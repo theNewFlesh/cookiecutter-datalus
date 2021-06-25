@@ -1,0 +1,14 @@
+apiVersion: v2
+name: {{cookiecutter.repo}}
+version: 0.1.0
+home: https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.repo}}
+description: |
+  {{cookiecutter.description}}
+keywords:
+{{'  - ' + cookiecutter.keywords.split(', ')|join("\n  - ")}}
+type: application
+appVersion: "0.1.0"
+maintainers:
+  - name: {{cookiecutter.author}}
+    email: {{cookiecutter.email}}
+    url: {{cookiecutter.website}}

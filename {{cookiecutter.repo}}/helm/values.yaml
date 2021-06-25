@@ -1,0 +1,29 @@
+namespace: {{cookiecutter.repo}}
+
+organization: k8s
+
+container:
+  image: k3d-dev-registry:5000/{{cookiecutter.repo}}
+  tag: dev
+  repo: /mnt/repos/{{cookiecutter.repo}}
+{%- if cookiecutter.volume != '' %}
+  storage_volume: /mnt/storage
+{%- endif %}
+  port: 8080
+  image_pull_policy: IfNotPresent
+{%- if cookiecutter.repo_type in ['dash', 'flask'] %}
+  command:
+    [
+      "python3.7",
+      "/home/ubuntu/{{cookiecutter.repo}}/python/{{cookiecutter.repo}}/server/app.py",
+    ]
+  env:
+    - name: REPO_ENV
+      value: "True"
+{%- endif %}
+
+service:
+  port: 80
+
+ingress:
+  path: /{{cookiecutter.repo}}

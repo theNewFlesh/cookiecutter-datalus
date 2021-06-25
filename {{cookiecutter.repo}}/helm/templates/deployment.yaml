@@ -1,0 +1,101 @@
+{%- raw %}
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: {{ .Values.namespace }}
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+{%- endraw %}
+  name: {{cookiecutter.repo}}
+{%- raw %}
+  namespace: {{ .Values.namespace }}
+{%- endraw %}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{cookiecutter.repo}}
+  template:
+    metadata:
+      labels:
+        app: {{cookiecutter.repo}}
+    spec:
+      containers:
+        - name: {{cookiecutter.repo}}
+{%- raw %}
+          image: {{ .Values.container.image }}:{{ .Values.container.tag }}
+          imagePullPolicy: {{ .Values.container.image_pull_policy }}
+          command: [{{ join ", " .Values.container.command }}]
+          env: {{- range .Values.container.env }}
+            - name: {{ .name }}
+              value: "{{ .value }}"
+          {{- end }}
+          ports:
+            - containerPort: {{ .Values.container.port }}
+          volumeMounts:
+{%- endraw %}
+{%- if cookiecutter.volume != '' %}
+            - name: storage
+              mountPath: /mnt/storage
+{%- endif %}
+            - name: repo
+              mountPath: /home/ubuntu/{{cookiecutter.repo}}
+      volumes:
+{%- if cookiecutter.volume != '' %}
+        - name: storage
+          hostPath:
+{%- raw %}
+            path: {{ .Values.container.storage_volume }}
+{%- endraw %}
+            type: Directory
+{%- endif %}
+        - name: repo
+          hostPath:
+{%- raw %}
+            path: {{ .Values.container.repo }}
+{%- endraw %}
+            type: Directory
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{cookiecutter.repo}}
+{%- raw %}
+  namespace: {{ .Values.namespace }}
+{%- endraw %}
+spec:
+  type: ClusterIP
+  selector:
+    app: {{cookiecutter.repo}}
+  ports:
+{%- raw %}
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.container.port }}
+
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: ingress
+  namespace: {{ .Values.namespace }}
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+{%- endraw %}
+    traefik.ingress.kubernetes.io/rewrite-target: /{{cookiecutter.repo}}
+spec:
+  rules:
+    - http:
+        paths:
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: {{cookiecutter.repo}}
+                port:
+{%- raw %}
+                  number: {{ .Values.service.port }}
+{%- endraw %}

@@ -1,0 +1,14 @@
+{
+	"repo": "repo_name",
+    "repo_type": ["dash", "flask", "package"],
+    "include_openexr": ["yes", "no"],
+    "port_prefix": 10,
+    "github_user": "github_user",
+    "description": "A repo_name app.",
+    "author": "First_name Last_name",
+    "email": "your@email.com",
+    "website": "http://yourwebsite.com",
+    "volume": "",
+    "keywords": "comma, separated, list",
+    "year": 2021
+}
