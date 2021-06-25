@@ -841,6 +841,14 @@ def state_command():
         'export IMAGE_EXISTS=`docker images {repo} | grep -v REPOSITORY`',
         'export CONTAINER_EXISTS=`docker ps -a -f name={repo} | grep -v CONTAINER`',
         'export RUNNING=`docker ps -a -f name={repo} -f status=running | grep -v CONTAINER`',
+        line(r'''
+            export PORTS=`docker ps -a -f name={repo}
+                --format '{{{{.Ports}}}}'
+            | sed -E 's/[0-9.]+:|:|\/[a-z]+//g'
+            | sed 's/, /\n/g' | uniq
+            | sed 's/->/{clear}->{blue}/'
+            | parallel "echo -n {{}} ' '"`
+        '''),
         line('''
             if [ -z "$IMAGE_EXISTS" ];
                 then export IMAGE_STATE="{red}absent{clear}";
@@ -858,7 +866,8 @@ def state_command():
         line('''echo
             "app: {cyan}{repo}{clear}:{yellow}$VERSION{clear} -
             image: $IMAGE_STATE -
-            container: $CONTAINER_STATE"
+            container: $CONTAINER_STATE - 
+            ports: {blue}$PORTS{clear}"
         '''),
         exit_repo(),
     ]
