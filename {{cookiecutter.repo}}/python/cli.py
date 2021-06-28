@@ -79,6 +79,7 @@ def get_info():
     tox          - Run tox tests on {repo}
     version-up   - Updates version and runs full-docs and requirements
     zsh          - Run ZSH session inside {repo} container
+    zsh-complete - Generate oh-my-zsh completions
     zsh-root     - Run ZSH session as root inside {repo} container
 '''.format(repo=REPO))
 
@@ -142,14 +143,15 @@ def resolve(commands):
     return cmd
 
 
-def line(text):
-    # type: (str) -> str
+def line(text, sep=' '):
+    # type: (str, str) -> str
     '''
     Convenience function for formatting a given block of text as series of
     commands.
 
     Args:
         text (text): Block of text.
+        sep (str, optional): Line separator. Default: ' '.
 
     Returns:
         str: Formatted command.
@@ -157,7 +159,7 @@ def line(text):
     output = re.sub('^\n|\n$', '', text)  # type: Any
     output = output.split('\n')
     output = [re.sub('^ +| +$', '', x) for x in output]
-    output = ' '.join(output) + ' '
+    output = sep.join(output) + sep
     return output
 
 
@@ -969,6 +971,44 @@ def zsh_command():
     return resolve(cmds)
 
 
+def zsh_complete_command():
+    # type: () -> str
+    '''
+    Returns:
+        str: Command to generate and install zsh completions.
+    '''
+    cmds = [
+        'export _COMP=~/.oh-my-zsh/custom/plugins/zsh-completions/src/_{repo}',
+        'touch $_COMP',
+        'echo "#compdef datalus rec" >> $_COMP',
+        'echo "" >> $_COMP',
+        'echo "local -a _subcommands" >> $_COMP',
+        'echo "_subcommands=(" >> $_COMP',
+        line('''
+            bin/{repo} --help
+                | grep '    - '
+                | sed -E 's/ +- /:/g'
+                | sed -E 's/^ +//g'
+                | sed -E "s/(.*)/    '\\1'/g"
+                | parallel "echo {{}} >> $_COMP"
+        '''),
+        'echo ")" >> $_COMP',
+        'echo "" >> $_COMP',
+        'echo "local expl" >> $_COMP',
+        'echo "" >> $_COMP',
+        'echo "_arguments \\\\" >> $_COMP',
+        'echo "    \'(-h --help)\'{{-h,--help}}\'[show help message]\' \\\\" >> $_COMP',
+        'echo "    \'(-d --dryrun)\'{{-d,--dryrun}}\'[print command]\' \\\\" >> $_COMP',
+        'echo "    \'*:: :->subcmds\' && return 0" >> $_COMP',
+        'echo "\n" >> $_COMP',
+        'echo "if (( CURRENT == 1 )); then" >> $_COMP',
+        'echo "    _describe -t commands \\"{repo} subcommand\\" _subcommands\" >> $_COMP',
+        'echo "    return" >> $_COMP',
+        'echo "fi" >> $_COMP',
+    ]
+    return resolve(cmds)
+
+
 def zsh_root_command():
     # type: () -> str
     '''
@@ -1035,6 +1075,8 @@ def main():
         'tox': tox_command(),
         'version-up': version_up_command(args),
         'zsh': zsh_command(),
+        'zsh-root': zsh_root_command(),
+        'zsh-complete': zsh_complete_command(),
         'zsh-root': zsh_root_command(),
     }
     cmd = lut.get(mode, get_illegal_mode_command())
