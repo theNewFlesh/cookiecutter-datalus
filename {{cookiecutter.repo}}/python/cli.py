@@ -980,7 +980,7 @@ def zsh_complete_command():
     cmds = [
         'export _COMP=~/.oh-my-zsh/custom/plugins/zsh-completions/src/_{repo}',
         'touch $_COMP',
-        'echo "#compdef datalus rec" >> $_COMP',
+        'echo "#compdef {repo} rec" > $_COMP',
         'echo "" >> $_COMP',
         'echo "local -a _subcommands" >> $_COMP',
         'echo "_subcommands=(" >> $_COMP',
