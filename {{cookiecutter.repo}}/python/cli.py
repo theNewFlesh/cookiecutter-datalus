@@ -79,6 +79,7 @@ def get_info():
     tox          - Run tox tests on {repo}
     version-up   - Updates version and runs full-docs and requirements
     zsh          - Run ZSH session inside {repo} container
+    zsh-root     - Run ZSH session as root inside {repo} container
 '''.format(repo=REPO))
 
     parser.add_argument(
@@ -968,6 +969,15 @@ def zsh_command():
     return resolve(cmds)
 
 
+def zsh_root_command():
+    # type: () -> str
+    '''
+    Returns:
+        str: Command to run a zsh session as root inside container.
+    '''
+    return re.sub('ubuntu:ubuntu', 'root:root', zsh_command())
+
+
 def get_illegal_mode_command():
     # type: () -> str
     '''
@@ -1025,6 +1035,7 @@ def main():
         'tox': tox_command(),
         'version-up': version_up_command(args),
         'zsh': zsh_command(),
+        'zsh-root': zsh_root_command(),
     }
     cmd = lut.get(mode, get_illegal_mode_command())
 
