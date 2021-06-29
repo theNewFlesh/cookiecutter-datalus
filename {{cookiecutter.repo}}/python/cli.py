@@ -1045,7 +1045,7 @@ def main():
     lut = {
 {%- if cookiecutter.repo_type in ['dash', 'flask'] %}
         'app': app_command(),
-{% else %}
+{%- else %}
         # 'app': app_command(),
 {%- endif %}
         'build': build_dev_command(),
