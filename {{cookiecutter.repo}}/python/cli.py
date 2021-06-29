@@ -102,7 +102,7 @@ def get_info():
     return mode, args
 
 
-{%- raw %}
+{% raw -%}
 def resolve(commands):
     # type: (List[str]) -> str
     '''
@@ -276,7 +276,7 @@ def coverage():
     return cmd
 
 
-{%- raw %}
+{% raw -%}
 def remove_container():
     # type: () -> str
     '''
@@ -536,7 +536,7 @@ def fast_test_command():
     return resolve(cmds)
 
 
-{%- raw %}
+{% raw -%}
 def full_docs_command():
     # type: () -> str
     '''
@@ -915,7 +915,7 @@ def test_command():
     return resolve(cmds)
 
 
-{%- raw %}
+{% raw -%}
 def tox_command():
     # type: () -> str
     '''

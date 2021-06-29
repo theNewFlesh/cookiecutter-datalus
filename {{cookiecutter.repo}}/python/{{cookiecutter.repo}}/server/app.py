@@ -30,6 +30,24 @@ import {{cookiecutter.repo}}.server.server_tools as svt
 '''
 
 
+def liveness():
+    # type: () -> None
+    '''Liveness probe for kubernetes.'''
+    pass
+
+
+def readiness():
+    # type: () -> None
+    '''
+    Readiness probe for kubernetes.
+
+    Raises:
+        HealthError: If api is not availiable.
+    '''
+    if not hasattr(APP, 'api'):
+        raise HealthError('App is missing API.')
+
+
 def get_app():
     # type: () -> dash.Dash
     '''
@@ -41,6 +59,13 @@ def get_app():
     flask_app = flask.Flask('{{cookiecutter.repo}}')
     swg.Swagger(flask_app)
     flask_app.register_blueprint(API)
+
+    # healthz endpoints
+    flask_app.register_blueprint(healthz, url_prefix="/healthz")
+    flask_app.config.update(HEALTHZ={
+        "live": liveness,
+        "ready": readiness,
+    })
 
     # flask monitoring
     fmdb.config.link = 'monitor'
