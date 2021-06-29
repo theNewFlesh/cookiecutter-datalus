@@ -1075,7 +1075,6 @@ def main():
         'tox': tox_command(),
         'version-up': version_up_command(args),
         'zsh': zsh_command(),
-        'zsh-root': zsh_root_command(),
         'zsh-complete': zsh_complete_command(),
         'zsh-root': zsh_root_command(),
     }
