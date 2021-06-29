@@ -25,14 +25,14 @@ import {{cookiecutter.repo}}.server.server_tools as svt
 
 
 '''
-{{cookiecutter.repo}} app used for displaying and interacting with database.
+{{cookiecutter.repo.capitalize()}} app used for displaying and interacting with database.
 '''
 
 
 def get_app():
     # type: () -> dash.Dash
     '''
-    Creates a {{cookiecutter.repo}} app.
+    Creates a {{cookiecutter.repo.capitalize()}} app.
 
     Returns:
         Dash: Dash app.
@@ -262,10 +262,10 @@ def on_get_tab(tab, store):
 
 def run(app, config_path, debug=False, test=False):
     '''
-    Runs a given {{cookiecutter.repo}} app.
+    Runs a given {{cookiecutter.repo.capitalize()}} app.
 
     Args:
-        Dash: {{cookiecutter.repo}} app.
+        Dash: {{cookiecutter.repo.capitalize()}} app.
         config_path (str or Path): Path to configuration JSON.
         debug (bool, optional): Whether debug mode is turned on. Default: False.
         test (bool, optional): Calls app.run_server if False. Default: False.

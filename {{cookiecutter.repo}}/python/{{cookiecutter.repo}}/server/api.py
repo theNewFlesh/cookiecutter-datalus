@@ -14,14 +14,14 @@ import {{cookiecutter.repo}}.server.server_tools as svt
 
 
 '''
-{{cookiecutter.repo}} REST API.
+{{cookiecutter.repo.capitalize()}} REST API.
 '''
 
 
 def get_api():
     # type: () -> Any
     '''
-    Creates a Blueprint for the {{cookiecutter.repo}} REST API.
+    Creates a Blueprint for the {{cookiecutter.repo.capitalize()}} REST API.
 
     Returns:
         flask.Blueprint: API Blueprint.
@@ -41,7 +41,7 @@ API = get_api()
 def api():
     # type: () -> Any
     '''
-    Route to {{cookiecutter.repo}} API documentation.
+    Route to {{cookiecutter.repo.capitalize()}} API documentation.
 
     Returns:
         html: Flassger generated API page.
@@ -62,7 +62,7 @@ def api():
     ],
     responses={
         200: dict(
-            description='{{cookiecutter.repo}} database successfully initialized.',
+            description='{{cookiecutter.repo.capitalize()}} database successfully initialized.',
             content='application/json',
         ),
         400: dict(
@@ -114,7 +114,7 @@ def initialize():
     parameters=[],
     responses={
         200: dict(
-            description='{{cookiecutter.repo}} database successfully updated.',
+            description='{{cookiecutter.repo.capitalize()}} database successfully updated.',
             content='application/json',
         ),
         500: dict(
