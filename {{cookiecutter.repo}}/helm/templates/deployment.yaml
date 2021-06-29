@@ -35,6 +35,18 @@ spec:
           {{- end }}
           ports:
             - containerPort: {{ .Values.container.port }}
+          livenessProbe:
+            httpGet:
+              path: /healthz/live
+              port: {{ .Values.container.port }}
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+          readinessProbe:
+            httpGet:
+              path: /healthz/ready
+              port: {{ .Values.container.port }}
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
           volumeMounts:
 {%- endraw %}
 {%- if cookiecutter.volume != '' %}
