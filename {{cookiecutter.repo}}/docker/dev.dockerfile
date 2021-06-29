@@ -46,8 +46,9 @@ RUN echo "\n${CYAN}SETUP ZSH${CLEAR}"; \
         -o install-oh-my-zsh.sh && \
     echo y | sh install-oh-my-zsh.sh && \
     cp -r /root/.oh-my-zsh /home/ubuntu/ && \
-    chown -R ubuntu:ubuntu .oh-my-zsh \
-    install-oh-my-zsh.sh && \
+    chown -R ubuntu:ubuntu \
+        .oh-my-zsh \
+        install-oh-my-zsh.sh && \
     echo 'UTC' > /etc/timezone
 
 # install python3.7 and pip
