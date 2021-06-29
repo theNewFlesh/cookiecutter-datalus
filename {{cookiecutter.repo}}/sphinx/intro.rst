@@ -3,8 +3,7 @@ Introduction
 
 {{cookiecutter.description}}
 
-See `documentation <https://{{cookiecutter.github_user}}.github.io/{{cookiecutter.repo}}/>` for
-details.
+See `documentation <https://{{cookiecutter.github_user}}.github.io/{{cookiecutter.repo}}/>` for details.
 
 Installation
 ============
