@@ -9,6 +9,7 @@ ipywidgets>=7.6
 jinja2
 jsoncomment
 jupyterlab_henanigans>=0.2.1
+jupyterlab_sublime
 jupyterlab-git
 jupyterlab>=3.0.0
 lunchbox
