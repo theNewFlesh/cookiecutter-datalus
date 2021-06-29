@@ -7,6 +7,7 @@ import os
 
 from dash.dependencies import Input, Output, State
 from flask_caching import Cache
+from flask_healthz import healthz, HealthError
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
