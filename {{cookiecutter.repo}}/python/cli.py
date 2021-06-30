@@ -310,24 +310,23 @@ def create_package_repo():
     '''
     cmd = line(
         docker_exec() + r'''{repo} zsh -c "
-            rm -rf /tmp/{repo} &&
-            cp -R /home/ubuntu/{repo}/python /tmp/{repo} &&
-            cp /home/ubuntu/{repo}/README.md /tmp/{repo}/README.md &&
-            cp /home/ubuntu/{repo}/LICENSE /tmp/{repo}/LICENSE &&
-            cp /home/ubuntu/{repo}/pip/MANIFEST.in /tmp/{repo}/MANIFEST.in &&
-            cp /home/ubuntu/{repo}/pip/setup.cfg /tmp/{repo}/ &&
-            cp /home/ubuntu/{repo}/pip/setup.py /tmp/{repo}/ &&
-            cp /home/ubuntu/{repo}/pip/version.txt /tmp/{repo}/ &&
-            cp /home/ubuntu/{repo}/docker/dev_requirements.txt /tmp/{repo}/ &&
-            cp /home/ubuntu/{repo}/docker/prod_requirements.txt /tmp/{repo}/ &&
-            cp -r /home/ubuntu/{repo}/templates /tmp/{repo}/{repo} &&
-            cp -r /home/ubuntu/{repo}/resources /tmp/{repo}/{repo} &&
+            rm -rf /tmp/$REPO &&
+            cp -R python /tmp/$REPO &&
+            cp README.md /tmp/$REPO/README.md &&
+            cp LICENSE /tmp/$REPO/LICENSE &&
+            cp docker/dev_requirements.txt /tmp/$REPO/ &&
+            cp docker/prod_requirements.txt /tmp/$REPO/ &&
+            cp -R pip/* /tmp/$REPO/ &&
+            cp -R templates /tmp/$REPO &&
+            cp -R resources /tmp/$REPO &&
+            find /tmp/$REPO/resources -type f | grep -vE 'icon|test_'
+                | parallel 'rm -rf {}' &&
             find /tmp/{repo}/{repo}/resources -type f | grep -vE 'icon|test_'
                 | parallel 'rm -rf {{}}' &&
-            find /tmp/{repo} | grep -E '.*test.*\.py$|mock.*\.py$|__pycache__'
-                | parallel 'rm -rf {{}}' &&
-            find /tmp/{repo} -type f | grep __init__.py
-                | parallel 'rm -rf {{}}; touch {{}}'
+            find /tmp/$REPO | grep -E '.*test.*\\.py$|mock.*\\.py$|__pycache__'
+                | parallel 'rm -rf {}' &&
+            find /tmp/$REPO -type f | grep __init__.py
+                | parallel 'rm -rf {} && touch {}'
         "
     ''')
     return cmd
@@ -341,18 +340,18 @@ def tox_repo():
     '''
     cmd = line(
         docker_exec() + r'''{repo} zsh -c "
-            rm -rf /tmp/{repo} &&
-            cp -R /home/ubuntu/{repo}/python /tmp/{repo} &&
-            cp -R /home/ubuntu/{repo}/docker/* /tmp/{repo}/ &&
-            cp -R /home/ubuntu/{repo}/resources /tmp/{repo}/{repo} &&
-            cp /home/ubuntu/{repo}/pip/* /tmp/{repo}/ &&
-            cp /home/ubuntu/{repo}/LICENSE /tmp/{repo}/ &&
-            cp /home/ubuntu/{repo}/README.md /tmp/{repo}/ &&
-            find /tmp/{repo}/{repo}/resources -type f
-                | grep -vE 'icon|test_' | parallel 'rm -rf {{}}' &&
-            cp -R /home/ubuntu/{repo}/templates /tmp/{repo}/{repo} &&
-            cp -R /home/ubuntu/{repo}/python/conftest.py /tmp/{repo}/ &&
-            find /tmp/{repo} | grep -E '__pycache__|\.pyc$' | parallel 'rm -rf'
+            rm -rf /tmp/$REPO &&
+            cp /home/ubuntu/$REPO/README.md /tmp/$REPO/README.md &&
+            cp /home/ubuntu/$REPO/LICENSE /tmp/$REPO/LICENSE &&
+            cp /home/ubuntu/$REPO/pip/* /tmp/$REPO/ &&
+            cp /home/ubuntu/$REPO/docker/dev_requirements.txt /tmp/$REPO/ &&
+            cp /home/ubuntu/$REPO/docker/prod_requirements.txt /tmp/$REPO/ &&
+            cp /home/ubuntu/$REPO/docker/pytest.ini /tmp/$REPO/ &&
+            cp /home/ubuntu/$REPO/docker/tox.ini /tmp/$REPO/ &&
+            cp /home/ubuntu/$REPO/python/conftest.py /tmp/$REPO/ &&
+            cp -R /home/ubuntu/$REPO/resources /tmp/$REPO &&
+            cp -R /home/ubuntu/$REPO/templates /tmp/$REPO &&
+            find /tmp/$REPO | grep -E '__pycache__|\\.pyc$' | parallel 'rm -rf'
         "
     ''')
     return cmd

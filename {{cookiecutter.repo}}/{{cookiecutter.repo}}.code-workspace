@@ -150,26 +150,34 @@
                 "type": "shell"
             },
             {
+                "label": "package-repo",
+                "command": [
+                    "rm -rf /tmp/$REPO &&",
+                    "cp -R python /tmp/$REPO &&",
+                    "cp README.md /tmp/$REPO/README.md &&",
+                    "cp LICENSE /tmp/$REPO/LICENSE &&",
+                    "cp docker/dev_requirements.txt /tmp/$REPO/ &&",
+                    "cp docker/prod_requirements.txt /tmp/$REPO/ &&",
+                    "cp -R pip/* /tmp/$REPO/ &&",
+                    "cp -R templates /tmp/$REPO &&",
+                    "cp -R resources /tmp/$REPO &&",
+                    "find /tmp/$REPO/resources -type f | grep -vE 'icon|test_' | parallel 'rm -rf {}' &&",
+                    "find /tmp/{repo}/{repo}/resources -type f | grep -vE 'icon|test_' | parallel 'rm -rf {{}}' &&",
+                    "find /tmp/$REPO | grep -E '.*test.*\\.py$|mock.*\\.py$|__pycache__' | parallel 'rm -rf {}' &&",
+                    "find /tmp/$REPO -type f | grep __init__.py | parallel 'rm -rf {} && touch {}'",
+                ],
+                "type": "shell"
+            },
+            {
                 "label": "package",
                 "command": [
                     "unset REPO_ENV && ",
-                    "rm -rf /tmp/$REPO && ",
-                    "cp -R python /tmp/$REPO && ",
-                    "cp README.md /tmp/$REPO/README.md && ",
-                    "cp LICENSE /tmp/$REPO/LICENSE && ",
-                    "cp pip/MANIFEST.in /tmp/$REPO/MANIFEST.in && ",
-                    "cp pip/setup.cfg /tmp/$REPO/ && ",
-                    "cp pip/setup.py /tmp/$REPO/ && ",
-                    "cp pip/version.txt /tmp/$REPO/ && ",
-                    "cp docker/dev_requirements.txt /tmp/$REPO/ && ",
-                    "cp docker/prod_requirements.txt /tmp/$REPO/ && ",
-                    "cp -R templates /tmp/$REPO/$REPO && ",
-                    "cp -R resources /tmp/$REPO/$REPO && ",
-                    "find /tmp/$REPO/$REPO/resources -type f | grep -vE 'icon|test_' | parallel 'rm -rf {}' && ",
-                    "find /tmp/$REPO | grep -E '.*test.*\\.py$|mock.*\\.py$|__pycache__' | parallel 'rm -rf {}' && ",
-                    "find /tmp/$REPO -type f | grep __init__.py | parallel 'rm -rf {} && touch {}' && ",
                     "cd /tmp/$REPO && ",
                     "python3.7 setup.py sdist"
+                ],
+                "dependsOrder": "sequence",
+                "dependsOn": [
+                    "package-repo"
                 ],
                 "type": "shell"
             },
@@ -209,15 +217,16 @@
                 "label": "tox-repo",
                 "command": [
                     "rm -rf /tmp/$REPO && ",
-                    "cp -R /home/ubuntu/$REPO/python /tmp/$REPO && ",
-                    "cp /home/ubuntu/$REPO/README.md /tmp/$REPO/ && ",
-                    "cp /home/ubuntu/$REPO/LICENSE /tmp/$REPO/ && ",
-                    "cp -R /home/ubuntu/$REPO/docker/* /tmp/$REPO/ && ",
-                    "cp -R /home/ubuntu/$REPO/pip/* /tmp/$REPO/ && ",
-                    "cp -R /home/ubuntu/$REPO/resources /tmp/$REPO/$REPO && ",
-                    "find /tmp/$REPO/$REPO/resources -type f | grep -vE 'icon|test_' | parallel 'rm -rf {}' && ",
-                    "cp -R /home/ubuntu/$REPO/templates /tmp/$REPO/$REPO && ",
-                    "cp -R /home/ubuntu/$REPO/python/conftest.py /tmp/$REPO/ && ",
+                    "cp /home/ubuntu/$REPO/README.md /tmp/$REPO/README.md && ",
+                    "cp /home/ubuntu/$REPO/LICENSE /tmp/$REPO/LICENSE && ",
+                    "cp /home/ubuntu/$REPO/pip/* /tmp/$REPO/ && ",
+                    "cp /home/ubuntu/$REPO/docker/dev_requirements.txt /tmp/$REPO/ && ",
+                    "cp /home/ubuntu/$REPO/docker/prod_requirements.txt /tmp/$REPO/ && ",
+                    "cp /home/ubuntu/$REPO/docker/pytest.ini /tmp/$REPO/ && ",
+                    "cp /home/ubuntu/$REPO/docker/tox.ini /tmp/$REPO/ && ",
+                    "cp /home/ubuntu/$REPO/python/conftest.py /tmp/$REPO/ && ",
+                    "cp -R /home/ubuntu/$REPO/resources /tmp/$REPO && ",
+                    "cp -R /home/ubuntu/$REPO/templates /tmp/$REPO && ",
                     "find /tmp/$REPO | grep -E '__pycache__|\\.pyc$' | parallel 'rm -rf'"
                 ],
                 "type": "shell"
