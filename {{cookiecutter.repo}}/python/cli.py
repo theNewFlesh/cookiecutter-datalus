@@ -327,7 +327,7 @@ def create_package_repo():
             find /tmp/{repo} | grep -E '.*test.*\.py$|mock.*\.py$|__pycache__'
                 | parallel 'rm -rf {{}}' &&
             find /tmp/{repo} -type f | grep __init__.py
-                | parallel 'rm -rf {{}};touch {{}}'
+                | parallel 'rm -rf {{}}; touch {{}}'
         "
     ''')
     return cmd
