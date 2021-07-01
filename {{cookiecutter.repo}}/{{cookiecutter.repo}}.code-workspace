@@ -61,7 +61,7 @@
             {
                 "label": "app",
                 "command": [
-                    "export DEBUG_MODE=True && ",
+                    "export DEBUG_MODE=True &&",
                     "python3.7 python/$REPO/server/app.py"
                 ],
                 "type": "shell"
@@ -70,7 +70,7 @@
             // {
             //     "label": "app",
             //     "command": [
-            //         "export DEBUG_MODE=True && ",
+            //         "export DEBUG_MODE=True &&",
             //         "python3.7 python/$REPO/server/app.py"
             //     ],
             //     "type": "shell"
@@ -86,7 +86,7 @@
             {
                 "label": "coverage",
                 "command": [
-                    "mkdir -p docs && ",
+                    "mkdir -p docs &&",
 {%- if cookiecutter.repo_type == 'dash' %}
                     "pytest python -c docker/pytest.ini --cov=python --cov-config=docker/pytest.ini --cov-report=html:docs/htmlcov --headless"
 {%- else %}
@@ -98,12 +98,12 @@
             {
                 "label": "docs",
                 "command": [
-                    "mkdir -p docs && ",
-                    "pandoc README.md -o sphinx/intro.rst && ",
-                    "sphinx-build sphinx docs && ",
-                    "cp sphinx/style.css docs/_static/style.css && ",
-                    "touch docs/.nojekyll && ",
-                    "mkdir -p /home/ubuntu/$REPO/docs/resources && "
+                    "mkdir -p docs &&",
+                    "pandoc README.md -o sphinx/intro.rst &&",
+                    "sphinx-build sphinx docs &&",
+                    "cp sphinx/style.css docs/_static/style.css &&",
+                    "touch docs/.nojekyll &&",
+                    "mkdir -p /home/ubuntu/$REPO/docs/resources &&"
                 ],
                 "type": "shell"
             },
@@ -135,9 +135,9 @@
             {
                 "label": "lint",
                 "command": [
-                    "echo 'LINTING' && ",
-                    "flake8 python --config docker/flake8.ini && ",
-                    "echo 'TYPE CHECKING' && ",
+                    "echo 'LINTING' &&",
+                    "flake8 python --config docker/flake8.ini &&",
+                    "echo 'TYPE CHECKING' &&",
                     "mypy python --config-file docker/mypy.ini"
                 ],
                 "type": "shell"
@@ -145,32 +145,44 @@
             {
                 "label": "metrics",
                 "command": [
-                    "python3.7 -c \"from rolling_pin.radon_etl import RadonETL; etl = RadonETL('python'); etl.write_plots('docs/plots.html'); etl.write_tables('docs')\" && "
+                    "python3.7 -c \"from rolling_pin.radon_etl import RadonETL; etl = RadonETL('python'); etl.write_plots('docs/plots.html'); etl.write_tables('docs')\" &&"
+                ],
+                "type": "shell"
+            },
+            {
+                "label": "tmp-repo",
+                "command": [
+                    "rm -rf /tmp/$REPO &&",
+                    "cp -R python /tmp/$REPO &&",
+                    "cp -R templates /tmp/$REPO/$REPO/ &&",
+                    "cp -R resources /tmp/$REPO/$REPO/ &&",
+                    "cp README.md /tmp/$REPO/ &&",
+                    "cp LICENSE /tmp/$REPO/ &&",
+                    "cp docker/dev_requirements.txt /tmp/$REPO/ &&",
+                    "cp docker/prod_requirements.txt /tmp/$REPO/ &&",
+                    "cp -R pip/* /tmp/$REPO/ &&",
+                    "find /tmp/$REPO | grep -E '__pycache__|flask_monitor|cli.py' | parallel 'rm -rf {}' &&",
+                    "find /tmp/$REPO -type f | grep __init__.py | parallel 'rm -rf {}; touch {}'"
                 ],
                 "type": "shell"
             },
             {
                 "label": "package-repo",
                 "command": [
-                    "rm -rf /tmp/$REPO &&",
-                    "cp -R python /tmp/$REPO &&",
-                    "cp README.md /tmp/$REPO/README.md &&",
-                    "cp LICENSE /tmp/$REPO/LICENSE &&",
-                    "cp docker/dev_requirements.txt /tmp/$REPO/ &&",
-                    "cp docker/prod_requirements.txt /tmp/$REPO/ &&",
-                    "cp -R pip/* /tmp/$REPO/ &&",
-                    "cp -R templates /tmp/$REPO/$REPO/ &&",
-                    "cp -R resources /tmp/$REPO/$REPO/ &&",
-                    "find /tmp/$REPO | grep -E '.*test.*\\.py$|mock.*\\.py$|__pycache__|flask_monitor|cli.py' | parallel 'rm -rf {}' &&",
-                    "find /tmp/$REPO -type f | grep __init__.py | parallel 'rm -rf {}; touch {}'",
+                    "cd /tmp/$REPO &&",
+                    "find /tmp/$REPO | grep -E '.*test.*\\.py$|mock.*\\.py$' | parallel 'rm -rf {}'",
+                ],
+                "dependsOrder": "sequence",
+                "dependsOn": [
+                    "tmp-repo"
                 ],
                 "type": "shell"
             },
             {
                 "label": "package",
                 "command": [
-                    "unset REPO_ENV && ",
-                    "cd /tmp/$REPO && ",
+                    "unset REPO_ENV &&",
+                    "cd /tmp/$REPO &&",
                     "python3.7 setup.py sdist"
                 ],
                 "dependsOrder": "sequence",
@@ -198,7 +210,7 @@
             {
                 "label": "requirements",
                 "command": [
-                    "python3.7 -m pip list --format freeze > docker/frozen_requirements.txt && "
+                    "python3.7 -m pip list --format freeze > docker/frozen_requirements.txt &&"
                 ],
                 "type": "shell"
             },
@@ -214,26 +226,23 @@
             {
                 "label": "tox-repo",
                 "command": [
-                    "rm -rf /tmp/$REPO && ",
-                    "cp /home/ubuntu/$REPO/README.md /tmp/$REPO/README.md && ",
-                    "cp /home/ubuntu/$REPO/LICENSE /tmp/$REPO/LICENSE && ",
-                    "cp /home/ubuntu/$REPO/pip/* /tmp/$REPO/ && ",
-                    "cp /home/ubuntu/$REPO/docker/dev_requirements.txt /tmp/$REPO/ && ",
-                    "cp /home/ubuntu/$REPO/docker/prod_requirements.txt /tmp/$REPO/ && ",
-                    "cp /home/ubuntu/$REPO/docker/pytest.ini /tmp/$REPO/ && ",
-                    "cp /home/ubuntu/$REPO/docker/tox.ini /tmp/$REPO/ && ",
-                    "cp /home/ubuntu/$REPO/python/conftest.py /tmp/$REPO/ && ",
-                    "cp -R /home/ubuntu/$REPO/resources /tmp/$REPO/$REPO/ && ",
-                    "cp -R /home/ubuntu/$REPO/templates /tmp/$REPO/$REPO/ && ",
-                    "find /tmp/$REPO | grep -E '__pycache__|\\.pyc$' | parallel 'rm -rf'"
+                    "cp docker/flake8.ini /tmp/$REPO &&",
+                    "cp docker/mypy.ini /tmp/$REPO &&",
+                    "cp docker/pytest.ini /tmp/$REPO &&",
+                    "cp docker/tox.ini /tmp/$REPO &&",
+                    "cp python/conftest.py /tmp/$REPO",
+                ],
+                "dependsOrder": "sequence",
+                "dependsOn": [
+                    "tmp-repo"
                 ],
                 "type": "shell"
             },
             {
                 "label": "tox",
                 "command": [
-                    "unset REPO_ENV && ",
-                    "cd /tmp/$REPO && ",
+                    "unset REPO_ENV &&",
+                    "cd /tmp/$REPO &&",
                     "tox"
                 ],
                 "dependsOrder": "sequence",

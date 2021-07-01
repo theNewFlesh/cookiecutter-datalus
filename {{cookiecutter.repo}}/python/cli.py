@@ -303,31 +303,45 @@ def docker_exec():
     return cmd
 
 
-def create_package_repo():
+def tmp_repo():
+    # type: () -> str
+    '''
+    Returns:
+        str: Command to build repo in /tmp.
+    '''
+    cmd = line('''
+        cd /home/ubuntu/{repo} &&
+        rm -rf /tmp/{repo} &&
+        mkdir /tmp/{repo} &&
+        cp -R python/{repo_} /tmp/{repo}/ &&
+        cp -R templates /tmp/{repo}/{repo_}/ &&
+        cp -R resources /tmp/{repo}/{repo_}/ &&
+        cp README.md /tmp/{repo}/ &&
+        cp LICENSE /tmp/{repo}/ &&
+        cp docker/dev_requirements.txt /tmp/{repo}/ &&
+        cp docker/prod_requirements.txt /tmp/{repo}/ &&
+        cp -R pip/* /tmp/{repo}/ &&
+        find /tmp/{repo}/{repo_}/resources -type f | grep -vE 'icon|test_'
+            | parallel 'rm -rf {{}}' &&
+        find /tmp/{repo} | grep -E '__pycache__|flask_monitor|cli.py'
+            | parallel 'rm -rf {{}}' &&
+        find /tmp/{repo} -type f | grep __init__.py
+            | parallel 'rm -rf {{}}; touch {{}}'
+    ''')
+    return cmd
+
+
+def package_repo():
     # type: () -> str
     '''
     Returns:
         str: Command to create a temporary repo in /tmp.
     '''
-    cmd = line(
-        docker_exec() + r'''{repo} zsh -c "
-            rm -rf /tmp/{repo} &&
-            cp -R python /tmp/{repo} &&
-            cp README.md /tmp/{repo}/README.md &&
-            cp LICENSE /tmp/{repo}/LICENSE &&
-            cp docker/dev_requirements.txt /tmp/{repo}/ &&
-            cp docker/prod_requirements.txt /tmp/{repo}/ &&
-            cp -R pip/* /tmp/{repo}/ &&
-            cp -R templates /tmp/{repo}/{repo_}/ &&
-            cp -R resources /tmp/{repo}/{repo_}/ &&
-            find /tmp/{repo}/{repo}/resources -type f | grep -vE 'icon|test_'
-                | parallel 'rm -rf {}' &&
-            find /tmp/{repo} | grep -E '.*test.*\\.py$|mock.*\\.py$|__pycache__'
-                | parallel 'rm -rf {}' &&
-            find /tmp/{repo} -type f | grep __init__.py
-                | parallel 'rm -rf {} && touch {}'
-        "
+    pkg = line('''
+        find /tmp/$REPO | grep -E '.*test.*\\.py$|mock.*\\.py$'
+            | parallel 'rm -rf {{}}'
     ''')
+    cmd = docker_exec() + ' {repo} zsh -c "' + tmp_repo() + ' && ' + pkg + '"'
     return cmd
 
 
@@ -337,22 +351,14 @@ def tox_repo():
     Returns:
         str: Command to build tox repo.
     '''
-    cmd = line(
-        docker_exec() + r'''{repo} zsh -c "
-            rm -rf /tmp/{repo} &&
-            cp /home/ubuntu/{repo}/README.md /tmp/{repo}/README.md &&
-            cp /home/ubuntu/{repo}/LICENSE /tmp/{repo}/LICENSE &&
-            cp /home/ubuntu/{repo}/pip/* /tmp/{repo}/ &&
-            cp /home/ubuntu/{repo}/docker/dev_requirements.txt /tmp/{repo}/ &&
-            cp /home/ubuntu/{repo}/docker/prod_requirements.txt /tmp/{repo}/ &&
-            cp /home/ubuntu/{repo}/docker/pytest.ini /tmp/{repo}/ &&
-            cp /home/ubuntu/{repo}/docker/tox.ini /tmp/{repo}/ &&
-            cp /home/ubuntu/{repo}/python/conftest.py /tmp/{repo}/ &&
-            cp -R /home/ubuntu/{repo}/{repo}/resources /tmp/{repo} &&
-            cp -R /home/ubuntu/{repo}/{repo}/templates /tmp/{repo} &&
-            find /tmp/{repo} | grep -E '__pycache__|\\.pyc$' | parallel 'rm -rf'
-        "
+    tox = line('''
+        cp docker/flake8.ini /tmp/{repo} &&
+        cp docker/mypy.ini /tmp/{repo} &&
+        cp docker/pytest.ini /tmp/{repo} &&
+        cp docker/tox.ini /tmp/{repo} &&
+        cp python/conftest.py /tmp/{repo}
     ''')
+    cmd = docker_exec() + ' {repo} zsh -c "' + tmp_repo() + ' && ' + tox + '"'
     return cmd
 
 
@@ -675,7 +681,7 @@ def package_command():
     cmds = [
         enter_repo(),
         start(),
-        create_package_repo(),
+        package_repo(),
         docker_exec() + ' -w /tmp/{repo} {repo} python3.7 setup.py sdist',
         exit_repo(),
     ]
@@ -723,7 +729,7 @@ def publish_command():
         start(),
         tox_repo(),
         docker_exec() + '{repo} zsh -c "cd /tmp/{repo} && tox"',
-        create_package_repo(),
+        package_repo(),
         docker_exec() + ' -w /tmp/{repo} {repo} python3.7 setup.py sdist',
         docker_exec() + ' -w /tmp/{repo} {repo} twine upload dist/*',
         docker_exec() + ' {repo} rm -rf /tmp/{repo}',
