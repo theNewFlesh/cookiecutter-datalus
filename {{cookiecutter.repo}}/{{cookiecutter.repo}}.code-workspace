@@ -103,7 +103,7 @@
                     "sphinx-build sphinx docs &&",
                     "cp sphinx/style.css docs/_static/style.css &&",
                     "touch docs/.nojekyll &&",
-                    "mkdir -p /home/ubuntu/$REPO/docs/resources &&"
+                    "mkdir -p /home/ubuntu/$REPO/docs/resources"
                 ],
                 "type": "shell"
             },
@@ -145,7 +145,7 @@
             {
                 "label": "metrics",
                 "command": [
-                    "python3.7 -c \"from rolling_pin.radon_etl import RadonETL; etl = RadonETL('python'); etl.write_plots('docs/plots.html'); etl.write_tables('docs')\" &&"
+                    "python3.7 -c \"from rolling_pin.radon_etl import RadonETL; etl = RadonETL('python'); etl.write_plots('docs/plots.html'); etl.write_tables('docs')\""
                 ],
                 "type": "shell"
             },
@@ -210,7 +210,7 @@
             {
                 "label": "requirements",
                 "command": [
-                    "python3.7 -m pip list --format freeze > docker/frozen_requirements.txt &&"
+                    "python3.7 -m pip list --format freeze > docker/frozen_requirements.txt"
                 ],
                 "type": "shell"
             },
