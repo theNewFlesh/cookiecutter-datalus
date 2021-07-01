@@ -132,6 +132,7 @@ def resolve(commands):
         pythonpath='{PYTHONPATH}',
         repo_path=REPO_PATH,
         repo=REPO,
+        repo_=re.sub('-', '_', REPO),
         user=USER,
     )
     args = {}
@@ -317,12 +318,10 @@ def create_package_repo():
             cp docker/dev_requirements.txt /tmp/{repo}/ &&
             cp docker/prod_requirements.txt /tmp/{repo}/ &&
             cp -R pip/* /tmp/{repo}/ &&
-            cp -R templates /tmp/{repo} &&
-            cp -R resources /tmp/{repo} &&
-            find /tmp/{repo}/resources -type f | grep -vE 'icon|test_'
-                | parallel 'rm -rf {}' &&
+            cp -R templates /tmp/{repo}/{repo_}/ &&
+            cp -R resources /tmp/{repo}/{repo_}/ &&
             find /tmp/{repo}/{repo}/resources -type f | grep -vE 'icon|test_'
-                | parallel 'rm -rf {{}}' &&
+                | parallel 'rm -rf {}' &&
             find /tmp/{repo} | grep -E '.*test.*\\.py$|mock.*\\.py$|__pycache__'
                 | parallel 'rm -rf {}' &&
             find /tmp/{repo} -type f | grep __init__.py
@@ -349,8 +348,8 @@ def tox_repo():
             cp /home/ubuntu/{repo}/docker/pytest.ini /tmp/{repo}/ &&
             cp /home/ubuntu/{repo}/docker/tox.ini /tmp/{repo}/ &&
             cp /home/ubuntu/{repo}/python/conftest.py /tmp/{repo}/ &&
-            cp -R /home/ubuntu/{repo}/resources /tmp/{repo} &&
-            cp -R /home/ubuntu/{repo}/templates /tmp/{repo} &&
+            cp -R /home/ubuntu/{repo}/{repo}/resources /tmp/{repo} &&
+            cp -R /home/ubuntu/{repo}/{repo}/templates /tmp/{repo} &&
             find /tmp/{repo} | grep -E '__pycache__|\\.pyc$' | parallel 'rm -rf'
         "
     ''')
