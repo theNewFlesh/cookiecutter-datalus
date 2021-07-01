@@ -57,7 +57,7 @@ RUN echo "\n${CYAN}INSTALL OPENEXR${CLEAR}"; \
 USER ubuntu
 ENV REPO='{{cookiecutter.repo}}'
 ENV PYTHONPATH "${PYTHONPATH}:/home/ubuntu/$REPO/python"
-RUN echo "\n${CYAN}INSTALL $REPO${CLEAR}"; \
+RUN echo "\n${CYAN}INSTALL {{cookiecutter.repo | upper}}{CLEAR}"; \
     pip3.7 install {{cookiecutter.repo}}
 
 {% if cookiecutter.repo_type in ['dash', 'flask'] -%}
