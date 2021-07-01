@@ -164,7 +164,7 @@
                     "find /tmp/$REPO/resources -type f | grep -vE 'icon|test_' | parallel 'rm -rf {}' &&",
                     "find /tmp/{repo}/{repo}/resources -type f | grep -vE 'icon|test_' | parallel 'rm -rf {{}}' &&",
                     "find /tmp/$REPO | grep -E '.*test.*\\.py$|mock.*\\.py$|__pycache__' | parallel 'rm -rf {}' &&",
-                    "find /tmp/$REPO -type f | grep __init__.py | parallel 'rm -rf {} && touch {}'",
+                    "find /tmp/$REPO -type f | grep __init__.py | parallel 'rm -rf {}; touch {}'",
                 ],
                 "type": "shell"
             },
