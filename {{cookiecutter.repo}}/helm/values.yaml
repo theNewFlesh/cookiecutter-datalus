@@ -25,5 +25,3 @@ container:
 service:
   port: 80
 
-ingress:
-  path: /{{cookiecutter.repo}}
