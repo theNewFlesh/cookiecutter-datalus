@@ -851,7 +851,7 @@ def state_command():
         line(r'''
             export PORTS=`
                 cat docker/docker-compose.yml |
-                grep -E ' - "\d\d\d\d:\d\d\d\d"' |
+                grep -E ' - "....:...."' |
                 sed s'/.* - "//g' |
                 sed 's/"//g' |
                 sed 's/^/{blue}/g' |
