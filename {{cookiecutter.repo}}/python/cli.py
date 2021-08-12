@@ -990,33 +990,39 @@ def zsh_complete_command():
         'export _COMP=~/.oh-my-zsh/custom/completions/_{repo}',
         'touch $_COMP',
         "echo 'fpath=(~/.oh-my-zsh/custom/completions $fpath)' >> ~/.zshrc",
-        'echo "#compdef {repo} rec" > $_COMP',
+        'echo "#compdef {repo}" > $_COMP',
         'echo "" >> $_COMP',
-        'echo "local -a _subcommands" >> $_COMP',
-        'echo "_subcommands=(" >> $_COMP',
+        'echo "_modes () {{" >> $_COMP',
+        'echo "    _values \'subcommand\' \\\\" <ind1> >> $_COMP',
         line('''
             bin/{repo} --help
                 | grep '    - '
-                | sed -E 's/ +- /:/g'
+                | sed -E 's/ +- /[/g'
                 | sed -E 's/^ +//g'
-                | sed -E "s/(.*)/    '\\1'/g"
-                | parallel "echo {{}} >> $_COMP"
+                | sed -E "s/(.*)/ \ \ \ \ \ \ \ '\\1]'/g"
+                | parallel "echo {{}} '\\' >> $_COMP"
         '''),
-        'echo ")" >> $_COMP',
+        'echo "}}" >> $_COMP',
         'echo "" >> $_COMP',
-        'echo "local expl" >> $_COMP',
+        'echo "_{repo} () {{" >> $_COMP',
+        'echo "    _arguments \\\\" <ind1> >> $_COMP',
+        'echo "        {{-h,--help}}\'[display usage information]\' \\\\" <ind2> >> $_COMP',
+        'echo "        {{-a,--args}}\'[additional arguments to be passed]\' \\\\" <ind2> >> $_COMP',
+        'echo "        --dryrun\'[print command]\' \\\\" <ind2> >> $_COMP',
+        'echo "        \'*: :_modes\'" <ind2> >> $_COMP',
+        'echo "}}" >> $_COMP',
         'echo "" >> $_COMP',
-        'echo "_arguments \\\\" >> $_COMP',
-        'echo "    \'(-h --help)\'{{-h,--help}}\'[show help message]\' \\\\" >> $_COMP',
-        'echo "    \'(-d --dryrun)\'{{-d,--dryrun}}\'[print command]\' \\\\" >> $_COMP',
-        'echo "    \'*:: :->subcmds\' && return 0" >> $_COMP',
-        'echo "\n" >> $_COMP',
-        'echo "if (( CURRENT == 1 )); then" >> $_COMP',
-        'echo "    _describe -t commands \\"{repo} subcommand\\" _subcommands\" >> $_COMP',
-        'echo "    return" >> $_COMP',
-        'echo "fi" >> $_COMP',
+        'echo "_{repo} \\"\$@\\"" >> $_COMP',
     ]
-    return resolve(cmds)
+    cmd = resolve(cmds)
+
+    # this nonsense is needed because of echo's awful auto-collapse of multiple
+    # spaces 
+    ind1 = '| sed -E "s/^[[:space:]]+/\ \ \ \ /"'
+    ind2 = '| sed -E "s/^[[:space:]]+/\ \ \ \ \ \ \ \ /"'
+    cmd = re.sub('<ind1>', ind1, cmd)
+    cmd = re.sub('<ind2>', ind2, cmd)
+    return cmd
 
 
 def zsh_root_command():
