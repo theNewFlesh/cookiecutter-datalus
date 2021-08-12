@@ -989,10 +989,10 @@ def zsh_complete_command():
         'mkdir -p ~/.oh-my-zsh/custom/completions',
         'export _COMP=~/.oh-my-zsh/custom/completions/_{repo}',
         'touch $_COMP',
-        "echo 'fpath=(~/.oh-my-zsh/custom/completions $fpath)' >> ~/.zshrc",
+        # "echo 'fpath=(~/.oh-my-zsh/custom/completions $fpath)' >> ~/.zshrc",
         'echo "#compdef {repo}" > $_COMP',
         'echo "" >> $_COMP',
-        'echo "_modes () {{" >> $_COMP',
+        'echo "_flags () {{" >> $_COMP',
         'echo "    _values \'subcommand\' \\\\" <ind1> >> $_COMP',
         line('''
             bin/{repo} --help
@@ -1009,7 +1009,7 @@ def zsh_complete_command():
         'echo "        {{-h,--help}}\'[display usage information]\' \\\\" <ind2> >> $_COMP',
         'echo "        {{-a,--args}}\'[additional arguments to be passed]\' \\\\" <ind2> >> $_COMP',
         'echo "        --dryrun\'[print command]\' \\\\" <ind2> >> $_COMP',
-        'echo "        \'*: :_modes\'" <ind2> >> $_COMP',
+        'echo "        \'*: :_flags\'" <ind2> >> $_COMP',
         'echo "}}" >> $_COMP',
         'echo "" >> $_COMP',
         'echo "_{repo} \\"\$@\\"" >> $_COMP',
