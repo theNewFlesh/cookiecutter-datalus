@@ -25,7 +25,7 @@ pytest
 pytest-cov
 pytest-forked
 pytest-xdist
-rolling-pin
+rolling-pin>=0.4.2
 {%- if cookiecutter.repo_type == 'dash' %}
 selenium
 {%- endif %}
