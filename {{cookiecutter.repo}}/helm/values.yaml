@@ -1,7 +1,5 @@
 namespace: {{cookiecutter.repo}}
 
-organization: k8s
-
 container:
   image: k3d-dev-registry:5000/{{cookiecutter.repo}}
   tag: dev

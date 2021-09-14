@@ -87,27 +87,3 @@ spec:
 {%- raw %}
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.container.port }}
-
----
-kind: Ingress
-apiVersion: networking.k8s.io/v1
-metadata:
-  name: ingress
-  namespace: {{ .Values.namespace }}
-  annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
-{%- endraw %}
-    traefik.ingress.kubernetes.io/rewrite-target: /{{cookiecutter.repo}}
-spec:
-  rules:
-    - http:
-        paths:
-          - path: "/"
-            pathType: Prefix
-            backend:
-              service:
-                name: {{cookiecutter.repo}}
-                port:
-{%- raw %}
-                  number: {{ .Values.service.port }}
-{%- endraw %}
