@@ -87,3 +87,4 @@ spec:
 {%- raw %}
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.container.port }}
+{%- endraw %}
