@@ -21,7 +21,26 @@ classifiers = [
 ]
 requires-python = ">=3.10"
 dependencies = [
-    "click>=8.1.3"
+    "click>=8.1.3",
+{%- if cookiecutter.repo_type == 'dash' %}
+    "dash>=2.0.0",
+    "dash-core-components",
+    "dash-cytoscape",
+    "dash-html-components",
+    "dash-table",
+{%- endif %}
+{%- if cookiecutter.repo_type in ['dash', 'flask'] %}
+    "flasgger",
+    "flask",
+    "flask-caching",
+    "flask-healthz",
+    "jinja2",
+{%- endif %}
+    "numpy",
+    "pandas",
+{%- if cookiecutter.include_openexr == 'yes' %}
+    "OpenEXR",
+{%- endif %}
 ]
 
 [project.urls]
