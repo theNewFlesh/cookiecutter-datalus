@@ -11,6 +11,8 @@ services:
       - "{{cookiecutter.port_prefix}}80:8080"
     userns_mode: "host"
     user: ubuntu
+    env_file:
+      - config/dev-env
     volumes:
       - ../:/home/ubuntu/{{cookiecutter.repo}}
       - ~/.ssh:/home/ubuntu/.ssh:ro
