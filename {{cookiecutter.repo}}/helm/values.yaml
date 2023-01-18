@@ -18,7 +18,7 @@ base:
     liveness_probe: true
 
   namespace:
-    name: asset-ingest
+    name: {{ cookiecutter.repo }}
 
   argocd_application:
     name: {{ cookiecutter.repo }}
@@ -34,7 +34,7 @@ base:
   env_secret:
 
   deployment:
-    repository: thenewflesh/{{ cookiecutter.repo }}
+    repository: {{ cookiecutter.github_user }}/{{ cookiecutter.repo }}
     image_tag: latest
     repo_path: /home/ubuntu/{{ cookiecutter.repo }}
     storage_path: /mnt/storage
