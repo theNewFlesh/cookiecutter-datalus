@@ -37,9 +37,9 @@ RUN echo "\n${CYAN}SETUP PYTHON3.10${CLEAR}"; \
     python3.10 get-pip.py && \
     rm -rf /home/ubuntu/get-pip.py
 
-# install lunchbox
+# install {{cookiecutter.repo}}
 USER ubuntu
-ENV REPO='lunchbox'
+ENV REPO='{{cookiecutter.repo}}'
 ENV PYTHONPATH "${PYTHONPATH}:/home/ubuntu/$REPO/python"
-RUN echo "\n${CYAN}INSTALL LUNCHBOX{CLEAR}"; \
-    pip3.10 install --user --upgrade lunchbox
+RUN echo "\n${CYAN}INSTALL {{cookiecutter.repo}}{CLEAR}"; \
+    pip3.10 install --user --upgrade {{cookiecutter.repo}}

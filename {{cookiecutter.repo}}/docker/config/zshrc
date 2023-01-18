@@ -47,7 +47,7 @@ if [[ `which parallel` != "* not found" ]]; then
 fi;
 
 # fix git permissions
-git config --global --add safe.directory /home/ubuntu/lunchbox
+git config --global --add safe.directory /home/ubuntu/{{cookiecutter.repo}}
 
 # activate dev env
 x_env_activate_dev;
