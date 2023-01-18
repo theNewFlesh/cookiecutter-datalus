@@ -1,5 +1,6 @@
 # ansible
 devops/ansible/**/*.retry
+ansible/password.txt
 
 # c
 *.so
@@ -38,6 +39,9 @@ lib64
 parts
 sdist
 var
+
+# pdm
+__pypackages__
 
 # python
 __pycache__
