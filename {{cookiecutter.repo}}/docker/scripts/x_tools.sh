@@ -1,6 +1,7 @@
 # VARIABLES---------------------------------------------------------------------
 export HOME="/home/ubuntu"
 export REPO="{{cookiecutter.repo}}"
+{%- raw -%}
 export REPO_DIR="$HOME/$REPO"
 export REPO_SNAKE_CASE=`echo $REPO | sed 's/-/_/g'`
 export REPO_SUBPACKAGE="$REPO_DIR/python/$REPO_SNAKE_CASE"
@@ -657,3 +658,4 @@ x_version_bump_patch () {
     pdm bump patch;
     _x_library_pdm_to_repo_dev;
 }
+{%- endraw -%}
