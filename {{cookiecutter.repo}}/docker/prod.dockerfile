@@ -1,4 +1,4 @@
-FROM ubuntu:18.04 AS base
+FROM ubuntu:22.04 AS base
 
 USER root
 
@@ -24,45 +24,22 @@ RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
     apt update && \
     apt install -y \
         software-properties-common \
-        wget
+        wget && \
+    rm -rf /var/lib/apt/lists/*
 
-# install python3.7 and pip
-RUN echo "\n${CYAN}SETUP PYTHON3.7${CLEAR}"; \
+# install python3.10 and pip
+RUN echo "\n${CYAN}SETUP PYTHON3.10${CLEAR}"; \
     add-apt-repository -y ppa:deadsnakes/ppa && \
     apt update && \
-    apt install --fix-missing -y \
-        python3.7 && \
+    apt install --fix-missing -y python3.10 && \
+    rm -rf /var/lib/apt/lists/* && \
     wget https://bootstrap.pypa.io/get-pip.py && \
-    python3.7 get-pip.py && \
+    python3.10 get-pip.py && \
     rm -rf /home/ubuntu/get-pip.py
 
-{%- if cookiecutter.include_openexr == "yes" %}
-# install OpenEXR
-ENV CC=gcc
-ENV CXX=g++
-ENV LD_LIBRARY_PATH='/usr/include/python3.7m/dist-packages'
-RUN echo "\n${CYAN}INSTALL OPENEXR${CLEAR}"; \
-    apt update && \
-    apt install -y \
-        build-essential \
-        g++ \
-        gcc \
-        libopenexr-dev \
-        openexr \
-        python3.7-dev \
-        zlib1g-dev
-{%- endif %}
-
-# install {{cookiecutter.repo}}
+# install lunchbox
 USER ubuntu
-ENV REPO='{{cookiecutter.repo}}'
+ENV REPO='lunchbox'
 ENV PYTHONPATH "${PYTHONPATH}:/home/ubuntu/$REPO/python"
-RUN echo "\n${CYAN}INSTALL {{cookiecutter.repo | upper}}{CLEAR}"; \
-    pip3.7 install {{cookiecutter.repo}}
-
-{% if cookiecutter.repo_type in ['dash', 'flask'] -%}
-ENTRYPOINT [\
-    "python3.7", \
-    "/home/ubuntu/.local/lib/python3.7/site-packages/{{cookiecutter.repo}}/server/app.py" \
-]
-{%- endif %}
+RUN echo "\n${CYAN}INSTALL LUNCHBOX{CLEAR}"; \
+    pip3.10 install --user --upgrade lunchbox
