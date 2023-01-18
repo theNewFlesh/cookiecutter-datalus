@@ -1,6 +1,4 @@
-version: "3.4"
-volumes:
-  cache:
+version: "3.8"
 services:
   {{cookiecutter.repo}}:
     container_name: {{cookiecutter.repo}}
@@ -15,10 +13,10 @@ services:
     user: ubuntu
     volumes:
       - ../:/home/ubuntu/{{cookiecutter.repo}}
-      - ./jupyter:/home/ubuntu/.jupyter
-      - ./ipython:/home/ubuntu/.ipython
+      - ~/.ssh:/home/ubuntu/.ssh:ro
+      - ./config/jupyter:/home/ubuntu/.jupyter
+      - ./config/zshrc:/home/ubuntu/.zshrc
       - ../artifacts:/tmp/dash_artifacts
-      - ~/.ssh:/home/ubuntu/.ssh
 {%- if cookiecutter.volume != '' %}
       - {{cookiecutter.volume}}:/mnt/storage
 {%- endif %}
