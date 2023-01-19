@@ -98,8 +98,8 @@ ENV LC_ALL "C.UTF-8"
 # ------------------------------------------------------------------------------
 
 FROM base AS dev
-{%- if cookiecutter.repo_type == 'dash' %}
 USER root
+{%- if cookiecutter.repo_type == 'dash' %}
 
 # install chromedriver
 ENV PATH=$PATH:/lib/chromedriver
