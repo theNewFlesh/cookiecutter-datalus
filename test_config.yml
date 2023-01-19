@@ -1,6 +1,6 @@
 default_context:
   repo: datalus
-  repo_type: package
+  repo_type: dash
   include_openexr: no
   port_prefix: 99
   github_user: theNewFlesh
@@ -10,6 +10,6 @@ default_context:
   website: http://www.alexgbraun.com
   volume: ''
   keywords: data, cloud, app
-  year: 2021
+  year: 2023
   python_min_version: 7
   python_max_version: 10

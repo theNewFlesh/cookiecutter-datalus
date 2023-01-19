@@ -1,4 +1,4 @@
-{%- set max_ver = cookiecutter.python_max_version | int %}
+{%- set max_ver = cookiecutter.python_max_version | int -%}
 FROM ubuntu:22.04 AS base
 
 USER root
@@ -14,18 +14,18 @@ ARG GID_='1000'
 RUN echo "\n${CYAN}SETUP UBUNTU USER${CLEAR}"; \
     addgroup --gid $GID_ ubuntu && \
     adduser \
-    --disabled-password \
-    --gecos '' \
-    --uid $UID_ \
-    --gid $GID_ ubuntu
+        --disabled-password \
+        --gecos '' \
+        --uid $UID_ \
+        --gid $GID_ ubuntu
 WORKDIR /home/ubuntu
 
 # update ubuntu and install basic dependencies
 RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
     apt update && \
     apt install -y \
-    software-properties-common \
-    wget && \
+        software-properties-common \
+        wget && \
     rm -rf /var/lib/apt/lists/*
 
 # install python3.{{ max_ver }} and pip
