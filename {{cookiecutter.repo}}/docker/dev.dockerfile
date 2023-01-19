@@ -1,6 +1,6 @@
 {%- set min_ver = cookiecutter.python_min_version | int %}
 {%- set max_ver = cookiecutter.python_max_version | int -%}
-FROM ubuntu:22.04 AS base
+FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 AS base
 
 USER root
 

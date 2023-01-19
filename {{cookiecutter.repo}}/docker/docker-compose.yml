@@ -23,4 +23,9 @@ services:
       - {{cookiecutter.volume}}:/mnt/storage
 {%- endif %}
     working_dir: "/home/ubuntu"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
     command: "tail -f /dev/null"
