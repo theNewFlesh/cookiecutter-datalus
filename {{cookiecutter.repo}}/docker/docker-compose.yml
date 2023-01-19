@@ -2,7 +2,7 @@ version: "3.8"
 services:
   {{cookiecutter.repo}}:
     container_name: {{cookiecutter.repo}}
-    image: {{cookiecutter.repo}}
+    image: {{cookiecutter.repo}}:dev
     build:
       context: .
       dockerfile: dev.dockerfile
