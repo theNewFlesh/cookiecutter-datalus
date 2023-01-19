@@ -1,7 +1,6 @@
 # VARIABLES---------------------------------------------------------------------
 export HOME="/home/ubuntu"
 export REPO="{{cookiecutter.repo}}"
-{%- raw -%}
 export REPO_DIR="$HOME/$REPO"
 export REPO_SNAKE_CASE=`echo $REPO | sed 's/-/_/g'`
 export REPO_SUBPACKAGE="$REPO_DIR/python/$REPO_SNAKE_CASE"
@@ -20,6 +19,7 @@ export JUPYTER_PLATFORM_DIRS=0
 export JUPYTER_CONFIG_PATH=/home/ubuntu/.jupyter
 alias cp=cp  # "cp -i" default alias asks you if you want to clobber files
 
+{% raw -%}
 # COLORS------------------------------------------------------------------------
 export BLUE1='\033[0;34m'
 export BLUE2='\033[0;94m'

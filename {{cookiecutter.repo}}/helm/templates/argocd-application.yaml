@@ -1,4 +1,4 @@
-{%- raw %}
+{%- raw -%}
 {{- with (include "overlay" . | fromYaml) -}}
 {{ if .enable.argocd_application }}
 kind: Application
@@ -9,7 +9,9 @@ metadata:
 spec:
   project: default
   source:
+{%- endraw -%}
     repoURL: https://github.com/{{ cookiecutter.github_user }}/{{ cookiecutter.repo }}.git
+{%- raw -%}
     targetRevision: master
     path: helm
     helm:

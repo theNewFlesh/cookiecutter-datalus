@@ -1,4 +1,4 @@
-{%- raw %}
+{%- raw -%}
 {{- with (include "overlay" . | fromYaml) -}}
 {{ if .enable.traefik_ingress }}
 kind: IngressRoute

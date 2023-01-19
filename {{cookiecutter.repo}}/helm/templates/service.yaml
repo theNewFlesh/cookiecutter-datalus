@@ -1,4 +1,4 @@
-{%- raw %}
+{%- raw -%}
 {{- with (include "overlay" . | fromYaml) -}}
 kind: Service
 apiVersion: v1
