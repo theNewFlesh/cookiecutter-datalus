@@ -49,6 +49,7 @@ RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
         wget && \
     rm -rf /var/lib/apt/lists/*
 
+# install all python versions
 RUN echo "\n${CYAN}INSTALL PYTHON${CLEAR}"; \
     add-apt-repository -y ppa:deadsnakes/ppa && \
     apt update && \
@@ -61,13 +62,14 @@ RUN echo "\n${CYAN}INSTALL PYTHON${CLEAR}"; \
     {%- endfor %}
     && rm -rf /var/lib/apt/lists/*
 
+# install pip
 RUN echo "\n${CYAN}INSTALL PIP${CLEAR}"; \
     wget https://bootstrap.pypa.io/get-pip.py && \
     python3.{{ max_ver }} get-pip.py && \
     pip3.{{ max_ver }} install --upgrade pip && \
     rm -rf get-pip.py
 
-# install zsh
+# install and setup zsh
 RUN echo "\n${CYAN}SETUP ZSH${CLEAR}"; \
     apt update && \
     apt install -y zsh && \
@@ -98,6 +100,8 @@ ENV LC_ALL "C.UTF-8"
 FROM base AS dev
 {%- if cookiecutter.repo_type == 'dash' %}
 USER root
+
+# install chromedriver
 ENV PATH=$PATH:/lib/chromedriver
 RUN echo "\n${CYAN}INSTALL CHROMEDRIVER${CLEAR}"; \
     apt update && \
@@ -105,7 +109,7 @@ RUN echo "\n${CYAN}INSTALL CHROMEDRIVER${CLEAR}"; \
     rm -rf /var/lib/apt/lists/*
 {%- endif %}
 
-{%- if cookiecutter.include_openexr == "yes" %}
+{% if cookiecutter.include_openexr == "yes" -%}
 # install OpenEXR
 ENV CC=gcc
 ENV CXX=g++
@@ -125,6 +129,7 @@ RUN echo "\n${CYAN}INSTALL OPENEXR${CLEAR}"; \
 USER ubuntu
 WORKDIR /home/ubuntu
 
+# insetll dev dependencies
 RUN echo "\n${CYAN}INSTALL DEV DEPENDENCIES${CLEAR}"; \
     curl -sSL \
         https://raw.githubusercontent.com/pdm-project/pdm/main/install-pdm.py \
@@ -135,11 +140,13 @@ RUN echo "\n${CYAN}INSTALL DEV DEPENDENCIES${CLEAR}"; \
     mkdir -p /home/ubuntu/.oh-my-zsh/custom/completions && \
     pdm completion zsh > /home/ubuntu/.oh-my-zsh/custom/completions/_pdm
 
+# setup pdm
 COPY --chown=ubuntu:ubuntu config/* /home/ubuntu/config/
 COPY --chown=ubuntu:ubuntu scripts/* /home/ubuntu/scripts/
 RUN echo "\n${CYAN}SETUP DIRECTORIES${CLEAR}"; \
     mkdir pdm
 
+# create dev env
 WORKDIR /home/ubuntu/pdm
 RUN echo "\n${CYAN}INSTALL DEV ENVIRONMENT${CLEAR}"; \
     . /home/ubuntu/scripts/x_tools.sh && \
@@ -150,6 +157,7 @@ RUN echo "\n${CYAN}INSTALL DEV ENVIRONMENT${CLEAR}"; \
     ln -s `_x_env_get_path dev 3.{{ max_ver }}` .dev-env && \
     ln -s `_x_env_get_path dev 3.{{ max_ver }}`/lib/python3.{{ max_ver }}/site-packages .dev-packages
 
+# create prod envs
 RUN echo "\n${CYAN}INSTALL PROD ENVIRONMENTS${CLEAR}"; \
     . /home/ubuntu/scripts/x_tools.sh && \
     export CONFIG_DIR=/home/ubuntu/config && \
@@ -159,6 +167,7 @@ RUN echo "\n${CYAN}INSTALL PROD ENVIRONMENTS${CLEAR}"; \
 {%- endfor %}
     x_env_init prod 3.{{ min_ver }}
 
+# cleanup dirs
 WORKDIR /home/ubuntu
 RUN echo "\n${CYAN}REMOVE DIRECTORIES${CLEAR}"; \
     rm -rf config scripts

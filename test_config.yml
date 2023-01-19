@@ -1,7 +1,7 @@
 default_context:
   repo: datalus
   repo_type: dash
-  include_openexr: no
+  include_openexr: yes
   port_prefix: 99
   github_user: theNewFlesh
   description: A cloud-native, custom dashboard and ephemeral database application.
