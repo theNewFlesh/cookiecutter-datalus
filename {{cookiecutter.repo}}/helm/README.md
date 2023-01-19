@@ -52,6 +52,7 @@ base:
 ```
 Enable's corresponding template files contain a conditional at the top of their definition, such that their entire contents are rendered or not depending on their enable value.
 
+{%- raw %}
 For example:
 ```
 {{- with (include "overlay" . | fromYaml) -}}
@@ -60,6 +61,7 @@ For example:
 {{ end }}
 {{- end -}}
 ```
+{%- endraw %}
 
 ---
 ## Overlays Section

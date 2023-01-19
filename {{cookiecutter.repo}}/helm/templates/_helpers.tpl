@@ -1,3 +1,4 @@
+{%- raw %}
 {{- define "_overlay" -}}
     {{- /* patch base dict with overlay dict */ -}}
 
@@ -50,3 +51,4 @@
         {{ $output | toYaml }}
     {{- end -}}
 {{- end -}}
+{%- endraw %}

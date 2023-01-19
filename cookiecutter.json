@@ -10,5 +10,7 @@
     "website": "http://yourwebsite.com",
     "volume": "",
     "keywords": "comma, separated, list",
-    "year": 2021
+    "year": 2021,
+    "python_min_version": 7,
+    "python_max_version": 10
 }

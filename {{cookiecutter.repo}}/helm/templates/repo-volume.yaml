@@ -1,3 +1,4 @@
+{%- raw %}
 {{- with (include "overlay" . | fromYaml) -}}
 {{ if .enable.repo_volume }}
 kind: PersistentVolume
@@ -49,3 +50,4 @@ spec:
       storage: 1Gi
 {{ end }}
 {{- end -}}
+{%- endraw %}

@@ -1,3 +1,4 @@
+{%- raw %}
 {{- with (include "overlay" . | fromYaml) -}}
 {{ if .enable.env_configmap }}
 kind: ConfigMap
@@ -9,3 +10,4 @@ data:
 {{- .env_configmap | toYaml | nindent 2 }}
 {{ end }}
 {{- end -}}
+{%- endraw %}

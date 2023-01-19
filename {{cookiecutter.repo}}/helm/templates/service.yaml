@@ -1,3 +1,4 @@
+{%- raw %}
 {{- with (include "overlay" . | fromYaml) -}}
 kind: Service
 apiVersion: v1
@@ -12,3 +13,4 @@ spec:
     - port: {{ .service.port }}
       targetPort: {{ .service.target_port }}
 {{- end -}}
+{%- endraw %}

@@ -1,3 +1,5 @@
+{%- set min_ver = cookiecutter.python_min_version | int %}
+{%- set max_ver = cookiecutter.python_max_version | int -%}
 FROM ubuntu:22.04 AS base
 
 USER root
@@ -52,24 +54,17 @@ RUN echo "\n${CYAN}INSTALL PYTHON${CLEAR}"; \
     apt update && \
     apt install -y \
         python3-pydot \
-        python3.10-dev \
-        python3.10-venv \
-        python3.10-distutils \
-        python3.9-dev \
-        python3.9-venv \
-        python3.9-distutils \
-        python3.8-dev \
-        python3.8-venv \
-        python3.8-distutils \
-        python3.7-dev \
-        python3.7-venv \
-        python3.7-distutils && \
-    rm -rf /var/lib/apt/lists/*
+    {%- for version in range(min_ver, max_ver + 1) | reverse %}
+        python3.{{ version }}-dev \
+        python3.{{ version }}-venv \
+        python3.{{ version }}-distutils \
+    {%- endfor %}
+    && rm -rf /var/lib/apt/lists/*
 
 RUN echo "\n${CYAN}INSTALL PIP${CLEAR}"; \
     wget https://bootstrap.pypa.io/get-pip.py && \
-    python3.10 get-pip.py && \
-    pip3.10 install --upgrade pip && \
+    python3.{{ max_ver }} get-pip.py && \
+    pip3.{{ max_ver }} install --upgrade pip && \
     rm -rf get-pip.py
 
 # install zsh
@@ -114,7 +109,7 @@ RUN echo "\n${CYAN}INSTALL CHROMEDRIVER${CLEAR}"; \
 # install OpenEXR
 ENV CC=gcc
 ENV CXX=g++
-ENV LD_LIBRARY_PATH='/usr/include/python3.10m/dist-packages'
+ENV LD_LIBRARY_PATH='/usr/include/python3.{{ max_ver }}m/dist-packages'
 RUN echo "\n${CYAN}INSTALL OPENEXR${CLEAR}"; \
     apt update && \
     apt install -y \
@@ -133,8 +128,8 @@ WORKDIR /home/ubuntu
 RUN echo "\n${CYAN}INSTALL DEV DEPENDENCIES${CLEAR}"; \
     curl -sSL \
         https://raw.githubusercontent.com/pdm-project/pdm/main/install-pdm.py \
-    | python3.10 - && \
-    pip3.10 install --upgrade --user \
+        | python3.{{ max_ver }} - && \
+    pip3.{{ max_ver }} install --upgrade --user \
         pdm \
         'rolling-pin>=0.9.2' && \
     mkdir -p /home/ubuntu/.oh-my-zsh/custom/completions && \
@@ -150,19 +145,19 @@ RUN echo "\n${CYAN}INSTALL DEV ENVIRONMENT${CLEAR}"; \
     . /home/ubuntu/scripts/x_tools.sh && \
     export CONFIG_DIR=/home/ubuntu/config && \
     export SCRIPT_DIR=/home/ubuntu/scripts && \
-    x_env_init dev 3.10 && \
+    x_env_init dev 3.{{ max_ver }} && \
     cd /home/ubuntu && \
-    ln -s `_x_env_get_path dev 3.10` .dev-env && \
-    ln -s `_x_env_get_path dev 3.10`/lib/python3.10/site-packages .dev-packages
+    ln -s `_x_env_get_path dev 3.{{ max_ver }}` .dev-env && \
+    ln -s `_x_env_get_path dev 3.{{ max_ver }}`/lib/python3.{{ max_ver }}/site-packages .dev-packages
 
 RUN echo "\n${CYAN}INSTALL PROD ENVIRONMENTS${CLEAR}"; \
     . /home/ubuntu/scripts/x_tools.sh && \
     export CONFIG_DIR=/home/ubuntu/config && \
     export SCRIPT_DIR=/home/ubuntu/scripts && \
-    x_env_init prod 3.10 && \
-    x_env_init prod 3.9 && \
-    x_env_init prod 3.8 && \
-    x_env_init prod 3.7
+{%- for version in range(min_ver + 1, max_ver + 1) | reverse %}
+    x_env_init prod 3.{{ version }} && \
+{%- endfor %}
+    x_env_init prod 3.{{ min_ver }}
 
 WORKDIR /home/ubuntu
 RUN echo "\n${CYAN}REMOVE DIRECTORIES${CLEAR}"; \

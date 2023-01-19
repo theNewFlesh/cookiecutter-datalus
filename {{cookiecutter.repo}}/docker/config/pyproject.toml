@@ -1,3 +1,5 @@
+{%- set min_ver = cookiecutter.python_min_version | int %}
+{%- set max_ver = cookiecutter.python_max_version | int %}
 [project]
 name = "{{cookiecutter.repo}}"
 version = "0.1.0"
@@ -13,13 +15,12 @@ classifiers = [
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
+{%- for version in range(min_ver, max_ver + 1) %}
+    "Programming Language :: Python :: 3.{{ version }}",
+{%- endfor %}
     "Typing :: Typed",
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.{{ max_ver }}"
 dependencies = [
     "click>=8.1.3",
 {%- if cookiecutter.repo_type == 'dash' %}
@@ -104,7 +105,7 @@ omit = [
 
 [tool.mypy]
 cache_dir = "/home/ubuntu/.mypy_cache"
-python_version = "3.10"
+python_version = "3.{{ max_ver }}"
 ignore_missing_imports = true
 warn_no_return = false
 pretty = true

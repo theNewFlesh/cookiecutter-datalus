@@ -10,5 +10,7 @@
     "website": "{{ cookiecutter.website }}",
     "volume": "{{ cookiecutter.volume }}",
     "keywords": "{{ cookiecutter.keywords }}",
-    "year": {{ cookiecutter.year }}
+    "year": {{ cookiecutter.year }},
+    "python_min_version": "{{ cookiecutter.python_min_version }}",
+    "python_min_version": {{ cookiecutter.python_min_version }}
 }

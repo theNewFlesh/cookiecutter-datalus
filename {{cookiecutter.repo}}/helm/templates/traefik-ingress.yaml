@@ -1,3 +1,4 @@
+{%- raw %}
 {{- with (include "overlay" . | fromYaml) -}}
 {{ if .enable.traefik_ingress }}
 kind: IngressRoute
@@ -15,3 +16,4 @@ spec:
           port: 80
 {{ end }}
 {{- end -}}
+{%- endraw %}

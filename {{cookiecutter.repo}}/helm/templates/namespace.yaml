@@ -1,3 +1,4 @@
+{%- raw %}
 {{- with (include "overlay" . | fromYaml) -}}
 {{ if .enable.namespace }}
 kind: Namespace
@@ -6,3 +7,4 @@ metadata:
   name: {{ .namespace.name }}
 {{ end }}
 {{- end -}}
+{%- endraw %}

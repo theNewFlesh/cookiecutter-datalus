@@ -1,3 +1,4 @@
+{%- raw %}
 {{- with (include "overlay" . | fromYaml) -}}
 kind: Deployment
 apiVersion: apps/v1
@@ -80,3 +81,4 @@ spec:
       imagePullSecrets:
         - name: image-pull-secret
 {{- end -}}
+{%- endraw %}

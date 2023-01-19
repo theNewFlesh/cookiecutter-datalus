@@ -11,3 +11,5 @@ default_context:
   volume: ''
   keywords: data, cloud, app
   year: 2021
+  python_min_version: 7
+  python_max_version: 10

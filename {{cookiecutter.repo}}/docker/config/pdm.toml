@@ -8,6 +8,6 @@ backend = "virtualenv"
 prompt = "dev-{python_version}"
 
 [python]
-path = "/usr/bin/python3.10"
+path = "/usr/bin/python3.{{ cookiecutter.python_max_version }}"
 use_pyenv = true
 use_venv = true

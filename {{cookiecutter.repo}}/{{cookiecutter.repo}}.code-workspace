@@ -1,3 +1,6 @@
+{%- set min_ver = cookiecutter.python_min_version | int %}
+{%- set max_ver = cookiecutter.python_max_version | int %}
+{%- raw %}
 {
     "folders": [{"path": "./"}],
     "settings": {
@@ -332,13 +335,15 @@
                     "x_test_lint"
                 ]
             },
+        {%- endraw %}
+        {%- for version in range(min_ver, max_ver + 1) %}
             {
-                "label": "_[test] prod-3.7",
-                "detail": "Run tests in prod-3.7 environment",
+                "label": "_[test] prod-3.{{ version }}",
+                "detail": "Run tests in prod-3.{{ version }} environment",
                 "command": [
                     "source $X_TOOLS_PATH &&",
                     "TEST_PROCS=1 &&",
-                    "x_test_run prod 3.7"
+                    "x_test_run prod 3.{{ version }}"
                 ],
                 "hide": true,
                 "presentation": {
@@ -346,56 +351,14 @@
                     "panel": "dedicated"
                 }
             },
-            {
-                "label": "_[test] prod-3.8",
-                "detail": "Run tests in prod-3.8 environment",
-                "command": [
-                    "source $X_TOOLS_PATH &&",
-                    "TEST_PROCS=1 &&",
-                    "x_test_run prod 3.8"
-                ],
-                "hide": true,
-                "presentation": {
-                    "group": "test",
-                    "panel": "dedicated"
-                }
-            },
-            {
-                "label": "_[test] prod-3.9",
-                "detail": "Run tests in prod-3.9 environment",
-                "command": [
-                    "source $X_TOOLS_PATH &&",
-                    "TEST_PROCS=1 &&",
-                    "x_test_run prod 3.9"
-                ],
-                "hide": true,
-                "presentation": {
-                    "group": "test",
-                    "panel": "dedicated"
-                }
-            },
-            {
-                "label": "_[test] prod-3.10",
-                "detail": "Run tests in prod-3.10 environment",
-                "command": [
-                    "source $X_TOOLS_PATH &&",
-                    "TEST_PROCS=1 &&",
-                    "x_test_run prod 3.10"
-                ],
-                "hide": true,
-                "presentation": {
-                    "group": "test",
-                    "panel": "dedicated"
-                }
-            },
+        {%- endfor %}
             {
                 "label": "_[test] prod",
                 "detail": "Run tests across all support python versions",
                 "dependsOn": [
-                    "_[test] prod-3.7",
-                    "_[test] prod-3.8",
-                    "_[test] prod-3.9",
-                    "_[test] prod-3.10"
+                {%- for version in range(min_ver, max_ver + 1) %}
+                    "_[test] prod-3.{{ version }}",
+                {%- endfor %}
                 ],
                 "hide": true,
                 "dependsOrder": "parallel",
@@ -403,6 +366,7 @@
                     "group": "test"
                 }
             },
+        {%- raw %}
             {
                 "label": "[test] prod",
                 "detail": "Run tests across all support python versions",
@@ -497,3 +461,4 @@
         ]
     }
 }
+{%- endraw %}
