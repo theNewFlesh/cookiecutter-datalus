@@ -49,7 +49,7 @@ repository = "https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.rep
 documentation = "https://{{cookiecutter.github_user}}.github.io/{{cookiecutter.repo}}"
 
 [project.scripts]
-{{ cookiecutter.repo }} = "{{cookiecutter.github_user}}.command:main"
+{{ cookiecutter.repo }} = "{{cookiecutter.repo}}.command:main"
 
 [project.optional-dependencies]
 
