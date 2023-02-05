@@ -83,6 +83,7 @@ def get_info():
     library-sync-dev     - Sync dev environment with packages listed in dev.lock
     library-sync-prod    - Sync prod environment with packages listed in prod.lock
     library-update       - Update dev dependencies
+    library-update-pdm   - Update PDM
 {%- if cookiecutter.repo_type in ['dash', 'flask'] %}
     session-app          - Run app inside {repo} container
 {%- endif %}
@@ -711,6 +712,7 @@ def main():
         'library-sync-dev': x_tools_command('x_library_sync_dev', args),
         'library-sync-prod': x_tools_command('x_library_sync_prod', args),
         'library-update': x_tools_command('x_library_update', args),
+        'library-update-pdm': x_tools_command('x_library_update_pdm', args),
 {%- if cookiecutter.repo_type in ['dash', 'flask'] %}
         'session-app': x_tools_command('x_session_app', args),
 {%- endif %}
