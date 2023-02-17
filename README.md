@@ -54,4 +54,4 @@ Datalus supports the following via a command line interface and VSCode tasks:
 
 # Usage
 1. Install [cookiecutter](https://github.com/cookiecutter/cookiecutter) CLI
-2. `cookiecutter https://github.com/thenewflesh/cookiecutter-datalus`
+2. `cookiecutter https://github.com/theNewFlesh/cookiecutter-datalus`
