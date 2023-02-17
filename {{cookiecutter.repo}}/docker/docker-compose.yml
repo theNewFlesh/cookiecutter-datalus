@@ -23,9 +23,11 @@ services:
       - {{cookiecutter.volume}}:/mnt/storage
 {%- endif %}
     working_dir: "/home/ubuntu"
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - capabilities: [gpu]
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
     command: "tail -f /dev/null"
