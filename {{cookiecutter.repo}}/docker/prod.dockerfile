@@ -1,7 +1,7 @@
 {%- set max_ver = cookiecutter.python_max_version | int -%}
 {% if cookiecutter.include_tensorflow == "yes" -%}
 FROM tensorflow/tensorflow:nightly-gpu AS base
-{%- else %}
+{%- else -%}
 FROM ubuntu:22.04 AS base
 {%- endif %}
 
