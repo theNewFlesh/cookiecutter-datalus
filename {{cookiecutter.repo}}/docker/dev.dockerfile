@@ -2,7 +2,7 @@
 {%- set max_ver = cookiecutter.python_max_version | int -%}
 {% if cookiecutter.include_tensorflow == "yes" -%}
 FROM tensorflow/tensorflow:nightly-gpu AS base
-{% else %}
+{%- else %}
 FROM ubuntu:22.04 AS base
 {%- endif %}
 
@@ -41,7 +41,7 @@ RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
     apt install -y \
         bat \
         curl \
-{% if cookiecutter.include_tensorflow == "yes" -%}
+{%- if cookiecutter.include_tensorflow == "yes" %}
         git \
         graphviz \
         npm \
@@ -73,6 +73,15 @@ RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
         software-properties-common \
         vim \
         wget && \
+    rm -rf /var/lib/apt/lists/*
+{%- endif %}
+{% if cookiecutter.include_tensorflow == "yes" -%}
+# install nvidia drivers
+RUN echo "\n${CYAN}INSTALL NVIDIA DRIVERS${CLEAR}"; \
+    apt update && \
+    apt install -y \
+        nvidia-utils-525 \
+        nvidia-driver-525 && \
     rm -rf /var/lib/apt/lists/*
 {%- endif %}
 

@@ -23,11 +23,13 @@ services:
       - {{cookiecutter.volume}}:/mnt/storage
 {%- endif %}
     working_dir: "/home/ubuntu"
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: 1
-    #           capabilities: [gpu]
+{%- if cookiecutter.include_tensorflow == "yes" %}
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+{%- endif %}
     command: "tail -f /dev/null"
