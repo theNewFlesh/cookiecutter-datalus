@@ -1,10 +1,8 @@
-version: "3.4"
-volumes:
-  cache:
+version: "3.8"
 services:
   {{cookiecutter.repo}}:
     container_name: {{cookiecutter.repo}}
-    image: {{cookiecutter.repo}}
+    image: {{cookiecutter.repo}}:dev
     build:
       context: .
       dockerfile: dev.dockerfile
@@ -13,14 +11,25 @@ services:
       - "{{cookiecutter.port_prefix}}80:8080"
     userns_mode: "host"
     user: ubuntu
+    env_file:
+      - config/dev-env
     volumes:
       - ../:/home/ubuntu/{{cookiecutter.repo}}
-      - ./jupyter:/home/ubuntu/.jupyter
-      - ./ipython:/home/ubuntu/.ipython
+      - ~/.ssh:/home/ubuntu/.ssh:ro
+      - ./config/jupyter:/home/ubuntu/.jupyter
+      - ./config/zshrc:/home/ubuntu/.zshrc
       - ../artifacts:/tmp/dash_artifacts
-      - ~/.ssh:/home/ubuntu/.ssh
 {%- if cookiecutter.volume != '' %}
       - {{cookiecutter.volume}}:/mnt/storage
 {%- endif %}
     working_dir: "/home/ubuntu"
+{%- if cookiecutter.include_tensorflow == "yes" %}
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+{%- endif %}
     command: "tail -f /dev/null"

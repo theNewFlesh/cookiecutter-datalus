@@ -14,13 +14,10 @@ def main():
     repo_ = re.sub('-', '_', repo)
     rtype = config['repo_type']
 
-    if rtype == 'package':
+    if rtype == 'library':
         shutil.rmtree('helm')
         shutil.rmtree('python/' + repo_ + '/server')
         os.remove('sphinx/server.rst')
-
-    if rtype == 'flask':
-        os.remove('python/' + repo_ + '/server/app.py')
 
     if rtype != 'dash':
         shutil.rmtree('artifacts')

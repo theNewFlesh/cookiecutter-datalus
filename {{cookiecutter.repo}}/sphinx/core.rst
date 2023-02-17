@@ -1,9 +1,9 @@
-server
-======
+core
+====
 
-barfoo
+foobar
 ------
-.. automodule:: {{ cookiecutter.repo }}.server.barfoo
+.. automodule:: {{ cookiecutter.repo }}.core.foobar
     :members:
     :private-members:
     :undoc-members:

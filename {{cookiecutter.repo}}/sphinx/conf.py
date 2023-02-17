@@ -13,16 +13,15 @@
 import os
 import sys
 import sphinx_rtd_theme
-sys.path.insert(0, os.path.abspath('../python'))
-with open('../pip/version.txt') as f:
-    VERSION = f.read().strip('\n')
+import toml
 
+sys.path.insert(0, os.path.abspath('../python'))
 # -- Project information -----------------------------------------------------
 
 project = '{{cookiecutter.repo}}'
 copyright = '{{cookiecutter.year}}, {{cookiecutter.author}} <{{cookiecutter.email}}>'
 author = '{{cookiecutter.author}} <{{cookiecutter.email}}>'
-version = VERSION
+version = toml.load('../docker/config/pyproject.toml')['project']['version']
 # release = ''
 
 # -- General configuration ---------------------------------------------------
@@ -36,9 +35,10 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
     'sphinx.ext.mathjax',
+    'sphinx.ext.napoleon',
     'sphinx.ext.todo',
     'sphinx.ext.viewcode',
-    'sphinxcontrib.napoleon',
+    "sphinx_autodoc_typehints",
 ]
 
 # Add any paths that contain templates here, relative to this directory.

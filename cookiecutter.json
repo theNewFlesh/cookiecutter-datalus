@@ -1,7 +1,8 @@
 {
 	"repo": "repo_name",
-    "repo_type": ["dash", "flask", "package"],
+    "repo_type": ["dash", "flask", "library"],
     "include_openexr": ["yes", "no"],
+    "include_tensorflow": ["yes", "no"],
     "port_prefix": 10,
     "github_user": "github_user",
     "description": "A repo_name app.",
@@ -10,5 +11,7 @@
     "website": "http://yourwebsite.com",
     "volume": "",
     "keywords": "comma, separated, list",
-    "year": 2021
+    "year": 2023,
+    "python_min_version": 7,
+    "python_max_version": 10
 }

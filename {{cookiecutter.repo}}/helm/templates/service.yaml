@@ -1,0 +1,16 @@
+{%- raw -%}
+{{- with (include "overlay" . | fromYaml) -}}
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .argocd_application.name }}-service
+  namespace: {{ .namespace.name }}
+spec:
+  type: ClusterIP
+  selector:
+    app: {{ .argocd_application.name }}
+  ports:
+    - port: {{ .service.port }}
+      targetPort: {{ .service.target_port }}
+{{- end -}}
+{%- endraw %}

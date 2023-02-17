@@ -1,18 +1,10 @@
 import logging
-import os
 
 from selenium.webdriver.chrome.options import Options
-import lunchbox.tools as lbt
 import pytest
 
 import {{cookiecutter.repo}}.server.app as app
 # ------------------------------------------------------------------------------
-
-
-CONFIG_PATH = '/tmp/{{cookiecutter.repo}}/{{cookiecutter.repo}}/resources/test_config.json'
-if 'REPO_ENV' in os.environ.keys():
-    CONFIG_PATH = lbt \
-        .relative_path(__file__, '../resources/test_config.json').as_posix()
 
 
 def pytest_setup_options():

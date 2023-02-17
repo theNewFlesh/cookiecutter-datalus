@@ -1,0 +1,121 @@
+{%- set min_ver = cookiecutter.python_min_version | int %}
+{%- set max_ver = cookiecutter.python_max_version | int %}
+[project]
+name = "{{cookiecutter.repo}}"
+version = "0.1.0"
+description = "{{cookiecutter.description}}"
+authors = [
+    {name = "{{cookiecutter.author}}", email = "{{cookiecutter.email}}"},
+]
+readme = "README.md"
+license = "MIT"
+keywords = []
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+{%- for version in range(min_ver, max_ver + 1) %}
+    "Programming Language :: Python :: 3.{{ version }}",
+{%- endfor %}
+    "Typing :: Typed",
+]
+requires-python = ">=3.{{ max_ver }}"
+dependencies = [
+    "click>=8.1.3",
+{%- if cookiecutter.repo_type == 'dash' %}
+    "dash>=2.0.0",
+    "dash-core-components",
+    "dash-cytoscape",
+    "dash-html-components",
+    "dash-table",
+{%- endif %}
+{%- if cookiecutter.repo_type in ['dash', 'flask'] %}
+    "flasgger",
+    "flask",
+    "flask-caching",
+    "flask-healthz",
+    "jinja2",
+{%- endif %}
+    "numpy",
+{%- if cookiecutter.include_openexr == 'yes' %}
+    "OpenEXR",
+{%- endif %}
+    "pandas",
+{%- if cookiecutter.include_tensorflow == 'yes' %}
+    "tensorboard>=2.0.0",
+    "tensorflow>=2.0.0",
+{%- endif %}
+]
+
+[project.urls]
+repository = "https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.repo}}"
+documentation = "https://{{cookiecutter.github_user}}.github.io/{{cookiecutter.repo}}"
+
+[project.scripts]
+{{ cookiecutter.repo }} = "{{cookiecutter.repo}}.command:main"
+
+[project.optional-dependencies]
+
+[tool.pdm.dev-dependencies]
+lab = [
+    "cufflinks",
+    "jupyterlab-git>=0.39.3",
+    "jupyterlab-henanigans>=0.2.2",
+    "jupyterlab-sublime",
+    "jupyterlab",
+]
+dev = [
+    "sphinx-autodoc-typehints>=1.22",
+    "sphinx-rtd-theme",
+    "sphinx>=5.3.0",
+    "toml>=0.10.2",
+]
+test = [
+    "flake8",
+    "mypy",
+    "pytest-cov",
+    "pytest-forked",
+    "pytest-xdist",
+    "pytest",
+{%- if cookiecutter.include_tensorflow == 'yes' %}
+    "types-tensorflow>=2.11.0.2",
+{%- endif %}
+]
+
+[tool.pytest.ini_options]
+cache_dir = "/home/ubuntu/.pytest_cache"
+filterwarnings = [
+    # "ignore::UserWarning",
+    # "ignore::DeprecationWarning",
+    # "ignore::PendingDeprecationWarning",
+    "ignore:The --rsyncdir command line argument"
+]
+markers = [
+    "flaky:Flaky test",
+]
+
+[tool.coverage.report]
+show_missing = true
+omit = [
+    "*/__init__.py",
+    "*/*_test_base.py",
+    "*/*_test.py",
+    "*/*_tests.py",
+    "*/cli.py",
+    "*/command.py",
+    "*/mock_*.py",
+    "*/conftest.py",
+]
+
+[tool.mypy]
+cache_dir = "/home/ubuntu/.mypy_cache"
+python_version = "3.{{ max_ver }}"
+ignore_missing_imports = true
+warn_no_return = false
+pretty = true
+warn_unused_ignores = true
+
+[build-system]
+requires = ["pdm-pep517>=1.0.0"]
+build-backend = "pdm.pep517.api"

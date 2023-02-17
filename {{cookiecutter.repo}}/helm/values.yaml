@@ -1,25 +1,101 @@
-namespace: {{cookiecutter.repo}}
+# CONTEXT-----------------------------------------------------------------------
+overlay: rancher_desktop
 
-container:
-  image: k3d-dev-registry:5000/{{cookiecutter.repo}}
-  tag: dev
-  repo: /mnt/repos/{{cookiecutter.repo}}
-{%- if cookiecutter.volume != '' %}
-  storage_volume: /mnt/storage
-{%- endif %}
-  port: 8080
-  image_pull_policy: IfNotPresent
-{%- if cookiecutter.repo_type in ['dash', 'flask'] %}
-  command:
-    [
-      "python3.7",
-      "/home/ubuntu/{{cookiecutter.repo}}/python/{{cookiecutter.repo}}/server/app.py",
-    ]
-  env:
-    - name: REPO_ENV
-      value: "True"
-{%- endif %}
+# BASE--------------------------------------------------------------------------
+base:
+  enable:
+    namespace: false
+    argocd_application: false
+    env_configmap: true
+    env_secret: false
+    image_pull_secret: false
+    repo_volume: false
+    desktop_volume: false
+    nfs_volume: false
+    nginx_ingress: false
+    traefik_ingress: false
+    readiness_probe: true
+    liveness_probe: true
 
-service:
-  port: 80
+  namespace:
+    name: {{ cookiecutter.repo }}
 
+  argocd_application:
+    name: {{ cookiecutter.repo }}
+    source_namespace: argocd
+    target_namespace: {{ cookiecutter.repo }}
+
+  env_configmap:
+    FLASK_APP: server.app:get_app
+    FLASK_DEBUG:
+    FLASK_RUN_PORT: 8080
+    FLASK_RUN_HOST: 0.0.0.0
+
+  env_secret:
+
+  deployment:
+    repository: {{ cookiecutter.github_user }}/{{ cookiecutter.repo }}
+    image_tag: latest
+    repo_path: /home/ubuntu/{{ cookiecutter.repo }}
+    storage_path: /mnt/storage
+    image_pull_policy: IfNotPresent
+    nfs_server:
+    command:
+      - {{ cookiecutter.repo }}
+      - server
+    args:
+    env_configmap: {{ cookiecutter.repo }}-env-configmap
+    env_secret: {{ cookiecutter.repo }}-env-secret
+
+  service:
+    port: 80
+    target_port: 8080
+
+  repo_volume:
+    path:
+
+  desktop_volume:
+    path:
+
+  nginx_ingress:
+    host:
+
+  traefik_ingress:
+    match:
+
+  image_pull_secret:
+    docker_config:
+
+# OVERLAYS----------------------------------------------------------------------
+overlays:
+  # RANCHER-DESKTOP-------------------------------------------------------------
+  rancher_desktop:
+    enable:
+      namespace: true
+      env_secret: true
+      image_pull_secret: false
+      repo_volume: false
+      desktop_volume: true
+      traefik_ingress: true
+
+    namespace:
+      name: {{ cookiecutter.repo }}
+
+    repo_volume:
+      path: /local/path/to/{{ cookiecutter.repo }}/repository
+
+    desktop_volume:
+      path: /local/storage/path
+
+    traefik_ingress:
+      match: HostRegexp(`{{ cookiecutter.repo }}.local`)
+
+    deployment:
+      command:
+        - {{ cookiecutter.repo }}
+        - server
+
+    env_configmap:
+      FLASK_DEBUG: 1
+
+    env_secret:

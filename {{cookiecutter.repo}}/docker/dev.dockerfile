@@ -1,4 +1,10 @@
-FROM ubuntu:18.04 AS base
+{%- set min_ver = cookiecutter.python_min_version | int %}
+{%- set max_ver = cookiecutter.python_max_version | int -%}
+{% if cookiecutter.include_tensorflow == "yes" -%}
+FROM tensorflow/tensorflow:nightly-gpu AS base
+{%- else -%}
+FROM ubuntu:22.04 AS base
+{%- endif %}
 
 USER root
 
@@ -18,29 +24,92 @@ RUN echo "\n${CYAN}SETUP UBUNTU USER${CLEAR}"; \
         --uid $UID_ \
         --gid $GID_ ubuntu && \
     usermod -aG root ubuntu
+
+# setup sudo
+RUN echo "\n${CYAN}SETUP SUDO${CLEAR}"; \
+    apt update && \
+    apt install -y sudo && \
+    usermod -aG sudo ubuntu && \
+    echo '%ubuntu    ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers && \
+    rm -rf /var/lib/apt/lists/*
+
 WORKDIR /home/ubuntu
 
 # update ubuntu and install basic dependencies
 RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
     apt update && \
     apt install -y \
+        bat \
         curl \
-{%- if cookiecutter.repo_type == 'dash' %}
-        chromium-chromedriver \
-{%- endif %}
+{%- if cookiecutter.include_tensorflow == "yes" %}
         git \
         graphviz \
         npm \
         pandoc \
         parallel \
         software-properties-common \
-        tree \
+        unzip \
         vim \
-        wget
+        wget && \
+    rm -rf /var/lib/apt/lists/* && \
+    curl -fsSL \
+        "https://github.com/ogham/exa/releases/latest/download/exa-linux-x86_64-v0.10.1.zip" \
+        -o exa.zip && \
+    unzip -q exa.zip bin/exa -d /usr/local && \
+    rm -rf exa.zip && \
+    curl -fsSL \
+        "https://github.com/BurntSushi/ripgrep/releases/latest/download/ripgrep_13.0.0_amd64.deb" \
+        -o ripgrep.deb && \
+    apt install -y ./ripgrep.deb && \
+    rm -rf ripgrep.deb
+{% else %}
+        exa \
+        git \
+        graphviz \
+        npm \
+        pandoc \
+        parallel \
+        ripgrep \
+        software-properties-common \
+        vim \
+        wget && \
+    rm -rf /var/lib/apt/lists/*
+{%- endif %}
+{% if cookiecutter.include_tensorflow == "yes" -%}
+# install nvidia drivers
+RUN echo "\n${CYAN}INSTALL NVIDIA DRIVERS${CLEAR}"; \
+    apt update && \
+    apt install -y \
+        nvidia-utils-525 \
+        nvidia-driver-525 && \
+    rm -rf /var/lib/apt/lists/*
+{%- endif %}
 
-# install zsh
+# install all python versions
+RUN echo "\n${CYAN}INSTALL PYTHON${CLEAR}"; \
+    add-apt-repository -y ppa:deadsnakes/ppa && \
+    apt update && \
+    apt install -y \
+        python3-pydot \
+    {%- for version in range(min_ver, max_ver + 1) | reverse %}
+        python3.{{ version }}-dev \
+        python3.{{ version }}-venv \
+        python3.{{ version }}-distutils \
+    {%- endfor %}
+    && rm -rf /var/lib/apt/lists/*
+
+# install pip
+RUN echo "\n${CYAN}INSTALL PIP${CLEAR}"; \
+    wget https://bootstrap.pypa.io/get-pip.py && \
+    python3.{{ max_ver }} get-pip.py && \
+    pip3.{{ max_ver }} install --upgrade pip && \
+    rm -rf get-pip.py
+
+# install and setup zsh
 RUN echo "\n${CYAN}SETUP ZSH${CLEAR}"; \
+    apt update && \
     apt install -y zsh && \
+    rm -rf /var/lib/apt/lists/* && \
     curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh \
         -o install-oh-my-zsh.sh && \
     echo y | sh install-oh-my-zsh.sh && \
@@ -51,54 +120,36 @@ RUN echo "\n${CYAN}SETUP ZSH${CLEAR}"; \
     npm i -g zsh-history-enquirer --unsafe-perm && \
     cd /home/ubuntu && \
     cp -r /root/.oh-my-zsh /home/ubuntu/ && \
-    chown -R ubuntu:ubuntu \
-        .oh-my-zsh \
-        install-oh-my-zsh.sh && \
+    chown -R ubuntu:ubuntu .oh-my-zsh && \
+    rm -rf install-oh-my-zsh.sh && \
     echo 'UTC' > /etc/timezone
-
-# install python3.7 and pip
-RUN echo "\n${CYAN}SETUP PYTHON3.7${CLEAR}"; \
-    add-apt-repository -y ppa:deadsnakes/ppa && \
-    apt update && \
-    apt install --fix-missing -y \
-        python3-distutils \
-        python3-pydot \
-        python3.7 \
-        python3.7-dev && \
-    wget https://bootstrap.pypa.io/get-pip.py && \
-    python3.7 get-pip.py && \
-    chown -R ubuntu:ubuntu get-pip.py
-
-# install node.js, needed by jupyterlab
-RUN echo "\n${CYAN}INSTALL NODE.JS${CLEAR}"; \
-    curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
-    apt upgrade -y && \
-    apt install -y nodejs && \
-    rm -rf /var/lib/apt/lists/*
 
 USER ubuntu
 ENV PATH="/home/ubuntu/.local/bin:$PATH"
-COPY ./henanigans.zsh-theme .oh-my-zsh/custom/themes/henanigans.zsh-theme
-COPY ./zshrc .zshrc
+COPY ./config/henanigans.zsh-theme .oh-my-zsh/custom/themes/henanigans.zsh-theme
 
-ENV LANG "C"
-ENV LANGUAGE "C"
-ENV LC_ALL "C"
+ENV LANG "C.UTF-8"
+ENV LANGUAGE "C.UTF-8"
+ENV LC_ALL "C.UTF-8"
 # ------------------------------------------------------------------------------
 
 FROM base AS dev
-
 USER root
-WORKDIR /home/ubuntu
-ENV REPO='{{cookiecutter.repo}}'
-ENV PYTHONPATH "${PYTHONPATH}:/home/ubuntu/$REPO/python"
-ENV REPO_ENV=True
+{%- if cookiecutter.repo_type == 'dash' %}
 
-{%- if cookiecutter.include_openexr == "yes" %}
+# install chromedriver
+ENV PATH=$PATH:/lib/chromedriver
+RUN echo "\n${CYAN}INSTALL CHROMEDRIVER${CLEAR}"; \
+    apt update && \
+    apt install -y chromium-chromedriver && \
+    rm -rf /var/lib/apt/lists/*
+{%- endif %}
+
+{% if cookiecutter.include_openexr == "yes" -%}
 # install OpenEXR
 ENV CC=gcc
 ENV CXX=g++
-ENV LD_LIBRARY_PATH='/usr/include/python3.7m/dist-packages'
+ENV LD_LIBRARY_PATH='/usr/include/python3.{{ max_ver }}m/dist-packages'
 RUN echo "\n${CYAN}INSTALL OPENEXR${CLEAR}"; \
     apt update && \
     apt install -y \
@@ -107,16 +158,58 @@ RUN echo "\n${CYAN}INSTALL OPENEXR${CLEAR}"; \
         gcc \
         libopenexr-dev \
         openexr \
-        python3.7-dev \
-        zlib1g-dev
+        zlib1g-dev && \
+    rm -rf /var/lib/apt/lists/*
 {%- endif %}
 
 USER ubuntu
+WORKDIR /home/ubuntu
 
-# install python dependencies
-COPY ./dev_requirements.txt dev_requirements.txt
-COPY ./prod_requirements.txt prod_requirements.txt
-RUN echo "\n${CYAN}INSTALL PYTHON DEPENDENCIES${CLEAR}"; \
-    pip3.7 install -r dev_requirements.txt && \
-    pip3.7 install -r prod_requirements.txt && \
-    jupyter server extension enable --py --user jupyterlab_git
+# insetll dev dependencies
+RUN echo "\n${CYAN}INSTALL DEV DEPENDENCIES${CLEAR}"; \
+    curl -sSL \
+        https://raw.githubusercontent.com/pdm-project/pdm/main/install-pdm.py \
+        | python3.{{ max_ver }} - && \
+    pip3.{{ max_ver }} install --upgrade --user \
+        pdm \
+        pdm-bump \
+        'rolling-pin>=0.9.2' && \
+    mkdir -p /home/ubuntu/.oh-my-zsh/custom/completions && \
+    pdm self update && \
+    pdm completion zsh > /home/ubuntu/.oh-my-zsh/custom/completions/_pdm
+
+# setup pdm
+COPY --chown=ubuntu:ubuntu config/* /home/ubuntu/config/
+COPY --chown=ubuntu:ubuntu scripts/* /home/ubuntu/scripts/
+RUN echo "\n${CYAN}SETUP DIRECTORIES${CLEAR}"; \
+    mkdir pdm
+
+# create dev env
+WORKDIR /home/ubuntu/pdm
+RUN echo "\n${CYAN}INSTALL DEV ENVIRONMENT${CLEAR}"; \
+    . /home/ubuntu/scripts/x_tools.sh && \
+    export CONFIG_DIR=/home/ubuntu/config && \
+    export SCRIPT_DIR=/home/ubuntu/scripts && \
+    x_env_init dev 3.{{ max_ver }} && \
+    cd /home/ubuntu && \
+    ln -s `_x_env_get_path dev 3.{{ max_ver }}` .dev-env && \
+    ln -s `_x_env_get_path dev 3.{{ max_ver }}`/lib/python3.{{ max_ver }}/site-packages .dev-packages
+
+# create prod envs
+RUN echo "\n${CYAN}INSTALL PROD ENVIRONMENTS${CLEAR}"; \
+    . /home/ubuntu/scripts/x_tools.sh && \
+    export CONFIG_DIR=/home/ubuntu/config && \
+    export SCRIPT_DIR=/home/ubuntu/scripts && \
+{%- for version in range(min_ver + 1, max_ver + 1) | reverse %}
+    x_env_init prod 3.{{ version }} && \
+{%- endfor %}
+    x_env_init prod 3.{{ min_ver }}
+
+# cleanup dirs
+WORKDIR /home/ubuntu
+RUN echo "\n${CYAN}REMOVE DIRECTORIES${CLEAR}"; \
+    rm -rf config scripts
+
+ENV REPO='{{cookiecutter.repo}}'
+ENV PYTHONPATH ":/home/ubuntu/$REPO/python:/home/ubuntu/.local/lib"
+ENV PYTHONPYCACHEPREFIX "/home/ubuntu/.python_cache"
