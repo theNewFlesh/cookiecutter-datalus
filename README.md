@@ -30,7 +30,7 @@
 Cookiecutter-Datalus is a cookiecutter template for generating datalus
 repositories.
 
-# Information
+# Features
 Datalus repositories are extremely opionated, comprehensive and automated repos
 for modern python development inside docker.
 
@@ -51,3 +51,7 @@ Datalus supports the following via a command line interface and VSCode tasks:
 - flask app development
 - tensorflow installation
 - openexr installation
+
+# Usage
+1. Install [cookiecutter](https://github.com/cookiecutter/cookiecutter) CLI
+2. `cookiecutter https://github.com/thenewflesh/cookiecutter-datalus`
