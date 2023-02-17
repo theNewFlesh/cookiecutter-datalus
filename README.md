@@ -26,3 +26,28 @@
     </a>
 </p>
 
+# Introduction
+Cookiecutter-Datalus is a cookiecutter template for generating datalus
+repositories.
+
+# Information
+Datalus repositories are extremely opionated, comprehensive and automated repos
+for modern python development inside docker.
+
+Datalus supports the following via a command line interface and VSCode tasks:
+- multiple version support via PDM
+  - separate python environments per version per mode (dev and prod)
+- automated invocation of most PDM commands (sync, lock, add, etc)
+- automated, parallel testing across all environments (pytest)
+- automated linting across all environments (flake8)
+- automated type checking across all environments (mypy)
+- automated documentation generation (sphinx)
+- automated dependency graph generation (rolling-pin)
+- automated code coverage reports and metrics (rolling-pin)
+- automated publishing to PyPI
+  - including CLI for package (ie command.py)
+- automated jupyter lab serving
+- dash app development
+- flask app development
+- tensorflow installation
+- openexr installation
