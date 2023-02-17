@@ -38,10 +38,10 @@ dependencies = [
     "jinja2",
 {%- endif %}
     "numpy",
-    "pandas",
 {%- if cookiecutter.include_openexr == 'yes' %}
     "OpenEXR",
 {%- endif %}
+    "pandas",
 {%- if cookiecutter.include_tensorflow == 'yes' %}
     "tensorboard>=2.0.0",
     "tensorflow>=2.0.0",
