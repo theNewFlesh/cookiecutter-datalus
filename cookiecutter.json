@@ -2,6 +2,7 @@
 	"repo": "repo_name",
     "repo_type": ["dash", "flask", "package"],
     "include_openexr": ["yes", "no"],
+    "include_tensorflow": ["yes", "no"],
     "port_prefix": 10,
     "github_user": "github_user",
     "description": "A repo_name app.",

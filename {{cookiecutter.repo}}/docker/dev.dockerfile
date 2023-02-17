@@ -1,6 +1,10 @@
 {%- set min_ver = cookiecutter.python_min_version | int %}
 {%- set max_ver = cookiecutter.python_max_version | int -%}
+{% if cookiecutter.include_tensorflow == "yes" -%}
+FROM tensorflow/tensorflow:nightly-gpu AS base
+{% else %}
 FROM ubuntu:22.04 AS base
+{%- endif %}
 
 USER root
 
@@ -37,6 +41,28 @@ RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
     apt install -y \
         bat \
         curl \
+{% if cookiecutter.include_tensorflow == "yes" -%}
+        git \
+        graphviz \
+        npm \
+        pandoc \
+        parallel \
+        software-properties-common \
+        unzip \
+        vim \
+        wget && \
+    rm -rf /var/lib/apt/lists/* && \
+    curl -fsSL \
+        "https://github.com/ogham/exa/releases/latest/download/exa-linux-x86_64-v0.10.1.zip" \
+        -o exa.zip && \
+    unzip -q exa.zip bin/exa -d /usr/local && \
+    rm -rf exa.zip && \
+    curl -fsSL \
+        "https://github.com/BurntSushi/ripgrep/releases/latest/download/ripgrep_13.0.0_amd64.deb" \
+        -o ripgrep.deb && \
+    apt install -y ./ripgrep.deb && \
+    rm -rf ripgrep.deb
+{% else %}
         exa \
         git \
         graphviz \
@@ -48,6 +74,7 @@ RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
         vim \
         wget && \
     rm -rf /var/lib/apt/lists/*
+{%- endif %}
 
 # install all python versions
 RUN echo "\n${CYAN}INSTALL PYTHON${CLEAR}"; \

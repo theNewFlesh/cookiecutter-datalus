@@ -42,6 +42,10 @@ dependencies = [
 {%- if cookiecutter.include_openexr == 'yes' %}
     "OpenEXR",
 {%- endif %}
+{%- if cookiecutter.include_tensorflow == 'yes' %}
+    "tensorboard>=2.0.0",
+    "tensorflow>=2.0.0",
+{%- endif %}
 ]
 
 [project.urls]
@@ -74,6 +78,9 @@ test = [
     "pytest-forked",
     "pytest-xdist",
     "pytest",
+{%- if cookiecutter.include_tensorflow == 'yes' %}
+    "types-tensorflow>=2.11.0.2",
+{%- endif %}
 ]
 
 [tool.pytest.ini_options]
