@@ -30,6 +30,18 @@
 Cookiecutter-Datalus is a cookiecutter template for generating datalus
 repositories.
 
+# Usage
+1. Install [cookiecutter](https://github.com/cookiecutter/cookiecutter) CLI
+2. `cookiecutter https://github.com/theNewFlesh/cookiecutter-datalus`
+
+# Purpose
+Datalus is designed to facilitate the development of modern python applications.
+It supports:
+- Dash app development (ie Plotly + Flask + ReactJS) 
+- Flask app development
+- Kuberenetes app development via Helm and ArgoCD
+- Python library development (multi version pip packages via pyproject and PDM)
+
 # Features
 Datalus repositories are extremely opionated, comprehensive and automated repos
 for modern python development inside docker.
@@ -46,21 +58,32 @@ Datalus supports the following via a command line interface and VSCode tasks:
 - automated code coverage reports and metrics (rolling-pin)
 - automated publishing to PyPI
   - including CLI for package (ie command.py)
-- automated jupyter lab serving
-- dash app development
-- flask app development
+- automated jupyter lab serving, pre-customized with color theme and plugins
 - tensorflow installation
 - openexr installation
 
-# Usage
-1. Install [cookiecutter](https://github.com/cookiecutter/cookiecutter) CLI
-2. `cookiecutter https://github.com/theNewFlesh/cookiecutter-datalus`
+# Developer Level Agreement
+Functional division of labor between developer and devops requires a standard
+contract across repositories. There are three essential parts to this contract:
+
+  1. A consistent repository structure regarding directories, file names and
+     configurations
+  2. A consistent command line interface for running common developer tasks
+  3. A consistent means of deploying applications to Kubernetes
+
+# Design
+Datalus solves this contract through comprehensive, standardized developer tools
+and repository structure. The developer tools are accessed through the command
+line and as VSCode tasks. Development is done against a dev docker container
+defined in dev.dockerfile. Prod.dockerfile defines a slim production container
+for running the repository code as an installed pip package.
 
 # Development CLI
 Datalus repos come with a development command line interface (defined in cli.py)
 that works with any version of python 2.7 and above, as it has no dependencies.
 Additionally, a subset of these commands are defined in the VSCode workspace
-file.
+file. Appending `--dryrun` to any command will outputs the exact shell code that
+would have been run without the flag.
 
 Its usage pattern is: `bin/repo COMMAND [-a --args]=ARGS [-h --help] [--dryrun]`
 
@@ -142,3 +165,106 @@ Its usage pattern is: `repo COMMAND [FLAGS] [-h --help]`
 | --------------- | ---------------------------------------------------------------------| ------| ---------------- |
 | bash-completion | Prints BASH completion code to be written to a _repo completion file | -     | -                |
 | zsh-completion  | Prints ZSH completion code to be written to a _repo completion file  | -     | -                |
+
+---
+
+## Repository Structure
+The following is a comprehensive diagram of the Datalus repository structure:
+
+```
+APP
+   ├── README.md                               <-- README with install instructions
+   ├── .gitignore                              <-- git config
+   ├── .gitattributes                          <-- git config
+   ├── APP.code-workspace                      <-- VSCode config (contains task commands)
+   ├── .devcontainer.json                      <-- VSCode remote container config
+   ├── .env                                    <-- needed by VSCode docker-compose
+   ├── bin
+   |   └── APP                                 <-- shell wrapper for CLI
+   |
+   ├── docker                                  <-- everything needed to build and run container
+   |   ├── dev.dockerfile                      <-- development version of app image
+   |   ├── prod.dockerfile                     <-- production version of app image
+   |   ├── docker-compose.yml                  <-- dev means of starting container
+   │   ├── scripts
+   │   |  └── x_tools.sh                       <-- developer tools
+   │   ├── config
+   │      ├── pyproject.toml                   <-- defines all dependencies
+   │      ├── flake8.ini                       <-- linting config
+   │      ├── dev-env                          <-- dev environment variables
+   │      ├── pdm.toml                         <-- needed by PDM
+   │      ├── dev.lock                         <-- frozen dev dependencies
+   │      ├── prod.lock                        <-- frozen prod dependencies
+   │      ├── build.yaml                       <-- defines pip package builds
+   │      ├── zshrc                            <-- zsh environment setup
+   │      ├── henanigans.zsh-theme             <-- zsh theme
+   │      ├── jupyter
+   │         ├── jupyter_lab_config.py         <-- jupyter lab config
+   │         └── lab
+   │            └── ...                        <-- jupyter lab plugins
+   |
+   ├── python
+   |   ├── cli.py                              <-- dev command line interface
+   |   ├── conftest.py                         <-- pytest config
+   |   └── APP                                 <-- app source code
+   │      ├── __init__.py
+   │      ├── command.py                       <-- prod CLI module
+   │      ├── core
+   │      │   ├── __init__.py
+   |      |   └── ...                          <-- core logic modules
+   │      └── server
+   │         ├── __init__.py
+   |         └── ...                           <-- server logic modules
+   |
+   ├── docs                                    <-- documentation build
+   |   ├── index.html                          <-- docs homepage
+   |   ├── architecture.svg                    <-- auto-generated graph of app dependecies
+   |   ├── plots.html                          <-- code metric plots
+   |   ├── all_metrics.html                    <-- master code metrics table
+   |   ├── cyclomatic_complexity_metrics.html  <-- code metrics table
+   |   ├── halstead_metrics.html               <-- code metrics table
+   |   ├── htmlcov
+   |   |   └── index.html                      <-- code coverage report
+   |   └── resources
+   |       └── ...                             <-- additional media for docs
+   |
+   ├── sphinx                                  <-- automatic documentation config
+   |   ├── conf.py                             <-- sphinx config
+   |   ├── make.bat                            <-- sphinx config
+   |   ├── Makefile                            <-- sphinx config
+   |   ├── cli.rst                             <-- cli docs
+   |   ├── core.rst                            <-- core logic docs
+   |   ├── index.rst                           <-- sphinx tox tree
+   |   ├── modules.rst                         <-- sphinx toc tree
+   |   ├── server.rst                          <-- server.py docs
+   │   ├── intro.rst                           <-- README.md as rst
+   │   ├── style.css                           <-- used by sphinx for styling docs
+   |   └── images
+   |      └── ...                              <-- images for docs
+   |
+   ├── helm                                    <-- Helm app definition
+   |   ├── README.md                           <-- app README
+   |   ├── Chart.yaml                          <-- Helm chart
+   |   ├── values.yaml                         <-- default values
+   |   ├── .helmignore                         <-- ignores files
+   |   └── templates
+   │       ├── _helpers.tpl                    <-- creates vars from values.yml
+   │       ├── argocd-application.yaml         <-- ArgoCD app definition
+   │       ├── deployment.yaml                 <-- k8s deployment
+   │       ├── desktop-volume.yaml             <-- allows mounting of repo into pod
+   │       ├── env-configmap.yaml              <-- env vars
+   │       ├── env-secret.yaml                 <-- env secrets
+   │       ├── image-pull-secret.yaml          <-- image pull secret (ie ECR creds, etc)
+   │       ├── namespace.yaml                  <-- app namespace
+   │       ├── nginx-ingress.yaml              <-- Nginx ingress (HarvesterOS)
+   │       ├── repo-volume.yaml                <-- mount repo in volume
+   │       ├── service.yaml                    <-- app service
+   │       └── traefik-ingress.yaml            <-- Traefik ingress (RancherOS)
+   |
+   ├── notebooks
+   |   └── ...                                 <-- jupyter lab notebooks
+   ├── resources
+   |   └── ...                                 <-- resources used by app
+   └── artifacts
+       └── ...                                 <-- misc dev artifacts
+```
