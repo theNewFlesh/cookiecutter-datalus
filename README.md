@@ -168,7 +168,7 @@ Its usage pattern is: `repo COMMAND [FLAGS] [-h --help]`
 
 ---
 
-## Repository Structure
+# Repository Structure
 The following is a comprehensive diagram of the Datalus repository structure:
 
 ```
