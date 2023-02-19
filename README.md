@@ -156,7 +156,7 @@ Its usage pattern is: `bin/repo COMMAND [-a --args]=ARGS [-h --help] [--dryrun]`
 # Production CLI
 
 Datalus repos come with a production command line interface defined in
-command.py. Pyproject.toml references this module for pip package installs.
+command.py. pyproject.toml references this module for pip package installs.
 
 Its usage pattern is: `repo COMMAND [FLAGS] [-h --help]`
 
