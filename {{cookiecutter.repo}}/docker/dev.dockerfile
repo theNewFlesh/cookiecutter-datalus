@@ -174,7 +174,7 @@ RUN echo "\n${CYAN}INSTALL DEV DEPENDENCIES${CLEAR}"; \
         pdm-bump \
         'rolling-pin>=0.9.2' && \
     mkdir -p /home/ubuntu/.oh-my-zsh/custom/completions && \
-    pdm self update && \
+    pdm self update --pip-args='--user' && \
     pdm completion zsh > /home/ubuntu/.oh-my-zsh/custom/completions/_pdm
 
 # setup pdm
