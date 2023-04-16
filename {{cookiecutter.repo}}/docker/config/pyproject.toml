@@ -9,7 +9,11 @@ authors = [
 ]
 readme = "README.md"
 license = "MIT"
-keywords = []
+keywords = [
+{%- for keyword in cookiecutter.keywords.split(", ") %}
+    "{{ keyword }}",
+{%- endfor %}
+]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
