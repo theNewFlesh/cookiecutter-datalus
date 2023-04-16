@@ -1,10 +1,10 @@
 default_context:
-  repo: datalus
+  repo: datalus-repo
   repo_type: dash
-  include_openexr: yes
-  include_tensorflow: yes
+  include_openexr: 'yes'
+  include_tensorflow: 'yes'
   port_prefix: 99
-  github_user: theNewFlesh
+  github_user: thenewflesh
   description: A cloud-native, custom dashboard and ephemeral database application.
   author: Alex Braun
   email: alexander.g.braun@gmail.com

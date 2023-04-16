@@ -57,7 +57,7 @@ repository = "https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.rep
 documentation = "https://{{cookiecutter.github_user}}.github.io/{{cookiecutter.repo}}"
 
 [project.scripts]
-{{ cookiecutter.repo }} = "{{cookiecutter.repo}}.command:main"
+{{ cookiecutter.repo }} = "{{ cookiecutter.repo | replace('-', '_') }}.command:main"
 
 [project.optional-dependencies]
 

@@ -46,5 +46,5 @@ RUN echo "\n${CYAN}SETUP PYTHON3.{{ max_ver }}${CLEAR}"; \
 USER ubuntu
 ENV REPO='{{cookiecutter.repo}}'
 ENV PYTHONPATH "${PYTHONPATH}:/home/ubuntu/$REPO/python"
-RUN echo "\n${CYAN}INSTALL {{cookiecutter.repo}}{CLEAR}"; \
+RUN echo "\n${CYAN}INSTALL {{ cookiecutter.repo | upper }}{CLEAR}"; \
     pip3.{{ max_ver }} install --user --upgrade {{cookiecutter.repo}}
