@@ -164,7 +164,7 @@ RUN echo "\n${CYAN}INSTALL OPENEXR${CLEAR}"; \
 USER ubuntu
 WORKDIR /home/ubuntu
 
-# insetll dev dependencies
+# install dev dependencies
 RUN echo "\n${CYAN}INSTALL DEV DEPENDENCIES${CLEAR}"; \
     curl -sSL \
         https://raw.githubusercontent.com/pdm-project/pdm/main/install-pdm.py \
