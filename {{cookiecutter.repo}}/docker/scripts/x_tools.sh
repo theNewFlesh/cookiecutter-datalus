@@ -130,7 +130,7 @@ _x_gen_pdm_files () {
     cp -f $CONFIG_DIR/$1.lock $PDM_DIR/pdm.lock;
 
     # .pdm-python
-    _x_env_get_python $1 $2 > $PDM_DIR/.pdm-python
+    _x_env_get_python $1 $2 > $PDM_DIR/.pdm-python;
 
     # pdm.toml
     rolling-pin toml $CONFIG_DIR/pdm.toml \

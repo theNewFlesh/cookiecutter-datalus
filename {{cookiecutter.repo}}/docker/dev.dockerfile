@@ -171,7 +171,7 @@ RUN echo "\n${CYAN}INSTALL DEV DEPENDENCIES${CLEAR}"; \
         | python3.{{ max_ver }} - && \
     pip3.{{ max_ver }} install --upgrade --user \
         pdm \
-        pdm-bump \
+        'pdm-bump<0.7.0' \
         'rolling-pin>=0.9.2' && \
     mkdir -p /home/ubuntu/.oh-my-zsh/custom/completions && \
     pdm self update --pip-args='--user' && \
