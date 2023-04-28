@@ -24,7 +24,7 @@ See [documentation](https://{{cookiecutter.github_user}}.github.io/{{cookiecutte
 3. `git clone git@github.com:{{cookiecutter.github_user}}/{{cookiecutter.repo}}.git`
 4. `cd {{cookiecutter.repo}}`
 6. `chmod +x bin/{{cookiecutter.repo}}`
-7. `bin/{{cookiecutter.repo}} start`
+7. `bin/{{cookiecutter.repo}} docker-start`
 
 The service should take a few minutes to start up.
 
