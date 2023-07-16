@@ -73,7 +73,6 @@ Its usage pattern is: `bin/{{cookiecutter.repo}} COMMAND [-a --args]=ARGS [-h --
 | docker-build         | Build image of {{cookiecutter.repo}}                                              |
 | docker-build-prod    | Build production image of {{cookiecutter.repo}}                                   |
 | docker-container     | Display the Docker container id of {{cookiecutter.repo}}                          |
-| docker-coverage      | Generate coverage report for {{cookiecutter.repo}}                                |
 | docker-destroy       | Shutdown {{cookiecutter.repo}} container and destroy its image                    |
 | docker-destroy-prod  | Shutdown {{cookiecutter.repo}} production container and destroy its image         |
 | docker-image         | Display the Docker image id of {{cookiecutter.repo}}                              |
