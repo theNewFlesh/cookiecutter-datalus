@@ -98,6 +98,7 @@ def get_info():
     version-bump-major   - Bump pyproject major version
     version-bump-minor   - Bump pyproject minor version
     version-bump-patch   - Bump pyproject patch version
+    quickstart           - Display quickstart guide
     zsh                  - Run ZSH session inside {repo} container
     zsh-complete         - Generate oh-my-zsh completions
     zsh-root             - Run ZSH session as root inside {repo} container
@@ -588,6 +589,50 @@ def x_tools_command(command, args=[]):
     return resolve(cmds)
 
 
+def quickstart_command():
+    # type: () -> str
+    '''
+    Returns a command which prints a quickstart help guide.
+
+    Returns:
+        str: quickstart command.
+    '''
+    output = f'''
+{REPO.upper()} QUICKSTART GUIDE
+
+The development CLI contains a list of commands grouped by one of 10 prefixes:
+>>>>build>>>>>>- Commands for building packages for testing and pip publishing
+>>>>docker>>>>>- Common docker commands such as build, start and stop
+>>>>docs>>>>>>>- Commands for generating documentation and code metrics
+>>>>library>>>>- Commands for managing python package dependencies
+>>>>session>>>>- Commands for starting interactive sessions such as jupyter lab and python
+>>>>state>>>>>>- Command to display the current state of the repo and container
+>>>>test>>>>>>>- Commands for running tests, linter and type annotations
+>>>>version>>>>- Commands for bumping project versions
+>>>>quickstart>- Display this quickstart guide
+>>>>zsh>>>>>>>>- Commands for running a zsh session in the container and generating zsh completions
+
+Here are some frequently used commands to get you started:
+>>>>docker-restart>>>>- Restart {REPO} container
+>>>>docker-start>>>>>>- Start {REPO} container
+>>>>docker-stop>>>>>>>- Stop {REPO} container
+>>>>docs-full>>>>>>>>>- Generate documentation, coverage report, diagram and code
+>>>>library-add>>>>>>>- Add a given package to a given dependency group
+>>>>library-graph-dev>- Graph dependencies in dev environment
+>>>>library-remove>>>>- Remove a given package from a given dependency group
+>>>>library-search>>>>- Search for pip packages
+>>>>library-update>>>>- Update dev dependencies
+>>>>session-lab>>>>>>>- Run jupyter lab server
+>>>>state>>>>>>>>>>>>>- State of {REPO}
+>>>>test-dev>>>>>>>>>>- Run all tests
+>>>>test-lint>>>>>>>>>- Run linting and type checking
+>>>>zsh>>>>>>>>>>>>>>>- Run ZSH session inside {REPO} container
+'''
+    output = output.split('\n')
+    output = '<'.join(output)
+    return f"echo '{output}' | tr '<' '\\n' | tr '>' ' '"
+
+
 def zsh_command():
     # type: () -> str
     '''
@@ -727,6 +772,7 @@ def main():
         'version-bump-major': x_tools_command('x_version_bump_major', args),
         'version-bump-minor': x_tools_command('x_version_bump_minor', args),
         'version-bump-patch': x_tools_command('x_version_bump_patch', args),
+        'quickstart': quickstart_command(),
         'zsh': zsh_command(),
         'zsh-complete': zsh_complete_command(),
         'zsh-root': zsh_root_command(),
