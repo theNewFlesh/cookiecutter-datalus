@@ -101,6 +101,7 @@ Its usage pattern is: `bin/{{cookiecutter.repo}} COMMAND [-a --args]=ARGS [-h --
 | library-sync-prod    | Sync prod environment with packages listed in prod.lock             |
 | library-update       | Update dev dependencies                                             |
 | library-update-pdm   | Update PDM                                                          |
+| quickstart           | Display quickstart guide                                            |
 | session-app          | Run app                                                             |
 | session-lab          | Run jupyter lab server                                              |
 | session-python       | Run python session with dev dependencies                            |
@@ -114,7 +115,6 @@ Its usage pattern is: `bin/{{cookiecutter.repo}} COMMAND [-a --args]=ARGS [-h --
 | version-bump-major   | Bump pyproject major version                                        |
 | version-bump-minor   | Bump pyproject minor version                                        |
 | version-bump-patch   | Bump pyproject patch version                                        |
-| quickstart           | Display quickstart guide                                            |
 | zsh                  | Run ZSH session inside {{cookiecutter.repo}} container                            |
 | zsh-complete         | Generate oh-my-zsh completions                                      |
 | zsh-root             | Run ZSH session as root inside {{cookiecutter.repo}} container                    |

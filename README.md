@@ -126,6 +126,7 @@ Its usage pattern is: `bin/repo COMMAND [-a --args]=ARGS [-h --help] [--dryrun]`
 | library-sync-prod    | Sync prod environment with packages listed in prod.lock             | [library] sync-prod    |
 | library-update       | Update dev dependencies                                             | [library] update       |
 | library-update-pdm   | Update PDM                                                          | [library] update-pdm   |
+| quickstart           | Display quickstart guide                                            |
 | session-app          | Run app                                                             | [session] app          |
 | session-lab          | Run jupyter lab server                                              | [session] lab          |
 | session-python       | Run python session with dev dependencies                            | [session] python       |

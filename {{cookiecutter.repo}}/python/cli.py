@@ -83,6 +83,7 @@ def get_info():
     library-sync-prod    - Sync prod environment with packages listed in prod.lock
     library-update       - Update dev dependencies
     library-update-pdm   - Update PDM
+    quickstart           - Display quickstart guide
 {%- if cookiecutter.repo_type in ['dash', 'flask'] %}
     session-app          - Run app inside {repo} container
 {%- endif %}
@@ -98,7 +99,6 @@ def get_info():
     version-bump-major   - Bump pyproject major version
     version-bump-minor   - Bump pyproject minor version
     version-bump-patch   - Bump pyproject patch version
-    quickstart           - Display quickstart guide
     zsh                  - Run ZSH session inside {repo} container
     zsh-complete         - Generate oh-my-zsh completions
     zsh-root             - Run ZSH session as root inside {repo} container
