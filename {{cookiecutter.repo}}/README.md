@@ -114,6 +114,7 @@ Its usage pattern is: `bin/{{cookiecutter.repo}} COMMAND [-a --args]=ARGS [-h --
 | version-bump-major   | Bump pyproject major version                                        |
 | version-bump-minor   | Bump pyproject minor version                                        |
 | version-bump-patch   | Bump pyproject patch version                                        |
+| quickstart           | Display quickstart guide                                            |
 | zsh                  | Run ZSH session inside {{cookiecutter.repo}} container                            |
 | zsh-complete         | Generate oh-my-zsh completions                                      |
 | zsh-root             | Run ZSH session as root inside {{cookiecutter.repo}} container                    |
