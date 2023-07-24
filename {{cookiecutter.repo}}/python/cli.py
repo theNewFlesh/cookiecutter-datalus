@@ -13,7 +13,7 @@ import re
 # python2.7 doesn't have pathlib module
 REPO_PATH = os.path.join(os.sep, *os.path.realpath(__file__).split(os.sep)[:-2])
 REPO = os.path.split(REPO_PATH)[-1]
-GITHUB_USER = '{{cookiecutter.git_user}}'
+GIT_USER = '{{cookiecutter.git_user}}'
 USER = 'ubuntu:ubuntu'
 PORT = 8080
 # ------------------------------------------------------------------------------
@@ -148,7 +148,7 @@ def resolve(commands):
         red='\033[0;31m',
         white='\033[0;37m',
         yellow='\033[0;33m',
-        github_user=GITHUB_USER,
+        git_user=GIT_USER,
         port=str(PORT),
         pythonpath='{PYTHONPATH}',
         repo_path=REPO_PATH,
@@ -344,7 +344,7 @@ def build_prod_command():
                 --force-rm
                 --no-cache
                 --file prod.dockerfile
-                --tag {github_user}/{repo}:$VERSION .;
+                --tag {git_user}/{repo}:$VERSION .;
             cd ..
         '''),
         exit_repo(),
@@ -388,7 +388,7 @@ def destroy_prod_command():
     '''
     cmds = [
         "export PROD_CID=`docker ps --filter name=^{repo}-prod$ --format '{{{{.ID}}}}'`",
-        "export PROD_IID=`docker images {github_user}/{repo} --format '{{{{.ID}}}}'`",
+        "export PROD_IID=`docker images {git_user}/{repo} --format '{{{{.ID}}}}'`",
         'docker container stop $PROD_CID',
         'docker image rm --force $PROD_IID',
     ]
@@ -433,7 +433,7 @@ def prod_command(args):
             --rm
             --publish {port}:{port}
             --name {repo}-prod
-            {github_user}/{repo}:$VERSION
+            {git_user}/{repo}:$VERSION
         '''),
         exit_repo(),
     ]
@@ -450,7 +450,7 @@ def push_command():
         enter_repo(),
         version_variable(),
         start(),
-        'docker push {github_user}/{repo}:$VERSION',
+        'docker push {git_user}/{repo}:$VERSION',
         exit_repo(),
     ]
     return resolve(cmds)
