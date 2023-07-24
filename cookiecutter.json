@@ -5,6 +5,7 @@
     "include_tensorflow": ["yes", "no"],
     "port_prefix": 10,
     "git_user": "git_user",
+    "git_host": ["github", "gitlab", "bitbucket"],
     "description": "A repo_name app.",
     "author": "First_name Last_name",
     "email": "your@email.com",

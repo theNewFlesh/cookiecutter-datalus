@@ -5,6 +5,7 @@ default_context:
   include_tensorflow: "yes"
   port_prefix: 99
   git_user: thenewflesh
+  git_host: gitlab
   description: A cloud-native, custom dashboard and ephemeral database application.
   author: Alex Braun
   email: alexander.g.braun@gmail.com
