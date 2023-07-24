@@ -13,7 +13,7 @@ import re
 # python2.7 doesn't have pathlib module
 REPO_PATH = os.path.join(os.sep, *os.path.realpath(__file__).split(os.sep)[:-2])
 REPO = os.path.split(REPO_PATH)[-1]
-GITHUB_USER = '{{cookiecutter.github_user}}'
+GITHUB_USER = '{{cookiecutter.git_user}}'
 USER = 'ubuntu:ubuntu'
 PORT = 8080
 # ------------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 apiVersion: v2
 name: {{cookiecutter.repo}}
 version: 0.1.0
-home: https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.repo}}
+home: https://github.com/{{cookiecutter.git_user}}/{{cookiecutter.repo}}
 description: |
   {{cookiecutter.description}}
 keywords:

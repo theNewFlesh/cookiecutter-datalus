@@ -10,7 +10,7 @@ spec:
   project: default
   source:
 {%- endraw -%}
-    repoURL: https://github.com/{{ cookiecutter.github_user }}/{{ cookiecutter.repo }}.git
+    repoURL: https://github.com/{{ cookiecutter.git_user }}/{{ cookiecutter.repo }}.git
 {%- raw -%}
     targetRevision: master
     path: helm

@@ -34,7 +34,7 @@ base:
   env_secret:
 
   deployment:
-    repository: {{ cookiecutter.github_user }}/{{ cookiecutter.repo }}
+    repository: {{ cookiecutter.git_user }}/{{ cookiecutter.repo }}
     image_tag: latest
     repo_path: /home/ubuntu/{{ cookiecutter.repo }}
     storage_path: /mnt/storage

@@ -53,8 +53,8 @@ dependencies = [
 ]
 
 [project.urls]
-repository = "https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.repo}}"
-documentation = "https://{{cookiecutter.github_user}}.github.io/{{cookiecutter.repo}}"
+repository = "https://github.com/{{cookiecutter.git_user}}/{{cookiecutter.repo}}"
+documentation = "https://{{cookiecutter.git_user}}.github.io/{{cookiecutter.repo}}"
 
 [project.scripts]
 {{ cookiecutter.repo }} = "{{ cookiecutter.repo | replace('-', '_') }}.command:main"
