@@ -2,7 +2,6 @@ import json
 import os
 import re
 import shutil
-from pprint import pprint
 # ------------------------------------------------------------------------------
 
 
@@ -11,7 +10,6 @@ def main():
     with open(src) as f:
         config = json.load(f)
 
-    pprint(config)
     repo = config['repo']
     repo_ = re.sub('-', '_', repo)
     rtype = config['repo_type']
