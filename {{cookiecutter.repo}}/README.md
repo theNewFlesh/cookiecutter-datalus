@@ -36,6 +36,7 @@ The service should take a few minutes to start up.
 
 Run `bin/{{cookiecutter.repo}} --help` for more help on the command line tool.
 
+{% if cookiecutter.include_prod_cli == 'yes' -%}
 ---
 
 # Production CLI
@@ -59,6 +60,7 @@ Usage: `{{cookiecutter.repo}} bash-completion`
 Prints ZSH completion code to be written to a _{{cookiecutter.repo}} completion file
 
 Usage: `{{cookiecutter.repo}} zsh-completion`
+{%- endif %}
 
 ---
 

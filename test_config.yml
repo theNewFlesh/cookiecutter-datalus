@@ -1,8 +1,9 @@
 default_context:
   repo: datalus
-  repo_type: dash
+  repo_type: library
   include_openexr: "yes"
   include_tensorflow: "yes"
+  include_prod_cli: "no"
   port_prefix: 99
   git_user: thenewflesh
   git_host: bitbucket

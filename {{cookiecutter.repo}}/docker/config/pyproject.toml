@@ -63,8 +63,10 @@ documentation = "https://{{ cookiecutter.git_user }}.gitlab.io/{{cookiecutter.re
 repository = "https://bitbucket.org/{{ cookiecutter.git_user }}/{{ cookiecutter.repo }}"
 documentation = "https://{{ cookiecutter.git_user }}.bitbucket.io/docs/{{cookiecutter.repo}}"
 {% endif %}
+{% if cookiecutter.include_prod_cli == 'yes' -%}
 [project.scripts]
 {{ cookiecutter.repo }} = "{{ cookiecutter.repo | replace('-', '_') }}.command:main"
+{%- endif %}
 
 [project.optional-dependencies]
 
