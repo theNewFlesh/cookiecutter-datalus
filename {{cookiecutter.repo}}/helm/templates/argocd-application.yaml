@@ -10,7 +10,13 @@ spec:
   project: default
   source:
 {%- endraw -%}
-    repoURL: https://github.com/{{ cookiecutter.github_user }}/{{ cookiecutter.repo }}.git
+{%- if cookiecutter.git_host == 'github' %}
+repoURL: https://github.com/{{cookiecutter.git_user}}/{{cookiecutter.repo}}.git
+{% elif cookiecutter.git_host == 'gitlab' %}
+repoURL: https://gitlab.com/{{cookiecutter.git_user}}/{{cookiecutter.repo}}.git
+{% elif cookiecutter.git_host == 'bitbucket' %}
+repoURL: https://bitbucket.org/{{cookiecutter.git_user}}/{{cookiecutter.repo}}.git
+{% endif -%}
 {%- raw -%}
     targetRevision: master
     path: helm

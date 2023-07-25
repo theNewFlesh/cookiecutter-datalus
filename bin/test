@@ -1,12 +1,12 @@
 #! /usr/bin/env bash
 
 # rm -rf ~/.oh-my-zsh/custom/completions/_datalus
-rm -rf ~/Desktop/datalus-repo
+rm -rf ~/Desktop/datalus
 cookiecutter ../cookiecutter-datalus \
     --no-input \
     --config-file test_config.yml \
     --output-dir ~/Desktop
-cd ~/Desktop/datalus-repo
+cd ~/Desktop/datalus
 # bin/datalus zsh-complete
 # bin/datalus zsh-complete --dryrun
 # cd ~/Documents/projects/cookiecutter-datalus

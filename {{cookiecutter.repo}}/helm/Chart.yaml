@@ -1,7 +1,13 @@
 apiVersion: v2
 name: {{cookiecutter.repo}}
 version: 0.1.0
-home: https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.repo}}
+{%- if cookiecutter.git_host == 'github' %}
+home: https://github.com/{{ cookiecutter.git_user }}/{{cookiecutter.repo}}
+{% elif cookiecutter.git_host == 'gitlab' %}
+home: https://gitlab.com/{{ cookiecutter.git_user }}/{{cookiecutter.repo}}
+{% elif cookiecutter.git_host == 'bitbucket' %}
+home: https://bitbucket.org/{{ cookiecutter.git_user }}/{{ cookiecutter.repo }}
+{% endif -%}
 description: |
   {{cookiecutter.description}}
 keywords:
