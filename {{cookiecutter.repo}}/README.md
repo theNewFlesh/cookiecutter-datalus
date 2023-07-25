@@ -36,41 +36,68 @@ The service should take a few minutes to start up.
 
 Run `bin/{{cookiecutter.repo}} --help` for more help on the command line tool.
 
-{% if cookiecutter.include_prod_cli == 'yes' -%}
 ---
 
-# Production CLI
+# Quickstart Guide
+This repository contains a suite commands for the whole development process.
+This includes everything from testing, to documentation generation and
+publishing pip packages.
 
-{{cookiecutter.repo}} comes with a command line interface defined in command.py.
+These commands can be accessed through:
 
-Its usage pattern is: `{{cookiecutter.repo}} COMMAND [ARGS] [FLAGS] [-h --help]`
+  - The VSCode task runner
+  - The VSCode task runner side bar
+  - A terminal running on the host OS
+  - A terminal within this repositories docker container
 
-## Commands
+### Command Groups
 
----
+Development commands are grouped by one of 10 prefixes:
 
-### bash-completion
-Prints BASH completion code to be written to a _{{cookiecutter.repo}} completion file
+| Command    | Description                                                                        |
+| ---------- | ---------------------------------------------------------------------------------- |
+| build      | Commands for building packages for testing and pip publishing                      |
+| docker     | Common docker commands such as build, start and stop                               |
+| docs       | Commands for generating documentation and code metrics                             |
+| library    | Commands for managing python package dependencies                                  |
+| session    | Commands for starting interactive sessions such as jupyter lab and python          |
+| state      | Command to display the current state of the repo and container                     |
+| test       | Commands for running tests, linter and type annotations                            |
+| version    | Commands for bumping project versions                                              |
+| quickstart | Display this quickstart guide                                                      |
+| zsh        | Commands for running a zsh session in the container and generating zsh completions |
 
-Usage: `{{cookiecutter.repo}} bash-completion`
+### Common Commands
 
----
-
-### zsh-completion
-Prints ZSH completion code to be written to a _{{cookiecutter.repo}} completion file
-
-Usage: `{{cookiecutter.repo}} zsh-completion`
-{%- endif %}
+Here are some frequently used commands to get you started:
+| Command           | Description                                               |
+| ----------------- | --------------------------------------------------------- |
+| docker-restart    | Restart {REPO} container                                  |
+| docker-start      | Start {REPO} container                                    |
+| docker-stop       | Stop {REPO} container                                     |
+| docs-full         | Generate documentation, coverage report, diagram and code |
+| library-add       | Add a given package to a given dependency group           |
+| library-graph-dev | Graph dependencies in dev environment                     |
+| library-remove    | Remove a given package from a given dependency group      |
+| library-search    | Search for pip packages                                   |
+| library-update    | Update dev dependencies                                   |
+| session-lab       | Run jupyter lab server                                    |
+| state             | State of {REPO}                                           |
+| test-dev          | Run all tests                                             |
+| test-lint         | Run linting and type checking                             |
+| zsh               | Run ZSH session inside {REPO} container                   |
 
 ---
 
 # Development CLI
-bin/{{cookiecutter.repo}} is a command line interface (defined in cli.py) that works with
-any version of python 2.7 and above, as it has no dependencies.
+bin/{{cookiecutter.repo}} is a command line interface (defined in cli.py) that
+works with any version of python 2.7 and above, as it has no dependencies.
+Commands generally do not expect any arguments or flags.
 
 Its usage pattern is: `bin/{{cookiecutter.repo}} COMMAND [-a --args]=ARGS [-h --help] [--dryrun]`
 
 ### Commands
+The following is a complete list of all available development commands:
 
 | Command              | Description                                                         |
 | -------------------- | ------------------------------------------------------------------- |
@@ -134,3 +161,29 @@ Its usage pattern is: `bin/{{cookiecutter.repo}} COMMAND [-a --args]=ARGS [-h --
 | -a    | --args    | Additional arguments, this can generally be ignored  |
 | -h    | --help    | Prints command help message to stdout                |
 |       | --dryrun  | Prints command that would otherwise be run to stdout |
+
+{%- if cookiecutter.include_prod_cli == 'yes' -%}
+---
+
+# Production CLI
+
+{{cookiecutter.repo}} comes with a command line interface defined in command.py.
+
+Its usage pattern is: `{{cookiecutter.repo}} COMMAND [ARGS] [FLAGS] [-h --help]`
+
+## Commands
+
+---
+
+### bash-completion
+Prints BASH completion code to be written to a _{{cookiecutter.repo}} completion file
+
+Usage: `{{cookiecutter.repo}} bash-completion`
+
+---
+
+### zsh-completion
+Prints ZSH completion code to be written to a _{{cookiecutter.repo}} completion file
+
+Usage: `{{cookiecutter.repo}} zsh-completion`
+{% endif -%}
