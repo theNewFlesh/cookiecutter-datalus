@@ -597,8 +597,8 @@ def quickstart_command():
     Returns:
         str: quickstart command.
     '''
-    output = f'''
-{REPO.upper()} QUICKSTART GUIDE
+    output = '''
+{upper} QUICKSTART GUIDE
 
 The development CLI contains a list of commands grouped by one of 10 prefixes:
 >>>>build>>>>>>- Commands for building packages for testing and pip publishing
@@ -613,9 +613,9 @@ The development CLI contains a list of commands grouped by one of 10 prefixes:
 >>>>zsh>>>>>>>>- Commands for running a zsh session in the container and generating zsh completions
 
 Here are some frequently used commands to get you started:
->>>>docker-restart>>>>- Restart {REPO} container
->>>>docker-start>>>>>>- Start {REPO} container
->>>>docker-stop>>>>>>>- Stop {REPO} container
+>>>>docker-restart>>>>- Restart {repo} container
+>>>>docker-start>>>>>>- Start {repo} container
+>>>>docker-stop>>>>>>>- Stop {repo} container
 >>>>docs-full>>>>>>>>>- Generate documentation, coverage report, diagram and code
 >>>>library-add>>>>>>>- Add a given package to a given dependency group
 >>>>library-graph-dev>- Graph dependencies in dev environment
@@ -623,14 +623,16 @@ Here are some frequently used commands to get you started:
 >>>>library-search>>>>- Search for pip packages
 >>>>library-update>>>>- Update dev dependencies
 >>>>session-lab>>>>>>>- Run jupyter lab server
->>>>state>>>>>>>>>>>>>- State of {REPO}
+>>>>state>>>>>>>>>>>>>- State of {repo}
 >>>>test-dev>>>>>>>>>>- Run all tests
 >>>>test-lint>>>>>>>>>- Run linting and type checking
->>>>zsh>>>>>>>>>>>>>>>- Run ZSH session inside {REPO} container
+>>>>zsh>>>>>>>>>>>>>>>- Run ZSH session inside {repo} container
 '''
-    output = output.split('\n')
+    output = output.format(upper=REPO.upper(), repo=REPO)
+    output = output.split('\n')[1:]
     output = '<'.join(output)
-    return f"echo '{output}' | tr '<' '\\n' | tr '>' ' '"
+    output = "echo '{}' | tr '<' '\\n' | tr '>' ' '".format(output)
+    return output
 
 
 def zsh_command():
