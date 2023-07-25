@@ -21,7 +21,13 @@ See [documentation](https://{{cookiecutter.git_user}}.github.io/{{cookiecutter.r
 ### Docker For Developers
 1. Install [docker-desktop](https://docs.docker.com/desktop/)
 2. Ensure docker-desktop has at least 4 GB of memory allocated to it.
+{%- if cookiecutter.git_host == 'github' %}
 3. `git clone git@github.com:{{cookiecutter.git_user}}/{{cookiecutter.repo}}.git`
+{% elif cookiecutter.git_host == 'gitlab' %}
+3. `git clone git@gitlab.com:{{cookiecutter.git_user}}/{{cookiecutter.repo}}.git`
+{% elif cookiecutter.git_host == 'bitbucket' %}
+3. `git clone git@bitbucket.org:{{cookiecutter.git_user}}/{{cookiecutter.repo}}.git`
+{% endif -%}
 4. `cd {{cookiecutter.repo}}`
 6. `chmod +x bin/{{cookiecutter.repo}}`
 7. `bin/{{cookiecutter.repo}} docker-start`

@@ -61,7 +61,7 @@ repository = "https://gitlab.com/{{ cookiecutter.git_user }}/{{cookiecutter.repo
 documentation = "https://{{ cookiecutter.git_user }}.gitlab.io/{{cookiecutter.repo}}"
 {% elif cookiecutter.git_host == 'bitbucket' %}
 repository = "https://bitbucket.org/{{ cookiecutter.git_user }}/{{ cookiecutter.repo }}"
-documentation = "https://{{ cookiecutter.git_org }}.bitbucket.io/docs/{{cookiecutter.repo}}"
+documentation = "https://{{ cookiecutter.git_user }}.bitbucket.io/docs/{{cookiecutter.repo}}"
 {% endif %}
 [project.scripts]
 {{ cookiecutter.repo }} = "{{ cookiecutter.repo | replace('-', '_') }}.command:main"
