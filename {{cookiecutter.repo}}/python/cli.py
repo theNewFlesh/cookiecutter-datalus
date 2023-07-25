@@ -759,6 +759,7 @@ def main():
         'library-sync-prod': x_tools_command('x_library_sync_prod', args),
         'library-update': x_tools_command('x_library_update', args),
         'library-update-pdm': x_tools_command('x_library_update_pdm', args),
+        'quickstart': quickstart_command(),
 {%- if cookiecutter.repo_type in ['dash', 'flask'] %}
         'session-app': x_tools_command('x_session_app', args),
 {%- endif %}
@@ -774,7 +775,6 @@ def main():
         'version-bump-major': x_tools_command('x_version_bump_major', args),
         'version-bump-minor': x_tools_command('x_version_bump_minor', args),
         'version-bump-patch': x_tools_command('x_version_bump_patch', args),
-        'quickstart': quickstart_command(),
         'zsh': zsh_command(),
         'zsh-complete': zsh_complete_command(),
         'zsh-root': zsh_root_command(),
