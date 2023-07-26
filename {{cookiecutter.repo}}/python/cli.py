@@ -592,47 +592,18 @@ def x_tools_command(command, args=[]):
 def quickstart_command():
     # type: () -> str
     '''
-    Returns a command which prints a quickstart help guide.
+    Returns a command which prints the quickstart guide.
 
     Returns:
         str: quickstart command.
     '''
-    output = '''
-{upper} QUICKSTART GUIDE
-
-The development CLI contains a list of commands grouped by one of 10 prefixes:
->>>>build>>>>>>- Commands for building packages for testing and pip publishing
->>>>docker>>>>>- Common docker commands such as build, start and stop
->>>>docs>>>>>>>- Commands for generating documentation and code metrics
->>>>library>>>>- Commands for managing python package dependencies
->>>>session>>>>- Commands for starting interactive sessions such as jupyter lab and python
->>>>state>>>>>>- Command to display the current state of the repo and container
->>>>test>>>>>>>- Commands for running tests, linter and type annotations
->>>>version>>>>- Commands for bumping project versions
->>>>quickstart>- Display this quickstart guide
->>>>zsh>>>>>>>>- Commands for running a zsh session in the container and generating zsh completions
-
-Here are some frequently used commands to get you started:
->>>>docker-restart>>>>- Restart {repo} container
->>>>docker-start>>>>>>- Start {repo} container
->>>>docker-stop>>>>>>>- Stop {repo} container
->>>>docs-full>>>>>>>>>- Generate documentation, coverage report, diagram and code
->>>>library-add>>>>>>>- Add a given package to a given dependency group
->>>>library-graph-dev>- Graph dependencies in dev environment
->>>>library-remove>>>>- Remove a given package from a given dependency group
->>>>library-search>>>>- Search for pip packages
->>>>library-update>>>>- Update dev dependencies
->>>>session-lab>>>>>>>- Run jupyter lab server
->>>>state>>>>>>>>>>>>>- State of {repo}
->>>>test-dev>>>>>>>>>>- Run all tests
->>>>test-lint>>>>>>>>>- Run linting and type checking
->>>>zsh>>>>>>>>>>>>>>>- Run ZSH session inside {repo} container
-'''
-    output = output.format(upper=REPO.upper(), repo=REPO)
-    output = output.split('\n')[1:]
-    output = '<'.join(output)
-    output = "echo '{}' | tr '<' '\\n' | tr '>' ' '".format(output)
-    return output
+    return line('''
+        cat README.md
+        | grep -A 10000 '# Quickstart'
+        | grep -B 10000 '# Development CLI'
+        | grep -B 10000 -E '^---$'
+        | grep -vE '^---$'
+    ''')
 
 
 def zsh_command():
