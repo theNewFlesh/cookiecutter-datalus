@@ -517,6 +517,18 @@ x_library_update_pdm () {
     pdm self update;
 }
 
+# QUICKSTART-FUNCTIONS----------------------------------------------------------
+x_quickstart () {
+    # Display quickstart guide
+    echo "${CYAN2}QUICKSTART GUIDE${CLEAR}\n";
+    cat $REPO_DIR/README.md \
+    | grep -A 10000 '# Quickstart' \
+    | grep -B 10000 '# Development CLI' \
+    | grep -B 10000 -E '^---$' \
+    | grep -vE '^---$' \
+    | grep -v '# Quickstart';
+}
+
 # SESSION-FUNCTIONS-------------------------------------------------------------
 x_session_app () {
     # Run app
