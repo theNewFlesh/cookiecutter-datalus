@@ -36,6 +36,22 @@ The service should take a few minutes to start up.
 
 Run `bin/{{cookiecutter.repo}} --help` for more help on the command line tool.
 
+### ZSH Setup
+
+1. `bin/{{cookiecutter.repo}}` must be run from this repository's top level directory.
+2. Therefore, if using zsh, it is recommended that you paste the following line
+    in your ~/.zshrc file:
+    - ```alias {{cookiecutter.repo}}=`cd [parent dir]/{{cookiecutter.repo}}; bin/{{cookiecutter.repo}}` ```
+    - Replace `[parent dir]` with the parent directory of this repository
+3. Running the `zsh-complete` command will enable tab completions of the cli
+   commands, in the next shell session.
+
+   For example:
+   - `{{cookiecutter.repo}} [tab]` will show you all the cli options, which you can press
+     tab to cycle through
+   - `{{cookiecutter.repo}} docker-[tab]` will show you only the cli options that begin with
+     "docker-"
+
 ---
 
 # Quickstart Guide
@@ -49,6 +65,9 @@ These commands can be accessed through:
   - The VSCode task runner side bar
   - A terminal running on the host OS
   - A terminal within this repositories docker container
+
+Running the `zsh-complete` command will enable tab completions of the CLI.
+See the zsh setup section for more information.
 
 ### Command Groups
 
@@ -86,6 +105,7 @@ Here are some frequently used commands to get you started:
 | test-dev          | Run all tests                                             |
 | test-lint         | Run linting and type checking                             |
 | zsh               | Run ZSH session inside {REPO} container                   |
+| zsh-complete      | Generate ZSH completion script                            |
 
 ---
 
