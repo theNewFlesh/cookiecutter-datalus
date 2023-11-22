@@ -5,6 +5,7 @@
     "folders": [{"path": "./"}],
     "settings": {
         "debug.allowBreakpointsEverywhere": true,
+        "editor.rulers": [80, 100],
         "forbeslindesay-taskrunner.prefix": "[",
         "forbeslindesay-taskrunner.separator": "] ",
         "mypy.configFile": "docker/config/pyproject.toml",
