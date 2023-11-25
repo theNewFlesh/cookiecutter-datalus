@@ -16,25 +16,29 @@ def main():
     cli = config['include_prod_cli']
     sphinx = config['include_sphinx']
     mkdocs = config['include_mkdocs']
+    helm = config['include_helm']
 
     if rtype == 'library':
-        shutil.rmtree('helm')
-        shutil.rmtree('python/' + repo_ + '/server')
+        shutil.rmtree('helm', ignore_errors=True)
+        shutil.rmtree('python/' + repo_ + '/server', ignore_errors=True)
         os.remove('sphinx/server.rst')
 
     if rtype != 'dash':
-        shutil.rmtree('artifacts')
-        shutil.rmtree('templates')
+        shutil.rmtree('artifacts', ignore_errors=True)
+        shutil.rmtree('templates', ignore_errors=True)
         os.remove('python/conftest.py')
 
     if cli == 'no':
         os.remove('python/' + repo + '/command.py')
 
     if sphinx == 'no':
-        os.remove('sphinx')
+        shutil.rmtree('sphinx', ignore_errors=True)
     
     if mkdocs == 'no':
-        os.remove('mkdocs')
+        shutil.rmtree('mkdocs', ignore_errors=True)
+
+    if helm == 'no':
+        shutil.rmtree('helm', ignore_errors=True)
 
     os.remove(src)
 

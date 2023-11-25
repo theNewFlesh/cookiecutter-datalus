@@ -3,6 +3,7 @@
     "repo_type": "{{ cookiecutter.repo_type }}",
     "include_sphinx": "{{ cookiecutter.include_sphinx }}",
     "include_mkdocs": "{{ cookiecutter.include_mkdocs }}",
+    "include_helm": "{{ cookiecutter.include_helm }}",
     "include_openexr": "{{ cookiecutter.include_openexr }}",
     "include_tensorflow": "{{ cookiecutter.include_tensorflow }}",
     "include_prod_cli": "{{ cookiecutter.include_prod_cli }}",
