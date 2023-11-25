@@ -13,9 +13,9 @@ export CONFIG_DIR="$REPO_DIR/docker/config"
 export PDM_DIR="$HOME/pdm"
 export SCRIPT_DIR="$REPO_DIR/docker/scripts"
 {%- if cc.git_host == 'gitlab' %}
-export DOCS_DIR="$$REPO_DIR/public"
+export DOCS_DIR="$REPO_DIR/public"
 {%- else %}
-export DOCS_DIR="$$REPO_DIR/docs"
+export DOCS_DIR="$REPO_DIR/docs"
 {%- endif %}
 export MIN_PYTHON_VERSION="3.{{ cc.python_min_version }}"
 export MAX_PYTHON_VERSION="3.{{ cc.python_max_version }}"
