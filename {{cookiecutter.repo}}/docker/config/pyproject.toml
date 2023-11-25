@@ -56,13 +56,13 @@ dependencies = [
 [project.urls]
 {%- if cc.git_host == 'github' %}
 repository = "https://github.com/{{ cc.git_user }}/{{cc.repo}}"
-documentation = "https://{{ cc.git_user }}.github.io/{{cc.repo}}"
+documentation = "https://{{cc.git_user}}.github.io/{{cc.repo}}"
 {% elif cc.git_host == 'gitlab' %}
-repository = "https://gitlab.com/{{ cc.git_user }}/{{cc.repo}}"
-documentation = "https://{{ cc.git_user }}.gitlab.io/{{cc.repo}}"
+repository = "https://gitlab.com/{{cc.git_user}}/{{cc.repo}}"
+documentation = "https://{{cc.git_user}}.gitlab.io/{{cc.repo}}"
 {% elif cc.git_host == 'bitbucket' %}
-repository = "https://bitbucket.org/{{ cc.git_user }}/{{ cc.repo }}"
-documentation = "https://{{ cc.git_user }}.bitbucket.io/docs/{{cc.repo}}"
+repository = "https://bitbucket.org/{{cc.git_user}}/{{ cc.repo }}"
+documentation = "https://{{cc.git_user}}.bitbucket.io/docs/{{cc.repo}}"
 {% endif %}
 {% if cc.include_prod_cli == 'yes' -%}
 [project.scripts]
