@@ -1,14 +1,21 @@
+{%- if cookiecutter.git_host == 'bitbucket' %}
+{%- set url = "butbucket.org" %}
+{%- elif cookiecutter.git_host == 'gitlab' %}
+{%- set url = "gitlab.com" %}
+{%- else %}
+{%- set url = "github.com" %}
+{%- endif  -%}
 <!-- <img id="logo" src="resources/logo.png" style="max-width: 717px"> -->
 
-[![](https://img.shields.io/badge/License-MIT-F77E70?style=for-the-badge)](https://github.com/{{cookiecutter.git_user}}/{{cookiecutter.repo}}/blob/master/LICENSE)
-[![](https://img.shields.io/pypi/pyversions/{{cookiecutter.repo}}?style=for-the-badge&label=Python&color=A0D17B&logo=python&logoColor=A0D17B)](https://github.com/{{cookiecutter.git_user}}/{{cookiecutter.repo}}/blob/master/docker/config/pyproject.toml)
+[![](https://img.shields.io/badge/License-MIT-F77E70?style=for-the-badge)](https://{{url}}/{{cookiecutter.git_user}}/{{cookiecutter.repo}}/blob/master/LICENSE)
+[![](https://img.shields.io/pypi/pyversions/{{cookiecutter.repo}}?style=for-the-badge&label=Python&color=A0D17B&logo=python&logoColor=A0D17B)](https://{{url}}/{{cookiecutter.git_user}}/{{cookiecutter.repo}}/blob/master/docker/config/pyproject.toml)
 [![](https://img.shields.io/pypi/v/{{cookiecutter.repo}}?style=for-the-badge&label=PyPI&color=5F95DE&logo=pypi&logoColor=5F95DE)](https://pypi.org/project/{{cookiecutter.repo}}/)
 [![](https://img.shields.io/pypi/dm/{{cookiecutter.repo}}?style=for-the-badge&label=Downloads&color=5F95DE)](https://pepy.tech/project/{{cookiecutter.repo}})
 
 # Introduction
 {{cookiecutter.description}}
 
-See [documentation](https://{{cookiecutter.git_user}}.github.io/{{cookiecutter.repo}}/) for details.
+See [documentation](https://{{cookiecutter.git_user}}.{{cookiecutter.git_host}}.io/{{cookiecutter.repo}}/) for details.
 
 # Installation
 ### Python
@@ -21,16 +28,10 @@ See [documentation](https://{{cookiecutter.git_user}}.github.io/{{cookiecutter.r
 ### Docker For Developers
 1. Install [docker-desktop](https://docs.docker.com/desktop/)
 2. Ensure docker-desktop has at least 4 GB of memory allocated to it.
-{%- if cookiecutter.git_host == 'github' %}
-3. `git clone git@github.com:{{cookiecutter.git_user}}/{{cookiecutter.repo}}.git`
-{% elif cookiecutter.git_host == 'gitlab' %}
-3. `git clone git@gitlab.com:{{cookiecutter.git_user}}/{{cookiecutter.repo}}.git`
-{% elif cookiecutter.git_host == 'bitbucket' %}
-3. `git clone git@bitbucket.org:{{cookiecutter.git_user}}/{{cookiecutter.repo}}.git`
-{% endif -%}
+3. `git clone git@{{url}}:{{cookiecutter.git_user}}/{{cookiecutter.repo}}.git`
 4. `cd {{cookiecutter.repo}}`
-6. `chmod +x bin/{{cookiecutter.repo}}`
-7. `bin/{{cookiecutter.repo}} docker-start`
+5. `chmod +x bin/{{cookiecutter.repo}}`
+6. `bin/{{cookiecutter.repo}} docker-start`
 
 The service should take a few minutes to start up.
 
