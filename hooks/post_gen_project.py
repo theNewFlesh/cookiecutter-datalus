@@ -14,6 +14,8 @@ def main():
     repo_ = re.sub('-', '_', repo)
     rtype = config['repo_type']
     cli = config['include_prod_cli']
+    sphinx = config['include_sphinx']
+    mkdocs = config['include_mkdocs']
 
     if rtype == 'library':
         shutil.rmtree('helm')
@@ -27,6 +29,12 @@ def main():
 
     if cli == 'no':
         os.remove('python/' + repo + '/command.py')
+
+    if sphinx == 'no':
+        os.remove('sphinx')
+    
+    if mkdocs == 'no':
+        os.remove('mkdocs')
 
     os.remove(src)
 
