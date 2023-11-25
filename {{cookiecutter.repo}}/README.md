@@ -1,10 +1,10 @@
 {%- set cc = cookiecutter -%}
-{%- if cc.git_host == 'bitbucket' %}
-{%- set url = "butbucket.org" %}
+{%- if cc.git_host == 'github' %}
+{%- set url = "github.com" %}
 {%- elif cc.git_host == 'gitlab' %}
 {%- set url = "gitlab.com" %}
-{%- else %}
-{%- set url = "github.com" %}
+{%- elif cc.git_host == 'bitbucket' %}
+{%- set url = "butbucket.org" %}
 {%- endif  -%}
 <!-- <img id="logo" src="resources/logo.png" style="max-width: 717px"> -->
 
