@@ -2,7 +2,7 @@
 {%- set max_ver = cookiecutter.python_max_version | int %}
 [project]
 name = "{{cookiecutter.repo}}"
-version = "0.1.0"
+version = "{{cookiecutter.initial_repo_version}}"
 description = "{{cookiecutter.description}}"
 authors = [
     {name = "{{cookiecutter.author}}", email = "{{cookiecutter.email}}"},

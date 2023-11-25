@@ -18,3 +18,4 @@ default_context:
   year: 2023
   python_min_version: 7
   python_max_version: 10
+  initial_repo_version: "0.1.0"

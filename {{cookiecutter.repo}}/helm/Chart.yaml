@@ -1,6 +1,6 @@
 apiVersion: v2
 name: {{cookiecutter.repo}}
-version: 0.1.0
+version: {{cookiecutter.initial_repo_version}}
 {%- if cookiecutter.git_host == 'github' %}
 home: https://github.com/{{ cookiecutter.git_user }}/{{cookiecutter.repo}}
 {% elif cookiecutter.git_host == 'gitlab' %}
@@ -13,7 +13,7 @@ description: |
 keywords:
 {{'  - ' + cookiecutter.keywords.split(', ')|join("\n  - ")}}
 type: application
-appVersion: "0.1.0"
+appVersion: "{{cookiecutter.initial_repo_version}}"
 maintainers:
   - name: {{cookiecutter.author}}
     email: {{cookiecutter.email}}
