@@ -1,16 +1,17 @@
-{%- set min_ver = cookiecutter.python_min_version | int %}
-{%- set max_ver = cookiecutter.python_max_version | int %}
+{%- set cc = cookiecutter -%}
+{%- set min_ver = cc.python_min_version | int %}
+{%- set max_ver = cc.python_max_version | int %}
 [project]
-name = "{{cookiecutter.repo}}"
-version = "{{cookiecutter.initial_repo_version}}"
-description = "{{cookiecutter.description}}"
+name = "{{cc.repo}}"
+version = "{{cc.initial_repo_version}}"
+description = "{{cc.description}}"
 authors = [
-    {name = "{{cookiecutter.author}}", email = "{{cookiecutter.email}}"},
+    {name = "{{cc.author}}", email = "{{cc.email}}"},
 ]
 readme = "README.md"
 license = "MIT"
 keywords = [
-{%- for keyword in cookiecutter.keywords.split(", ") %}
+{%- for keyword in cc.keywords.split(", ") %}
     "{{ keyword }}",
 {%- endfor %}
 ]
@@ -27,14 +28,14 @@ classifiers = [
 requires-python = ">=3.{{ max_ver }}"
 dependencies = [
     "click>=8.1.3",
-{%- if cookiecutter.repo_type == 'dash' %}
+{%- if cc.repo_type == 'dash' %}
     "dash>=2.0.0",
     "dash-core-components",
     "dash-cytoscape",
     "dash-html-components",
     "dash-table",
 {%- endif %}
-{%- if cookiecutter.repo_type in ['dash', 'flask'] %}
+{%- if cc.repo_type in ['dash', 'flask'] %}
     "flasgger",
     "flask",
     "flask-caching",
@@ -42,30 +43,30 @@ dependencies = [
     "jinja2",
 {%- endif %}
     "numpy",
-{%- if cookiecutter.include_openexr == 'yes' %}
+{%- if cc.include_openexr == 'yes' %}
     "OpenEXR",
 {%- endif %}
     "pandas",
-{%- if cookiecutter.include_tensorflow == 'yes' %}
+{%- if cc.include_tensorflow == 'yes' %}
     "tensorboard>=2.0.0",
     "tensorflow>=2.0.0",
 {%- endif %}
 ]
 
 [project.urls]
-{%- if cookiecutter.git_host == 'github' %}
-repository = "https://github.com/{{ cookiecutter.git_user }}/{{cookiecutter.repo}}"
-documentation = "https://{{ cookiecutter.git_user }}.github.io/{{cookiecutter.repo}}"
-{% elif cookiecutter.git_host == 'gitlab' %}
-repository = "https://gitlab.com/{{ cookiecutter.git_user }}/{{cookiecutter.repo}}"
-documentation = "https://{{ cookiecutter.git_user }}.gitlab.io/{{cookiecutter.repo}}"
-{% elif cookiecutter.git_host == 'bitbucket' %}
-repository = "https://bitbucket.org/{{ cookiecutter.git_user }}/{{ cookiecutter.repo }}"
-documentation = "https://{{ cookiecutter.git_user }}.bitbucket.io/docs/{{cookiecutter.repo}}"
+{%- if cc.git_host == 'github' %}
+repository = "https://github.com/{{ cc.git_user }}/{{cc.repo}}"
+documentation = "https://{{ cc.git_user }}.github.io/{{cc.repo}}"
+{% elif cc.git_host == 'gitlab' %}
+repository = "https://gitlab.com/{{ cc.git_user }}/{{cc.repo}}"
+documentation = "https://{{ cc.git_user }}.gitlab.io/{{cc.repo}}"
+{% elif cc.git_host == 'bitbucket' %}
+repository = "https://bitbucket.org/{{ cc.git_user }}/{{ cc.repo }}"
+documentation = "https://{{ cc.git_user }}.bitbucket.io/docs/{{cc.repo}}"
 {% endif %}
-{% if cookiecutter.include_prod_cli == 'yes' -%}
+{% if cc.include_prod_cli == 'yes' -%}
 [project.scripts]
-{{ cookiecutter.repo }} = "{{ cookiecutter.repo | replace('-', '_') }}.command:main"
+{{ cc.repo }} = "{{ cc.repo | replace('-', '_') }}.command:main"
 {%- endif %}
 
 [project.optional-dependencies]
@@ -93,7 +94,7 @@ test = [
     "pytest-forked",
     "pytest-xdist",
     "pytest",
-{%- if cookiecutter.include_tensorflow == 'yes' %}
+{%- if cc.include_tensorflow == 'yes' %}
     "types-tensorflow>=2.11.0.2",
 {%- endif %}
 ]

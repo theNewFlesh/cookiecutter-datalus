@@ -1,4 +1,4 @@
-{%- set cc = cookiecutter %}
+{%- set cc = cookiecutter -%}
 {%- if cc.git_host == 'bitbucket' %}
 {%- set url = "butbucket.org" %}
 {%- elif cc.git_host == 'gitlab' %}

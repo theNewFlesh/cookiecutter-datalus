@@ -1,7 +1,8 @@
+{%- set cc = cookiecutter -%}
 .. toctree::
    :maxdepth: 4
 
    core
-{%- if cookiecutter.repo_type in ['dash', 'flask'] %}
+{%- if cc.repo_type in ['dash', 'flask'] %}
    server
 {%- endif %}

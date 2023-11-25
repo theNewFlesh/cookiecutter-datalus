@@ -1,6 +1,7 @@
+{%- set cc = cookiecutter -%}
 # VARIABLES---------------------------------------------------------------------
 export HOME="/home/ubuntu"
-export REPO="{{cookiecutter.repo}}"
+export REPO="{{cc.repo}}"
 export REPO_DIR="$HOME/$REPO"
 export REPO_SNAKE_CASE=`echo $REPO | sed 's/-/_/g'`
 export REPO_SUBPACKAGE="$REPO_DIR/python/$REPO_SNAKE_CASE"
@@ -11,13 +12,13 @@ export BUILD_DIR="$HOME/build"
 export CONFIG_DIR="$REPO_DIR/docker/config"
 export PDM_DIR="$HOME/pdm"
 export SCRIPT_DIR="$REPO_DIR/docker/scripts"
-{%- if cookiecutter.git_host == 'gitlab' %}
+{%- if cc.git_host == 'gitlab' %}
 export DOCS_DIR="$$REPO_DIR/public"
 {%- else %}
 export DOCS_DIR="$$REPO_DIR/docs"
 {%- endif %}
-export MIN_PYTHON_VERSION="3.{{ cookiecutter.python_min_version }}"
-export MAX_PYTHON_VERSION="3.{{ cookiecutter.python_max_version }}"
+export MIN_PYTHON_VERSION="3.{{ cc.python_min_version }}"
+export MAX_PYTHON_VERSION="3.{{ cc.python_max_version }}"
 export TEST_VERBOSITY=0
 export TEST_PROCS="auto"
 export JUPYTER_PLATFORM_DIRS=0

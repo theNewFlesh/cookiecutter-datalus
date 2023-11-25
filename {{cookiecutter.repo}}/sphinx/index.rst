@@ -1,6 +1,7 @@
-.. {{ cookiecutter.repo }} documentation master file
+{%- set cc = cookiecutter -%}
+.. {{ cc.repo }} documentation master file
 
-Welcome to {{ cookiecutter.repo }}'s documentation!
+Welcome to {{ cc.repo }}'s documentation!
 ====================================
 .. toctree::
    :maxdepth: 1

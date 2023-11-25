@@ -1,3 +1,4 @@
+{%- set cc = cookiecutter -%}
 # CONTEXT-----------------------------------------------------------------------
 overlay: rancher_desktop
 
@@ -18,12 +19,12 @@ base:
     liveness_probe: true
 
   namespace:
-    name: {{ cookiecutter.repo }}
+    name: {{ cc.repo }}
 
   argocd_application:
-    name: {{ cookiecutter.repo }}
+    name: {{ cc.repo }}
     source_namespace: argocd
-    target_namespace: {{ cookiecutter.repo }}
+    target_namespace: {{ cc.repo }}
 
   env_configmap:
     FLASK_APP: server.app:get_app
@@ -34,18 +35,18 @@ base:
   env_secret:
 
   deployment:
-    repository: {{ cookiecutter.git_user }}/{{ cookiecutter.repo }}
+    repository: {{ cc.git_user }}/{{ cc.repo }}
     image_tag: latest
-    repo_path: /home/ubuntu/{{ cookiecutter.repo }}
+    repo_path: /home/ubuntu/{{ cc.repo }}
     storage_path: /mnt/storage
     image_pull_policy: IfNotPresent
     nfs_server:
     command:
-      - {{ cookiecutter.repo }}
+      - {{ cc.repo }}
       - server
     args:
-    env_configmap: {{ cookiecutter.repo }}-env-configmap
-    env_secret: {{ cookiecutter.repo }}-env-secret
+    env_configmap: {{ cc.repo }}-env-configmap
+    env_secret: {{ cc.repo }}-env-secret
 
   service:
     port: 80
@@ -79,20 +80,20 @@ overlays:
       traefik_ingress: true
 
     namespace:
-      name: {{ cookiecutter.repo }}
+      name: {{ cc.repo }}
 
     repo_volume:
-      path: /local/path/to/{{ cookiecutter.repo }}/repository
+      path: /local/path/to/{{ cc.repo }}/repository
 
     desktop_volume:
       path: /local/storage/path
 
     traefik_ingress:
-      match: HostRegexp(`{{ cookiecutter.repo }}.local`)
+      match: HostRegexp(`{{ cc.repo }}.local`)
 
     deployment:
       command:
-        - {{ cookiecutter.repo }}
+        - {{ cc.repo }}
         - server
 
     env_configmap:

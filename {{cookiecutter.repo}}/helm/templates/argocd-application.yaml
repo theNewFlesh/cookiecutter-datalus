@@ -1,3 +1,4 @@
+{%- set cc = cookiecutter -%}
 {%- raw -%}
 {{- with (include "overlay" . | fromYaml) -}}
 {{ if .enable.argocd_application }}
@@ -10,12 +11,12 @@ spec:
   project: default
   source:
 {%- endraw -%}
-{%- if cookiecutter.git_host == 'github' %}
-repoURL: https://github.com/{{cookiecutter.git_user}}/{{cookiecutter.repo}}.git
-{% elif cookiecutter.git_host == 'gitlab' %}
-repoURL: https://gitlab.com/{{cookiecutter.git_user}}/{{cookiecutter.repo}}.git
-{% elif cookiecutter.git_host == 'bitbucket' %}
-repoURL: https://bitbucket.org/{{cookiecutter.git_user}}/{{cookiecutter.repo}}.git
+{%- if cc.git_host == 'github' %}
+repoURL: https://github.com/{{cc.git_user}}/{{cc.repo}}.git
+{% elif cc.git_host == 'gitlab' %}
+repoURL: https://gitlab.com/{{cc.git_user}}/{{cc.repo}}.git
+{% elif cc.git_host == 'bitbucket' %}
+repoURL: https://bitbucket.org/{{cc.git_user}}/{{cc.repo}}.git
 {% endif -%}
 {%- raw -%}
     targetRevision: master
