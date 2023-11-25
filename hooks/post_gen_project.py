@@ -17,6 +17,7 @@ def main():
     sphinx = config['include_sphinx']
     mkdocs = config['include_mkdocs']
     helm = config['include_helm']
+    git_host = config['git_host']
 
     if rtype == 'library':
         shutil.rmtree('helm', ignore_errors=True)
@@ -39,6 +40,9 @@ def main():
 
     if helm == 'no':
         shutil.rmtree('helm', ignore_errors=True)
+
+    if git_host == 'gitlab':
+        os.rename('docs', 'public')
 
     os.remove(src)
 
