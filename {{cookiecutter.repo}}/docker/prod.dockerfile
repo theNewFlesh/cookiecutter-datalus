@@ -1,5 +1,6 @@
-{%- set max_ver = cookiecutter.python_max_version | int -%}
-{% if cookiecutter.include_tensorflow == "yes" -%}
+{%- set cc = cookiecutter -%}
+{%- set max_ver = cc.python_max_version | int -%}
+{% if cc.include_tensorflow == "yes" -%}
 FROM tensorflow/tensorflow:nightly-gpu AS base
 {%- else -%}
 FROM ubuntu:22.04 AS base
@@ -42,9 +43,9 @@ RUN echo "\n${CYAN}SETUP PYTHON3.{{ max_ver }}${CLEAR}"; \
     python3.{{ max_ver }} get-pip.py && \
     rm -rf /home/ubuntu/get-pip.py
 
-# install {{cookiecutter.repo}}
+# install {{cc.repo}}
 USER ubuntu
-ENV REPO='{{cookiecutter.repo}}'
+ENV REPO='{{cc.repo}}'
 ENV PYTHONPATH "${PYTHONPATH}:/home/ubuntu/$REPO/python"
-RUN echo "\n${CYAN}INSTALL {{ cookiecutter.repo | upper }}{CLEAR}"; \
-    pip3.{{ max_ver }} install --user --upgrade {{cookiecutter.repo}}
+RUN echo "\n${CYAN}INSTALL {{ cc.repo | upper }}{CLEAR}"; \
+    pip3.{{ max_ver }} install --user --upgrade {{cc.repo}}

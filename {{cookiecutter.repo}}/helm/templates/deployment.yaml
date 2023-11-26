@@ -1,10 +1,11 @@
+{%- set cc = cookiecutter -%}
 {%- raw -%}
 {{- with (include "overlay" . | fromYaml) -}}
 kind: Deployment
 apiVersion: apps/v1
 metadata:
 {%- endraw -%}
-  name: {{ cookiecutter.repo }}
+  name: {{ cc.repo }}
 {%- raw -%}
   namespace: {{ .namespace.name }}
 spec:

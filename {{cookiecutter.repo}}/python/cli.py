@@ -1,3 +1,4 @@
+{%- set cc = cookiecutter -%}
 #!/usr/bin/env python
 
 try:
@@ -13,7 +14,7 @@ import re
 # python2.7 doesn't have pathlib module
 REPO_PATH = os.path.join(os.sep, *os.path.realpath(__file__).split(os.sep)[:-2])
 REPO = os.path.split(REPO_PATH)[-1]
-GIT_USER = '{{cookiecutter.git_user}}'
+GIT_USER = '{{cc.git_user}}'
 USER = 'ubuntu:ubuntu'
 PORT = 8080
 # ------------------------------------------------------------------------------
@@ -84,7 +85,7 @@ def get_info():
     library-update       - Update dev dependencies
     library-update-pdm   - Update PDM
     quickstart           - Display quickstart guide
-{%- if cookiecutter.repo_type in ['dash', 'flask'] %}
+{%- if cc.repo_type in ['dash', 'flask'] %}
     session-app          - Run app inside {repo} container
 {%- endif %}
     session-lab          - Run jupyter lab server
@@ -731,7 +732,7 @@ def main():
         'library-update': x_tools_command('x_library_update', args),
         'library-update-pdm': x_tools_command('x_library_update_pdm', args),
         'quickstart': quickstart_command(),
-{%- if cookiecutter.repo_type in ['dash', 'flask'] %}
+{%- if cc.repo_type in ['dash', 'flask'] %}
         'session-app': x_tools_command('x_session_app', args),
 {%- endif %}
         'session-lab': x_tools_command('x_session_lab', args),

@@ -1,9 +1,10 @@
+{%- set cc = cookiecutter -%}
 core
 ====
 
 foobar
 ------
-.. automodule:: {{ cookiecutter.repo }}.core.foobar
+.. automodule:: {{ cc.repo }}.core.foobar
     :members:
     :private-members:
     :undoc-members:

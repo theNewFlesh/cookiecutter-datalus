@@ -1,55 +1,57 @@
+{%- set cc = cookiecutter -%}
+{%- if cc.git_host == 'github' %}
+{%- set url = "github.com" %}
+{%- elif cc.git_host == 'gitlab' %}
+{%- set url = "gitlab.com" %}
+{%- elif cc.git_host == 'bitbucket' %}
+{%- set url = "butbucket.org" %}
+{%- endif  -%}
 <!-- <img id="logo" src="resources/logo.png" style="max-width: 717px"> -->
 
-[![](https://img.shields.io/badge/License-MIT-F77E70?style=for-the-badge)](https://github.com/{{cookiecutter.git_user}}/{{cookiecutter.repo}}/blob/master/LICENSE)
-[![](https://img.shields.io/pypi/pyversions/{{cookiecutter.repo}}?style=for-the-badge&label=Python&color=A0D17B&logo=python&logoColor=A0D17B)](https://github.com/{{cookiecutter.git_user}}/{{cookiecutter.repo}}/blob/master/docker/config/pyproject.toml)
-[![](https://img.shields.io/pypi/v/{{cookiecutter.repo}}?style=for-the-badge&label=PyPI&color=5F95DE&logo=pypi&logoColor=5F95DE)](https://pypi.org/project/{{cookiecutter.repo}}/)
-[![](https://img.shields.io/pypi/dm/{{cookiecutter.repo}}?style=for-the-badge&label=Downloads&color=5F95DE)](https://pepy.tech/project/{{cookiecutter.repo}})
+[![](https://img.shields.io/badge/License-MIT-F77E70?style=for-the-badge)](https://{{url}}/{{cc.git_user}}/{{cc.repo}}/blob/master/LICENSE)
+[![](https://img.shields.io/pypi/pyversions/{{cc.repo}}?style=for-the-badge&label=Python&color=A0D17B&logo=python&logoColor=A0D17B)](https://{{url}}/{{cc.git_user}}/{{cc.repo}}/blob/master/docker/config/pyproject.toml)
+[![](https://img.shields.io/pypi/v/{{cc.repo}}?style=for-the-badge&label=PyPI&color=5F95DE&logo=pypi&logoColor=5F95DE)](https://pypi.org/project/{{cc.repo}}/)
+[![](https://img.shields.io/pypi/dm/{{cc.repo}}?style=for-the-badge&label=Downloads&color=5F95DE)](https://pepy.tech/project/{{cc.repo}})
 
 # Introduction
-{{cookiecutter.description}}
+{{cc.description}}
 
-See [documentation](https://{{cookiecutter.git_user}}.github.io/{{cookiecutter.repo}}/) for details.
+See [documentation](https://{{cc.git_user}}.{{cc.git_host}}.io/{{cc.repo}}/) for details.
 
 # Installation
 ### Python
-`pip install {{cookiecutter.repo}}`
+`pip install {{cc.repo}}`
 
 ### Docker
 1. Install [docker-desktop](https://docs.docker.com/desktop/)
-2. `docker pull {{cookiecutter.git_user}}/{{cookiecutter.repo}}:[version]`
+2. `docker pull {{cc.git_user}}/{{cc.repo}}:[version]`
 
 ### Docker For Developers
 1. Install [docker-desktop](https://docs.docker.com/desktop/)
 2. Ensure docker-desktop has at least 4 GB of memory allocated to it.
-{%- if cookiecutter.git_host == 'github' %}
-3. `git clone git@github.com:{{cookiecutter.git_user}}/{{cookiecutter.repo}}.git`
-{% elif cookiecutter.git_host == 'gitlab' %}
-3. `git clone git@gitlab.com:{{cookiecutter.git_user}}/{{cookiecutter.repo}}.git`
-{% elif cookiecutter.git_host == 'bitbucket' %}
-3. `git clone git@bitbucket.org:{{cookiecutter.git_user}}/{{cookiecutter.repo}}.git`
-{% endif -%}
-4. `cd {{cookiecutter.repo}}`
-6. `chmod +x bin/{{cookiecutter.repo}}`
-7. `bin/{{cookiecutter.repo}} docker-start`
+3. `git clone git@{{url}}:{{cc.git_user}}/{{cc.repo}}.git`
+4. `cd {{cc.repo}}`
+5. `chmod +x bin/{{cc.repo}}`
+6. `bin/{{cc.repo}} docker-start`
 
 The service should take a few minutes to start up.
 
-Run `bin/{{cookiecutter.repo}} --help` for more help on the command line tool.
+Run `bin/{{cc.repo}} --help` for more help on the command line tool.
 
 ### ZSH Setup
 
-1. `bin/{{cookiecutter.repo}}` must be run from this repository's top level directory.
+1. `bin/{{cc.repo}}` must be run from this repository's top level directory.
 2. Therefore, if using zsh, it is recommended that you paste the following line
     in your ~/.zshrc file:
-    - ```alias {{cookiecutter.repo}}=`cd [parent dir]/{{cookiecutter.repo}}; bin/{{cookiecutter.repo}}` ```
+    - ```alias {{cc.repo}}=`cd [parent dir]/{{cc.repo}}; bin/{{cc.repo}}` ```
     - Replace `[parent dir]` with the parent directory of this repository
 3. Running the `zsh-complete` command will enable tab completions of the cli
    commands, in the next shell session.
 
    For example:
-   - `{{cookiecutter.repo}} [tab]` will show you all the cli options, which you can press
+   - `{{cc.repo}} [tab]` will show you all the cli options, which you can press
      tab to cycle through
-   - `{{cookiecutter.repo}} docker-[tab]` will show you only the cli options that begin with
+   - `{{cc.repo}} docker-[tab]` will show you only the cli options that begin with
      "docker-"
 
 ---
@@ -110,11 +112,11 @@ Here are some frequently used commands to get you started:
 ---
 
 # Development CLI
-bin/{{cookiecutter.repo}} is a command line interface (defined in cli.py) that
+bin/{{cc.repo}} is a command line interface (defined in cli.py) that
 works with any version of python 2.7 and above, as it has no dependencies.
 Commands generally do not expect any arguments or flags.
 
-Its usage pattern is: `bin/{{cookiecutter.repo}} COMMAND [-a --args]=ARGS [-h --help] [--dryrun]`
+Its usage pattern is: `bin/{{cc.repo}} COMMAND [-a --args]=ARGS [-h --help] [--dryrun]`
 
 ### Commands
 The following is a complete list of all available development commands:
@@ -125,18 +127,18 @@ The following is a complete list of all available development commands:
 | build-prod           | Publish pip package of repo to PyPi                                 |
 | build-publish        | Run production tests first then publish pip package of repo to PyPi |
 | build-test           | Build test version of repo for prod testing                         |
-| docker-build         | Build image of {{cookiecutter.repo}}                                              |
-| docker-build-prod    | Build production image of {{cookiecutter.repo}}                                   |
-| docker-container     | Display the Docker container id of {{cookiecutter.repo}}                          |
-| docker-destroy       | Shutdown {{cookiecutter.repo}} container and destroy its image                    |
-| docker-destroy-prod  | Shutdown {{cookiecutter.repo}} production container and destroy its image         |
-| docker-image         | Display the Docker image id of {{cookiecutter.repo}}                              |
-| docker-prod          | Start {{cookiecutter.repo}} production container                                  |
-| docker-push          | Push {{cookiecutter.repo}} production image to Dockerhub                          |
-| docker-remove        | Remove {{cookiecutter.repo}} Docker image                                         |
-| docker-restart       | Restart {{cookiecutter.repo}} container                                           |
-| docker-start         | Start {{cookiecutter.repo}} container                                             |
-| docker-stop          | Stop {{cookiecutter.repo}} container                                              |
+| docker-build         | Build image of {{cc.repo}}                                              |
+| docker-build-prod    | Build production image of {{cc.repo}}                                   |
+| docker-container     | Display the Docker container id of {{cc.repo}}                          |
+| docker-destroy       | Shutdown {{cc.repo}} container and destroy its image                    |
+| docker-destroy-prod  | Shutdown {{cc.repo}} production container and destroy its image         |
+| docker-image         | Display the Docker image id of {{cc.repo}}                              |
+| docker-prod          | Start {{cc.repo}} production container                                  |
+| docker-push          | Push {{cc.repo}} production image to Dockerhub                          |
+| docker-remove        | Remove {{cc.repo}} Docker image                                         |
+| docker-restart       | Restart {{cc.repo}} container                                           |
+| docker-start         | Start {{cc.repo}} container                                             |
+| docker-stop          | Stop {{cc.repo}} container                                              |
 | docs                 | Generate sphinx documentation                                       |
 | docs-architecture    | Generate architecture.svg diagram from all import statements        |
 | docs-full            | Generate documentation, coverage report, diagram and code           |
@@ -160,7 +162,7 @@ The following is a complete list of all available development commands:
 | session-app          | Run app                                                             |
 | session-lab          | Run jupyter lab server                                              |
 | session-python       | Run python session with dev dependencies                            |
-| state                | State of {{cookiecutter.repo}}                                                    |
+| state                | State of {{cc.repo}}                                                    |
 | test-coverage        | Generate test coverage report                                       |
 | test-dev             | Run all tests                                                       |
 | test-fast            | Test all code excepts tests marked with SKIP_SLOWS_TESTS decorator  |
@@ -170,9 +172,9 @@ The following is a complete list of all available development commands:
 | version-bump-major   | Bump pyproject major version                                        |
 | version-bump-minor   | Bump pyproject minor version                                        |
 | version-bump-patch   | Bump pyproject patch version                                        |
-| zsh                  | Run ZSH session inside {{cookiecutter.repo}} container                            |
+| zsh                  | Run ZSH session inside {{cc.repo}} container                            |
 | zsh-complete         | Generate oh-my-zsh completions                                      |
-| zsh-root             | Run ZSH session as root inside {{cookiecutter.repo}} container                    |
+| zsh-root             | Run ZSH session as root inside {{cc.repo}} container                    |
 
 ### Flags
 
@@ -182,28 +184,28 @@ The following is a complete list of all available development commands:
 | -h    | --help    | Prints command help message to stdout                |
 |       | --dryrun  | Prints command that would otherwise be run to stdout |
 
-{%- if cookiecutter.include_prod_cli == 'yes' -%}
+{%- if cc.include_prod_cli == 'yes' -%}
 ---
 
 # Production CLI
 
-{{cookiecutter.repo}} comes with a command line interface defined in command.py.
+{{cc.repo}} comes with a command line interface defined in command.py.
 
-Its usage pattern is: `{{cookiecutter.repo}} COMMAND [ARGS] [FLAGS] [-h --help]`
+Its usage pattern is: `{{cc.repo}} COMMAND [ARGS] [FLAGS] [-h --help]`
 
 ## Commands
 
 ---
 
 ### bash-completion
-Prints BASH completion code to be written to a _{{cookiecutter.repo}} completion file
+Prints BASH completion code to be written to a _{{cc.repo}} completion file
 
-Usage: `{{cookiecutter.repo}} bash-completion`
+Usage: `{{cc.repo}} bash-completion`
 
 ---
 
 ### zsh-completion
-Prints ZSH completion code to be written to a _{{cookiecutter.repo}} completion file
+Prints ZSH completion code to be written to a _{{cc.repo}} completion file
 
-Usage: `{{cookiecutter.repo}} zsh-completion`
+Usage: `{{cc.repo}} zsh-completion`
 {% endif -%}

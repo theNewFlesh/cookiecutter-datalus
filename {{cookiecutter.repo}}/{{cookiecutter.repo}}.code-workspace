@@ -1,5 +1,6 @@
-{%- set min_ver = cookiecutter.python_min_version | int %}
-{%- set max_ver = cookiecutter.python_max_version | int %}
+{%- set cc = cookiecutter -%}
+{%- set min_ver = cc.python_min_version | int %}
+{%- set max_ver = cc.python_max_version | int %}
 {%- raw %}
 {
     "folders": [{"path": "./"}],
@@ -25,12 +26,16 @@
         "terminal.integrated.defaultProfile.linux": "zsh",
         "terminal.integrated.defaultProfile.osx": "zsh",
         "testExplorer.codeLens": true,
-        "todo-tree.filtering.excludeGlobs": ["**/docs/**/*.*"],
+        "todo-tree.filtering.excludeGlobs": [
+            "**/docs/**/*.*",
+            "**/public/**/*.*",
+        ],
         "terminal.integrated.profiles.linux": {
             "zsh": {"path": "/bin/zsh"}
         },
         "search.exclude": {
-            "**/docs": true
+            "**/docs": true,
+            "**/public": true,
         },
         "files.exclude": {
             "**/__pypackages__": true,

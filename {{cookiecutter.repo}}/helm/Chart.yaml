@@ -1,20 +1,21 @@
+{%- set cc = cookiecutter -%}
 apiVersion: v2
-name: {{cookiecutter.repo}}
-version: 0.1.0
-{%- if cookiecutter.git_host == 'github' %}
-home: https://github.com/{{ cookiecutter.git_user }}/{{cookiecutter.repo}}
-{% elif cookiecutter.git_host == 'gitlab' %}
-home: https://gitlab.com/{{ cookiecutter.git_user }}/{{cookiecutter.repo}}
-{% elif cookiecutter.git_host == 'bitbucket' %}
-home: https://bitbucket.org/{{ cookiecutter.git_user }}/{{ cookiecutter.repo }}
+name: {{cc.repo}}
+version: {{cc.initial_repo_version}}
+{%- if cc.git_host == 'github' %}
+home: https://github.com/{{ cc.git_user }}/{{cc.repo}}
+{% elif cc.git_host == 'gitlab' %}
+home: https://gitlab.com/{{ cc.git_user }}/{{cc.repo}}
+{% elif cc.git_host == 'bitbucket' %}
+home: https://bitbucket.org/{{ cc.git_user }}/{{ cc.repo }}
 {% endif -%}
 description: |
-  {{cookiecutter.description}}
+  {{cc.description}}
 keywords:
-{{'  - ' + cookiecutter.keywords.split(', ')|join("\n  - ")}}
+{{'  - ' + cc.keywords.split(', ')|join("\n  - ")}}
 type: application
-appVersion: "0.1.0"
+appVersion: "{{cc.initial_repo_version}}"
 maintainers:
-  - name: {{cookiecutter.author}}
-    email: {{cookiecutter.email}}
-    url: {{cookiecutter.website}}
+  - name: {{cc.author}}
+    email: {{cc.email}}
+    url: {{cc.website}}

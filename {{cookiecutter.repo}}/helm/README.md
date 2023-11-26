@@ -1,4 +1,5 @@
-# {{ cookiecutter.repo }} Helm Chart Structure
+{%- set cc = cookiecutter -%}
+# {{ cc.repo }} Helm Chart Structure
 
 This Helm chart has been structured to incorporate the overlay logic of
 kustomize.
@@ -88,7 +89,7 @@ overlays:
       traefik_ingress: true
 
     traefik_ingress:
-      match: HostRegexp(`{{ cookiecutter.repo }}.local`)
+      match: HostRegexp(`{{ cc.repo }}.local`)
 ```
 
-This example declares an overlay called "example_overlay", enables the traefik_ingress.yaml file and sets its `match` parameter to `HostRegexp('{{ cookiecutter.repo }}.local')`.
+This example declares an overlay called "example_overlay", enables the traefik_ingress.yaml file and sets its `match` parameter to `HostRegexp('{{ cc.repo }}.local')`.

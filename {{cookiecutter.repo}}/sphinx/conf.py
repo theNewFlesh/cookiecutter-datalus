@@ -1,3 +1,4 @@
+{%- set cc = cookiecutter -%}
 # Configuration file for the Sphinx documentation builder.
 #
 # This file only contains a selection of the most common options. For a full
@@ -18,9 +19,9 @@ import toml
 sys.path.insert(0, os.path.abspath('../python'))
 # -- Project information -----------------------------------------------------
 
-project = '{{cookiecutter.repo}}'
-copyright = '{{cookiecutter.year}}, {{cookiecutter.author}} <{{cookiecutter.email}}>'
-author = '{{cookiecutter.author}} <{{cookiecutter.email}}>'
+project = '{{cc.repo}}'
+copyright = '{{cc.year}}, {{cc.author}} <{{cc.email}}>'
+author = '{{cc.author}} <{{cc.email}}>'
 version = toml.load('../docker/config/pyproject.toml')['project']['version']
 # release = ''
 

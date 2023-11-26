@@ -1,6 +1,7 @@
-{%- set min_ver = cookiecutter.python_min_version | int %}
-{%- set max_ver = cookiecutter.python_max_version | int -%}
-{% if cookiecutter.include_tensorflow == "yes" -%}
+{%- set cc = cookiecutter -%}
+{%- set min_ver = cc.python_min_version | int %}
+{%- set max_ver = cc.python_max_version | int -%}
+{% if cc.include_tensorflow == "yes" -%}
 FROM tensorflow/tensorflow:nightly-gpu AS base
 {%- else -%}
 FROM ubuntu:22.04 AS base
@@ -41,7 +42,7 @@ RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
     apt install -y \
         bat \
         curl \
-{%- if cookiecutter.include_tensorflow == "yes" %}
+{%- if cc.include_tensorflow == "yes" %}
         git \
         graphviz \
         npm \
@@ -74,7 +75,7 @@ RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
         wget && \
     rm -rf /var/lib/apt/lists/*
 {%- endif %}
-{% if cookiecutter.include_tensorflow == "yes" -%}
+{% if cc.include_tensorflow == "yes" -%}
 # install nvidia drivers
 RUN echo "\n${CYAN}INSTALL NVIDIA DRIVERS${CLEAR}"; \
     apt update && \
@@ -134,7 +135,7 @@ ENV LC_ALL "C.UTF-8"
 
 FROM base AS dev
 USER root
-{%- if cookiecutter.repo_type == 'dash' %}
+{%- if cc.repo_type == 'dash' %}
 
 # install chromedriver
 ENV PATH=$PATH:/lib/chromedriver
@@ -144,7 +145,7 @@ RUN echo "\n${CYAN}INSTALL CHROMEDRIVER${CLEAR}"; \
     rm -rf /var/lib/apt/lists/*
 {%- endif %}
 
-{% if cookiecutter.include_openexr == "yes" -%}
+{% if cc.include_openexr == "yes" -%}
 # install OpenEXR
 ENV CC=gcc
 ENV CXX=g++
@@ -209,6 +210,6 @@ WORKDIR /home/ubuntu
 RUN echo "\n${CYAN}REMOVE DIRECTORIES${CLEAR}"; \
     rm -rf config scripts
 
-ENV REPO='{{cookiecutter.repo}}'
+ENV REPO='{{cc.repo}}'
 ENV PYTHONPATH ":/home/ubuntu/$REPO/python:/home/ubuntu/.local/lib"
 ENV PYTHONPYCACHEPREFIX "/home/ubuntu/.python_cache"

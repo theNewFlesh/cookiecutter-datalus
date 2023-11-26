@@ -1,0 +1,17 @@
+{%- set cc = cookiecutter -%}
+site_name: {{cc.repo}}
+theme: readthedocs
+docs_dir: md
+{% if cc.git_host == 'gitlab' %}
+site_dir: ../public
+{% else %}
+site_dir: ../docs
+{% endif %}
+use_directory_urls: False
+extra:
+  version: {{cc.initial_repo_version}}
+extra_css:
+  - style.css
+nav:
+  - Introduction: index.md
+  - Python Documentation: "python/index.html"

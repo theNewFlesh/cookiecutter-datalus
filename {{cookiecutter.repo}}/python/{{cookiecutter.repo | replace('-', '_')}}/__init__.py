@@ -1,5 +1,6 @@
-import {{ cookiecutter.repo }}.command  # noqa F401
-import {{ cookiecutter.repo }}.core  # noqa F401
-{%- if cookiecutter.repo_type in ["dash", "flask"] %}
-import {{ cookiecutter.repo }}.server  # noqa F401
+{%- set cc = cookiecutter -%}
+import {{ cc.repo }}.command  # noqa F401
+import {{ cc.repo }}.core  # noqa F401
+{%- if cc.repo_type in ["dash", "flask"] %}
+import {{ cc.repo }}.server  # noqa F401
 {%- endif %}

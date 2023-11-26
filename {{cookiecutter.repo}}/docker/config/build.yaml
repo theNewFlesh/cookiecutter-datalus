@@ -1,17 +1,18 @@
+{%- set cc = cookiecutter -%}
 source_rules:
-  - path: /home/ubuntu/{{cookiecutter.repo}}
+  - path: /home/ubuntu/{{cc.repo}}
     include: "LICENSE|README\\.md"
     exclude: "/\\.|docker"
-  - path: /home/ubuntu/{{cookiecutter.repo}}/python/{{cookiecutter.repo | replace('-', '_')}}
+  - path: /home/ubuntu/{{cc.repo}}/python/{{cc.repo | replace('-', '_')}}
     include: "\\.py$"
-  - path: /home/ubuntu/{{cookiecutter.repo}}/docker/config
+  - path: /home/ubuntu/{{cc.repo}}/docker/config
     include: "flake8|prod.lock"
     exclude: "cache|__pypackages__"
-  - path: /home/ubuntu/{{cookiecutter.repo}}/resources
+  - path: /home/ubuntu/{{cc.repo}}/resources
     include: ".*"
     exclude: "__pycache__"
 rename_rules:
-  - regex: "/home/ubuntu/{{cookiecutter.repo}}"
+  - regex: "/home/ubuntu/{{cc.repo}}"
     replace: "/home/ubuntu/build/repo"
   - regex: ".*/resources"
     replace: "/home/ubuntu/build/resources"

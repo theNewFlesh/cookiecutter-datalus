@@ -1,29 +1,30 @@
+{%- set cc = cookiecutter -%}
 version: "3.8"
 services:
-  {{cookiecutter.repo}}:
-    container_name: {{cookiecutter.repo}}
-    image: {{cookiecutter.repo}}:dev
+  {{cc.repo}}:
+    container_name: {{cc.repo}}
+    image: {{cc.repo}}:dev
     build:
       context: .
       dockerfile: dev.dockerfile
     ports:
-      - "{{cookiecutter.port_prefix}}00:9000"
-      - "{{cookiecutter.port_prefix}}80:8080"
+      - "{{cc.port_prefix}}00:9000"
+      - "{{cc.port_prefix}}80:8080"
     userns_mode: "host"
     user: ubuntu
     env_file:
       - config/dev-env
     volumes:
-      - ../:/home/ubuntu/{{cookiecutter.repo}}
+      - ../:/home/ubuntu/{{cc.repo}}
       - ~/.ssh:/home/ubuntu/.ssh:ro
       - ./config/jupyter:/home/ubuntu/.jupyter
       - ./config/zshrc:/home/ubuntu/.zshrc
       - ../artifacts:/tmp/dash_artifacts
-{%- if cookiecutter.volume != '' %}
-      - {{cookiecutter.volume}}:/mnt/storage
+{%- if cc.volume != '' %}
+      - {{cc.volume}}:/mnt/storage
 {%- endif %}
     working_dir: "/home/ubuntu"
-{%- if cookiecutter.include_tensorflow == "yes" %}
+{%- if cc.include_tensorflow == "yes" %}
     deploy:
       resources:
         reservations:

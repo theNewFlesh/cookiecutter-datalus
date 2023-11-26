@@ -1,6 +1,8 @@
 {
 	"repo": "repo_name",
     "repo_type": ["dash", "flask", "library"],
+    "include_mkdocs": ["yes", "no"],
+    "include_helm": ["yes", "no"],
     "include_openexr": ["yes", "no"],
     "include_tensorflow": ["yes", "no"],
     "include_prod_cli": ["yes", "no"],
@@ -15,5 +17,6 @@
     "keywords": "comma, separated, list",
     "year": 2023,
     "python_min_version": 7,
-    "python_max_version": 10
+    "python_max_version": 10,
+    "initial_repo_version": "0.1.0"
 }

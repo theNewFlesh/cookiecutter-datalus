@@ -1,6 +1,12 @@
+{%- set cc = cookiecutter -%}
+{%- if cc.include_mkdocs == 'yes' %}
+{%- set sphinx_dir = "$DOCS_DIR/python" -%}
+{%- else %}
+{%- set sphinx_dir = "$DOCS_DIR" -%}
+{%- endif %}
 # VARIABLES---------------------------------------------------------------------
 export HOME="/home/ubuntu"
-export REPO="{{cookiecutter.repo}}"
+export REPO="{{cc.repo}}"
 export REPO_DIR="$HOME/$REPO"
 export REPO_SNAKE_CASE=`echo $REPO | sed 's/-/_/g'`
 export REPO_SUBPACKAGE="$REPO_DIR/python/$REPO_SNAKE_CASE"
@@ -11,8 +17,14 @@ export BUILD_DIR="$HOME/build"
 export CONFIG_DIR="$REPO_DIR/docker/config"
 export PDM_DIR="$HOME/pdm"
 export SCRIPT_DIR="$REPO_DIR/docker/scripts"
-export MIN_PYTHON_VERSION="3.{{ cookiecutter.python_min_version }}"
-export MAX_PYTHON_VERSION="3.{{ cookiecutter.python_max_version }}"
+{%- if cc.git_host == 'gitlab' %}
+export DOCS_DIR="$REPO_DIR/public"
+{%- else %}
+export DOCS_DIR="$REPO_DIR/docs"
+{%- endif %}
+export MKDOCS_DIR="$REPO_DIR/mkdocs"
+export MIN_PYTHON_VERSION="3.{{ cc.python_min_version }}"
+export MAX_PYTHON_VERSION="3.{{ cc.python_max_version }}"
 export TEST_VERBOSITY=0
 export TEST_PROCS="auto"
 export JUPYTER_PLATFORM_DIRS=0
@@ -315,16 +327,22 @@ x_build_test () {
 
 # DOCS-FUNCTIONS----------------------------------------------------------------
 x_docs () {
-    # Generate sphinx documentation
+    # Generate documentation
     x_env_activate_dev;
     cd $REPO_DIR;
     echo "${CYAN2}GENERATING DOCS${CLEAR}\n";
-    mkdir -p docs;
-    sphinx-build sphinx docs;
-    cp -f sphinx/style.css docs/_static/style.css;
-    touch docs/.nojekyll;
-    mkdir -p docs/resources;
-    # cp -r resources docs/;
+    rm -rf $DOCS_DIR;
+{%- endraw -%}
+{%- if cc.include_mkdocs == 'yes' %}
+    mkdocs build --config-file mkdocs/mkdocs.yml;
+{%- endif %}
+    mkdir -p {{sphinx_dir}};
+    sphinx-build sphinx {{sphinx_dir}};
+    cp -f sphinx/style.css {{sphinx_dir}}/_static/style.css;
+    touch {{sphinx_dir}}/.nojekyll;
+{%- raw %}
+    # mkdir -p $DOCS_DIR/resources;
+    # cp resources/* $DOCS_DIR/resources/;
 }
 
 x_docs_architecture () {
@@ -332,7 +350,7 @@ x_docs_architecture () {
     echo "${CYAN2}GENERATING ARCHITECTURE DIAGRAM${CLEAR}\n";
     x_env_activate_dev;
     rolling-pin graph \
-        $REPO_DIR/python $REPO_DIR/docs/architecture.svg \
+        $REPO_DIR/python $DOCS_DIR/architecture.svg \
         --exclude 'test|mock|__init__' \
         --orient 'lr';
 }
@@ -349,9 +367,9 @@ x_docs_metrics () {
     x_env_activate_dev;
     cd $REPO_DIR;
     rolling-pin plot \
-        $REPO_DIR/python $REPO_DIR/docs/plots.html;
+        $REPO_DIR/python $DOCS_DIR/plots.html;
     rolling-pin table \
-        $REPO_DIR/python $REPO_DIR/docs;
+        $REPO_DIR/python $DOCS_DIR;
 }
 
 # LIBRARY-FUNCTIONS-------------------------------------------------------------
@@ -567,7 +585,7 @@ x_test_coverage () {
         --verbosity $TEST_VERBOSITY \
         --cov=$REPO_DIR/python \
         --cov-config=$CONFIG_DIR/pyproject.toml \
-        --cov-report=html:$REPO_DIR/docs/htmlcov \
+        --cov-report=html:$DOCS_DIR/htmlcov \
         $REPO_SUBPACKAGE;
 }
 
@@ -643,6 +661,24 @@ x_test_prod () {
 }
 
 # VERSION-FUNCTIONS-------------------------------------------------------------
+{%- endraw -%}
+{%- if cc.include_mkdocs == 'yes' %}
+_x_get_version () {
+    # get current pyproject version
+    cat $CONFIG_DIR/pyproject.toml \
+        | grep -E '^version *=' \
+        | awk '{print $3}' \
+        | sed 's/\"//g';
+}
+
+_x_version_file_update () {
+    # update non-pyproject files with new pyproject version
+    # args: old_version, new_version
+    sed --in-place -E "s/$1/$2/g" $MKDOCS_DIR/mkdocs.yml;
+}
+{% endif %}
+
+{%- raw %}
 x_version () {
     # Full resolution of repo: dependencies, linting, tests, docs, etc
     x_library_install_dev;
@@ -650,30 +686,39 @@ x_version () {
     x_docs_full;
 }
 
+_x_version_bump () {
+    # Bump repo's version
+    # args: type
+    x_env_activate_dev;
+    local title=`echo $1 | tr '[a-z]' '[A-Z]'`;
+    echo "${CYAN2}BUMPING $title VERSION${CLEAR}\n";
+{%- endraw -%}
+{%- if cc.include_mkdocs == 'yes' %}
+    local old_version=`_x_get_version`;
+{%- endif %}
+    cd $PDM_DIR
+    pdm bump $1;
+    _x_library_pdm_to_repo_dev;
+{%- if cc.include_mkdocs == 'yes' %}
+    local new_version=`_x_get_version`;
+    _x_version_file_update $old_version $new_version;
+{%- endif %}
+{%- raw %}
+}
+
 x_version_bump_major () {
     # Bump repo's major version
-    x_env_activate_dev;
-    echo "${CYAN2}BUMPING MAJOR VERSION${CLEAR}\n";
-    cd $PDM_DIR
-    pdm bump major;
-    _x_library_pdm_to_repo_dev;
+    _x_version_bump major;
 }
 
 x_version_bump_minor () {
     # Bump repo's minor version
     x_env_activate_dev;
-    echo "${CYAN2}BUMPING MINOR VERSION${CLEAR}\n";
-    cd $PDM_DIR
-    pdm bump minor;
-    _x_library_pdm_to_repo_dev;
+    _x_version_bump minor;
 }
 
 x_version_bump_patch () {
     # Bump repo's patch version
-    x_env_activate_dev;
-    echo "${CYAN2}BUMPING PATCH VERSION${CLEAR}\n";
-    cd $PDM_DIR
-    pdm bump patch;
-    _x_library_pdm_to_repo_dev;
+    _x_version_bump patch;
 }
-{%- endraw -%}
+{% endraw %}

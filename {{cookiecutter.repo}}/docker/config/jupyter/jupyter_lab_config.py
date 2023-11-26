@@ -1,6 +1,7 @@
+{%- set cc = cookiecutter -%}
 c = get_config()
 c.ServerApp.iopub_data_rate_limit = 10000000
-c.ServerApp.root_dir = '/home/ubuntu/{{cookiecutter.repo}}/notebooks'
+c.ServerApp.root_dir = '/home/ubuntu/{{cc.repo}}/notebooks'
 c.ServerApp.disable_check_xsrf = True
 c.ServerApp.password_required = False
 c.ServerApp.port = 9000

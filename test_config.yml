@@ -1,12 +1,14 @@
 default_context:
   repo: datalus
   repo_type: library
+  include_mkdocs: "yes"
+  include_helm: "no"
   include_openexr: "yes"
   include_tensorflow: "yes"
   include_prod_cli: "no"
   port_prefix: 99
   git_user: thenewflesh
-  git_host: bitbucket
+  git_host: gitlab
   description: A cloud-native, custom dashboard and ephemeral database application.
   author: Alex Braun
   email: alexander.g.braun@gmail.com
@@ -16,3 +18,4 @@ default_context:
   year: 2023
   python_min_version: 7
   python_max_version: 10
+  initial_repo_version: "0.1.0"

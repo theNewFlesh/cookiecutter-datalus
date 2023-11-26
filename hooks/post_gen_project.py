@@ -14,6 +14,9 @@ def main():
     repo_ = re.sub('-', '_', repo)
     rtype = config['repo_type']
     cli = config['include_prod_cli']
+    mkdocs = config['include_mkdocs']
+    helm = config['include_helm']
+    git_host = config['git_host']
 
     if rtype == 'library':
         shutil.rmtree('helm')
@@ -27,6 +30,15 @@ def main():
 
     if cli == 'no':
         os.remove('python/' + repo + '/command.py')
+
+    if mkdocs == 'no':
+        shutil.rmtree('mkdocs')
+
+    if helm == 'no':
+        shutil.rmtree('helm', ignore_errors=True)
+
+    if git_host == 'gitlab':
+        os.rename('docs', 'public')
 
     os.remove(src)
 
