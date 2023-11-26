@@ -171,7 +171,6 @@ Its usage pattern is: `repo COMMAND [FLAGS] [-h --help]`
 # Repository Structure
 The following is a comprehensive diagram of the Datalus repository structure:
 
-<div style="background-color: #242424 !important">
 
 ```python
 APP
@@ -184,9 +183,6 @@ APP
    ├── bin
    |   └── APP                                 # shell wrapper for CLI
 ```
-</div>
-<div style="background-color: #343434 !important">
-
 ```python
    ├── docker                                  # everything needed to build and run container
    |   ├── dev.dockerfile                      # development version of app image
@@ -209,9 +205,6 @@ APP
    │         └── lab
    │            └── ...                        # jupyter lab plugins
 ```
-</div>
-<div style="background-color: #242424 !important">
-
 ```python
    ├── python
    |   ├── cli.py                              # dev command line interface
@@ -226,9 +219,6 @@ APP
    │         ├── __init__.py
    |         └── ...                           # server logic modules
 ```
-</div>
-<div style="background-color: #343434 !important">
-
 ```python
    ├── sphinx                                  # automatic documentation config
    |   ├── conf.py                             # sphinx config
@@ -242,9 +232,6 @@ APP
    │   ├── intro.rst                           # README.md as rst
    │   └── style.css                           # used by sphinx for styling docs
 ```
-</div>
-<div style="background-color: #242424 !important">
-
 ```python
    ├── mkdocs                                  # markdown documentation config (optional)
    |   ├── mkdocs.yml                          # mkdocs file index
@@ -253,9 +240,6 @@ APP
    |       ├── style.css                       # custom stylesheet
    |       └── ...                             # markdown files
 ```
-</div>
-<div style="background-color: #343434 !important">
-
 ```python
    ├── docs                                    # documentation build (/public if using gitlab)
    |   ├── index.html                          # docs homepage
@@ -269,9 +253,6 @@ APP
    |   └── resources
    |       └── ...                             # additional media for docs
 ```
-</div>
-<div style="background-color: #242424 !important">
-
 ```python
    ├── helm                                    # Helm app definition (optional)
    |   ├── README.md                           # app README
@@ -292,9 +273,6 @@ APP
    │       ├── service.yaml                    # app service
    │       └── traefik-ingress.yaml            # Traefik ingress (RancherOS)
 ```
-</div>
-<div style="background-color: #343434 !important">
-
 ```python
    ├── notebooks
    |   └── ...                                 # jupyter lab notebooks
@@ -305,4 +283,3 @@ APP
    └── templates                               # (optional)
        └── ...                                 # dash templates
 ```
-</div>
