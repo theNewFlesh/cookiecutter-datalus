@@ -2,7 +2,6 @@
 {
     "repo": "{{ cc.repo }}",
     "repo_type": "{{ cc.repo_type }}",
-    "include_sphinx": "{{ cc.include_sphinx }}",
     "include_mkdocs": "{{ cc.include_mkdocs }}",
     "include_helm": "{{ cc.include_helm }}",
     "include_openexr": "{{ cc.include_openexr }}",

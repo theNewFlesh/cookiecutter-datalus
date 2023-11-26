@@ -1,7 +1,6 @@
 default_context:
   repo: datalus
   repo_type: library
-  include_sphinx: "no"
   include_mkdocs: "yes"
   include_helm: "no"
   include_openexr: "yes"
