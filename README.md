@@ -172,7 +172,7 @@ Its usage pattern is: `repo COMMAND [FLAGS] [-h --help]`
 The following is a comprehensive diagram of the Datalus repository structure:
 
 
-```python
+```bash
 APP
    ├── README.md                               # README with install instructions
    ├── .gitignore                              # git config
@@ -183,7 +183,7 @@ APP
    ├── bin
    |   └── APP                                 # shell wrapper for CLI
 ```
-```python
+```bash
    ├── docker                                  # everything needed to build and run container
    |   ├── dev.dockerfile                      # development version of app image
    |   ├── prod.dockerfile                     # production version of app image
@@ -205,7 +205,7 @@ APP
    │         └── lab
    │            └── ...                        # jupyter lab plugins
 ```
-```python
+```bash
    ├── python
    |   ├── cli.py                              # dev command line interface
    |   ├── conftest.py                         # pytest config (optional)
@@ -219,7 +219,7 @@ APP
    │         ├── __init__.py
    |         └── ...                           # server logic modules
 ```
-```python
+```bash
    ├── sphinx                                  # automatic documentation config
    |   ├── conf.py                             # sphinx config
    |   ├── make.bat                            # sphinx config
@@ -232,7 +232,7 @@ APP
    │   ├── intro.rst                           # README.md as rst
    │   └── style.css                           # used by sphinx for styling docs
 ```
-```python
+```bash
    ├── mkdocs                                  # markdown documentation config (optional)
    |   ├── mkdocs.yml                          # mkdocs file index
    |   └── md
@@ -240,7 +240,7 @@ APP
    |       ├── style.css                       # custom stylesheet
    |       └── ...                             # markdown files
 ```
-```python
+```bash
    ├── docs                                    # documentation build (/public if using gitlab)
    |   ├── index.html                          # docs homepage
    |   ├── architecture.svg                    # auto-generated graph of app dependecies
@@ -253,7 +253,7 @@ APP
    |   └── resources
    |       └── ...                             # additional media for docs
 ```
-```python
+```bash
    ├── helm                                    # Helm app definition (optional)
    |   ├── README.md                           # app README
    |   ├── Chart.yaml                          # Helm chart
@@ -273,7 +273,7 @@ APP
    │       ├── service.yaml                    # app service
    │       └── traefik-ingress.yaml            # Traefik ingress (RancherOS)
 ```
-```python
+```bash
    ├── notebooks
    |   └── ...                                 # jupyter lab notebooks
    ├── resources
