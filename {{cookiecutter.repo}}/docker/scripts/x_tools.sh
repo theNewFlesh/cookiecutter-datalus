@@ -17,6 +17,7 @@ export DOCS_DIR="$REPO_DIR/public"
 {%- else %}
 export DOCS_DIR="$REPO_DIR/docs"
 {%- endif %}
+export MKDOCS_DIR="$REPO_DIR/mkdocs"
 export MIN_PYTHON_VERSION="3.{{ cc.python_min_version }}"
 export MAX_PYTHON_VERSION="3.{{ cc.python_max_version }}"
 export TEST_VERBOSITY=0
