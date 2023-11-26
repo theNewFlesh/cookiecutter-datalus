@@ -229,11 +229,11 @@ APP
    |       └── ...                             <-- additional media for docs
    |
    ├── mkdocs                                  <-- markdown documentation config (optional)
-   |   ├── md
-   |   │  ├── index.md                         <-- markdown docs homepage
-   |   │  ├── style.css                        <-- custom stylesheet
-   |   |  └── ...                              <-- markdown files
-   |   └── mkdocs.yml                          <-- mkdocs file index
+   |   ├── mkdocs.yml                          <-- mkdocs file index
+   |   └── md
+   |       ├── index.md                        <-- markdown docs homepage
+   |       ├── style.css                       <-- custom stylesheet
+   |       └── ...                             <-- markdown files
    |
    ├── sphinx                                  <-- automatic documentation config
    |   ├── conf.py                             <-- sphinx config
@@ -245,9 +245,7 @@ APP
    |   ├── modules.rst                         <-- sphinx toc tree
    |   ├── server.rst                          <-- server.py docs (optional)
    │   ├── intro.rst                           <-- README.md as rst
-   │   ├── style.css                           <-- used by sphinx for styling docs
-   |   └── images
-   |      └── ...                              <-- images for docs
+   │   └── style.css                           <-- used by sphinx for styling docs
    |
    ├── helm                                    <-- Helm app definition (optional)
    |   ├── README.md                           <-- app README
