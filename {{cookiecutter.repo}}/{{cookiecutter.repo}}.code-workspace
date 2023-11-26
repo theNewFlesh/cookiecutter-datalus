@@ -313,15 +313,19 @@
                     "x_session_python"
                 ]
             },
-            // {
-            //     "label": "[session] server",
-            //     "detail": "Run application server",
-            //     "icon": {"id": "beaker", "color": "terminal.ansiWhite"},
-            //     "command": [
-            //         "source $X_TOOLS_PATH &&",
-            //         "x_session_server"
-            //     ],
-            // },
+{%- endraw %}
+{%- if cc.repo_type in ['dash', 'flask'] %}
+            {
+                "label": "[session] server",
+                "detail": "Run application server",
+                "icon": {"id": "beaker", "color": "terminal.ansiWhite"},
+                "command": [
+                    "source $X_TOOLS_PATH &&",
+                    "x_session_server"
+                ],
+            },
+{%- endif %}
+{%- raw %}
             {
                 "label": "[test] coverage",
                 "detail": "Generate test coverage report",
