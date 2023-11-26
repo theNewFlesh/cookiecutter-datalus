@@ -205,18 +205,18 @@ APP
    |
    ├── python
    |   ├── cli.py                              <-- dev command line interface
-   |   ├── conftest.py                         <-- pytest config
+   |   ├── conftest.py                         <-- pytest config (optional)
    |   └── APP                                 <-- app source code
    │      ├── __init__.py
-   │      ├── command.py                       <-- prod CLI module
+   │      ├── command.py                       <-- prod CLI module (optional)
    │      ├── core
    │      │   ├── __init__.py
    |      |   └── ...                          <-- core logic modules
-   │      └── server
+   │      └── server                           <-- (optional)
    │         ├── __init__.py
    |         └── ...                           <-- server logic modules
    |
-   ├── docs                                    <-- documentation build
+   ├── docs                                    <-- documentation build (/public if using gitlab)
    |   ├── index.html                          <-- docs homepage
    |   ├── architecture.svg                    <-- auto-generated graph of app dependecies
    |   ├── plots.html                          <-- code metric plots
@@ -228,6 +228,13 @@ APP
    |   └── resources
    |       └── ...                             <-- additional media for docs
    |
+   ├── mkdocs                                  <-- markdown documentation config (optional)
+   |   ├── md
+   |   │  ├── index.md                         <-- markdown docs homepage
+   |   │  ├── style.css                        <-- custom stylesheet
+   |   |  └── ...                              <-- markdown files
+   |   └── mkdocs.yml                          <-- mkdocs file index
+   |
    ├── sphinx                                  <-- automatic documentation config
    |   ├── conf.py                             <-- sphinx config
    |   ├── make.bat                            <-- sphinx config
@@ -236,13 +243,13 @@ APP
    |   ├── core.rst                            <-- core logic docs
    |   ├── index.rst                           <-- sphinx tox tree
    |   ├── modules.rst                         <-- sphinx toc tree
-   |   ├── server.rst                          <-- server.py docs
+   |   ├── server.rst                          <-- server.py docs (optional)
    │   ├── intro.rst                           <-- README.md as rst
    │   ├── style.css                           <-- used by sphinx for styling docs
    |   └── images
    |      └── ...                              <-- images for docs
    |
-   ├── helm                                    <-- Helm app definition
+   ├── helm                                    <-- Helm app definition (optional)
    |   ├── README.md                           <-- app README
    |   ├── Chart.yaml                          <-- Helm chart
    |   ├── values.yaml                         <-- default values
@@ -265,6 +272,8 @@ APP
    |   └── ...                                 <-- jupyter lab notebooks
    ├── resources
    |   └── ...                                 <-- resources used by app
-   └── artifacts
-       └── ...                                 <-- misc dev artifacts
+   ├── artifacts                               <-- (optional)
+   |   └── ...                                 <-- dash artifacts
+   └── templates                               <-- (optional)
+       └── ...                                 <-- dash templates
 ```
