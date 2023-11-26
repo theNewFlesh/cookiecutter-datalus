@@ -171,7 +171,7 @@ Its usage pattern is: `repo COMMAND [FLAGS] [-h --help]`
 # Repository Structure
 The following is a comprehensive diagram of the Datalus repository structure:
 
-<div style="background:#242424">
+<div style="background-color:#242424">
 
 ```python
 APP
@@ -185,7 +185,7 @@ APP
    |   └── APP                                 # shell wrapper for CLI
 ```
 </div>
-<div style="background:#343434">
+<div style="background-color:#343434">
 
 ```python
    ├── docker                                  # everything needed to build and run container
@@ -210,7 +210,7 @@ APP
    │            └── ...                        # jupyter lab plugins
 ```
 </div>
-<div style="background:#242424">
+<div style="background-color:#242424">
 
 ```python
    ├── python
@@ -227,7 +227,7 @@ APP
    |         └── ...                           # server logic modules
 ```
 </div>
-<div style="background:#343434">
+<div style="background-color:#343434">
 
 ```python
    ├── sphinx                                  # automatic documentation config
@@ -243,7 +243,7 @@ APP
    │   └── style.css                           # used by sphinx for styling docs
 ```
 </div>
-<div style="background:#242424">
+<div style="background-color:#242424">
 
 ```python
    ├── mkdocs                                  # markdown documentation config (optional)
@@ -254,7 +254,7 @@ APP
    |       └── ...                             # markdown files
 ```
 </div>
-<div style="background:#343434">
+<div style="background-color:#343434">
 
 ```python
    ├── docs                                    # documentation build (/public if using gitlab)
@@ -270,7 +270,7 @@ APP
    |       └── ...                             # additional media for docs
 ```
 </div>
-<div style="background:#242424">
+<div style="background-color:#242424">
 
 ```python
    ├── helm                                    # Helm app definition (optional)
@@ -293,7 +293,7 @@ APP
    │       └── traefik-ingress.yaml            # Traefik ingress (RancherOS)
 ```
 </div>
-<div style="background:#343434">
+<div style="background-color:#343434">
 
 ```python
    ├── notebooks
