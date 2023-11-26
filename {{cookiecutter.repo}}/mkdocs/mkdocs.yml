@@ -14,3 +14,4 @@ extra_css:
   - style.css
 nav:
   - Introduction: index.md
+  - Python Documentation: "python/index.html"
