@@ -188,7 +188,7 @@ APP
    |   ├── docker-compose.yml                  <-- dev means of starting container
    │   ├── scripts
    │   |  └── x_tools.sh                       <-- developer tools
-   │   ├── config
+   │   └── config
    │      ├── pyproject.toml                   <-- defines all dependencies
    │      ├── flake8.ini                       <-- linting config
    │      ├── dev-env                          <-- dev environment variables
@@ -198,7 +198,7 @@ APP
    │      ├── build.yaml                       <-- defines pip package builds
    │      ├── zshrc                            <-- zsh environment setup
    │      ├── henanigans.zsh-theme             <-- zsh theme
-   │      ├── jupyter
+   │      └── jupyter
    │         ├── jupyter_lab_config.py         <-- jupyter lab config
    │         └── lab
    │            └── ...                        <-- jupyter lab plugins
