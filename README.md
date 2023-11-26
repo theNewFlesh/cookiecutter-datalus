@@ -171,107 +171,138 @@ Its usage pattern is: `repo COMMAND [FLAGS] [-h --help]`
 # Repository Structure
 The following is a comprehensive diagram of the Datalus repository structure:
 
-```
+<div style="background:#242424">
+
+```python
 APP
-   ├── README.md                               <-- README with install instructions
-   ├── .gitignore                              <-- git config
-   ├── .gitattributes                          <-- git config
-   ├── APP.code-workspace                      <-- VSCode config (contains task commands)
-   ├── .devcontainer.json                      <-- VSCode remote container config
-   ├── .env                                    <-- needed by VSCode docker-compose
+   ├── README.md                               # README with install instructions
+   ├── .gitignore                              # git config
+   ├── .gitattributes                          # git config
+   ├── APP.code-workspace                      # VSCode config (contains task commands)
+   ├── .devcontainer.json                      # VSCode remote container config
+   ├── .env                                    # needed by VSCode docker-compose
    ├── bin
-   |   └── APP                                 <-- shell wrapper for CLI
-   |
-   ├── docker                                  <-- everything needed to build and run container
-   |   ├── dev.dockerfile                      <-- development version of app image
-   |   ├── prod.dockerfile                     <-- production version of app image
-   |   ├── docker-compose.yml                  <-- dev means of starting container
+   |   └── APP                                 # shell wrapper for CLI
+```
+</div>
+<div style="background:#343434">
+
+```python
+   ├── docker                                  # everything needed to build and run container
+   |   ├── dev.dockerfile                      # development version of app image
+   |   ├── prod.dockerfile                     # production version of app image
+   |   ├── docker-compose.yml                  # dev means of starting container
    │   ├── scripts
-   │   |  └── x_tools.sh                       <-- developer tools
+   │   |  └── x_tools.sh                       # developer tools
    │   └── config
-   │      ├── pyproject.toml                   <-- defines all dependencies
-   │      ├── flake8.ini                       <-- linting config
-   │      ├── dev-env                          <-- dev environment variables
-   │      ├── pdm.toml                         <-- needed by PDM
-   │      ├── dev.lock                         <-- frozen dev dependencies
-   │      ├── prod.lock                        <-- frozen prod dependencies
-   │      ├── build.yaml                       <-- defines pip package builds
-   │      ├── zshrc                            <-- zsh environment setup
-   │      ├── henanigans.zsh-theme             <-- zsh theme
+   │      ├── pyproject.toml                   # defines all dependencies
+   │      ├── flake8.ini                       # linting config
+   │      ├── dev-env                          # dev environment variables
+   │      ├── pdm.toml                         # needed by PDM
+   │      ├── dev.lock                         # frozen dev dependencies
+   │      ├── prod.lock                        # frozen prod dependencies
+   │      ├── build.yaml                       # defines pip package builds
+   │      ├── zshrc                            # zsh environment setup
+   │      ├── henanigans.zsh-theme             # zsh theme
    │      └── jupyter
-   │         ├── jupyter_lab_config.py         <-- jupyter lab config
+   │         ├── jupyter_lab_config.py         # jupyter lab config
    │         └── lab
-   │            └── ...                        <-- jupyter lab plugins
-   |
+   │            └── ...                        # jupyter lab plugins
+```
+</div>
+<div style="background:#242424">
+
+```python
    ├── python
-   |   ├── cli.py                              <-- dev command line interface
-   |   ├── conftest.py                         <-- pytest config (optional)
-   |   └── APP                                 <-- app source code
+   |   ├── cli.py                              # dev command line interface
+   |   ├── conftest.py                         # pytest config (optional)
+   |   └── APP                                 # app source code
    │      ├── __init__.py
-   │      ├── command.py                       <-- prod CLI module (optional)
+   │      ├── command.py                       # prod CLI module (optional)
    │      ├── core
    │      │   ├── __init__.py
-   |      |   └── ...                          <-- core logic modules
-   │      └── server                           <-- (optional)
+   |      |   └── ...                          # core logic modules
+   │      └── server                           # (optional)
    │         ├── __init__.py
-   |         └── ...                           <-- server logic modules
-   |
-   ├── docs                                    <-- documentation build (/public if using gitlab)
-   |   ├── index.html                          <-- docs homepage
-   |   ├── architecture.svg                    <-- auto-generated graph of app dependecies
-   |   ├── plots.html                          <-- code metric plots
-   |   ├── all_metrics.html                    <-- master code metrics table
-   |   ├── cyclomatic_complexity_metrics.html  <-- code metrics table
-   |   ├── halstead_metrics.html               <-- code metrics table
-   |   ├── htmlcov
-   |   |   └── index.html                      <-- code coverage report
-   |   └── resources
-   |       └── ...                             <-- additional media for docs
-   |
-   ├── mkdocs                                  <-- markdown documentation config (optional)
-   |   ├── mkdocs.yml                          <-- mkdocs file index
-   |   └── md
-   |       ├── index.md                        <-- markdown docs homepage
-   |       ├── style.css                       <-- custom stylesheet
-   |       └── ...                             <-- markdown files
-   |
-   ├── sphinx                                  <-- automatic documentation config
-   |   ├── conf.py                             <-- sphinx config
-   |   ├── make.bat                            <-- sphinx config
-   |   ├── Makefile                            <-- sphinx config
-   |   ├── cli.rst                             <-- cli docs
-   |   ├── core.rst                            <-- core logic docs
-   |   ├── index.rst                           <-- sphinx tox tree
-   |   ├── modules.rst                         <-- sphinx toc tree
-   |   ├── server.rst                          <-- server.py docs (optional)
-   │   ├── intro.rst                           <-- README.md as rst
-   │   └── style.css                           <-- used by sphinx for styling docs
-   |
-   ├── helm                                    <-- Helm app definition (optional)
-   |   ├── README.md                           <-- app README
-   |   ├── Chart.yaml                          <-- Helm chart
-   |   ├── values.yaml                         <-- default values
-   |   ├── .helmignore                         <-- ignores files
-   |   └── templates
-   │       ├── _helpers.tpl                    <-- creates vars from values.yml
-   │       ├── argocd-application.yaml         <-- ArgoCD app definition
-   │       ├── deployment.yaml                 <-- k8s deployment
-   │       ├── desktop-volume.yaml             <-- allows mounting of repo into pod
-   │       ├── env-configmap.yaml              <-- env vars
-   │       ├── env-secret.yaml                 <-- env secrets
-   │       ├── image-pull-secret.yaml          <-- image pull secret (ie ECR creds, etc)
-   │       ├── namespace.yaml                  <-- app namespace
-   │       ├── nginx-ingress.yaml              <-- Nginx ingress (HarvesterOS)
-   │       ├── repo-volume.yaml                <-- mount repo in volume
-   │       ├── service.yaml                    <-- app service
-   │       └── traefik-ingress.yaml            <-- Traefik ingress (RancherOS)
-   |
-   ├── notebooks
-   |   └── ...                                 <-- jupyter lab notebooks
-   ├── resources
-   |   └── ...                                 <-- resources used by app
-   ├── artifacts                               <-- (optional)
-   |   └── ...                                 <-- dash artifacts
-   └── templates                               <-- (optional)
-       └── ...                                 <-- dash templates
+   |         └── ...                           # server logic modules
 ```
+</div>
+<div style="background:#343434">
+
+```python
+   ├── sphinx                                  # automatic documentation config
+   |   ├── conf.py                             # sphinx config
+   |   ├── make.bat                            # sphinx config
+   |   ├── Makefile                            # sphinx config
+   |   ├── cli.rst                             # cli docs
+   |   ├── core.rst                            # core logic docs
+   |   ├── index.rst                           # sphinx tox tree
+   |   ├── modules.rst                         # sphinx toc tree
+   |   ├── server.rst                          # server.py docs (optional)
+   │   ├── intro.rst                           # README.md as rst
+   │   └── style.css                           # used by sphinx for styling docs
+```
+</div>
+<div style="background:#242424">
+
+```python
+   ├── mkdocs                                  # markdown documentation config (optional)
+   |   ├── mkdocs.yml                          # mkdocs file index
+   |   └── md
+   |       ├── index.md                        # markdown docs homepage
+   |       ├── style.css                       # custom stylesheet
+   |       └── ...                             # markdown files
+```
+</div>
+<div style="background:#343434">
+
+```python
+   ├── docs                                    # documentation build (/public if using gitlab)
+   |   ├── index.html                          # docs homepage
+   |   ├── architecture.svg                    # auto-generated graph of app dependecies
+   |   ├── plots.html                          # code metric plots
+   |   ├── all_metrics.html                    # master code metrics table
+   |   ├── cyclomatic_complexity_metrics.html  # code metrics table
+   |   ├── halstead_metrics.html               # code metrics table
+   |   ├── htmlcov
+   |   |   └── index.html                      # code coverage report
+   |   └── resources
+   |       └── ...                             # additional media for docs
+```
+</div>
+<div style="background:#242424">
+
+```python
+   ├── helm                                    # Helm app definition (optional)
+   |   ├── README.md                           # app README
+   |   ├── Chart.yaml                          # Helm chart
+   |   ├── values.yaml                         # default values
+   |   ├── .helmignore                         # ignores files
+   |   └── templates
+   │       ├── _helpers.tpl                    # creates vars from values.yml
+   │       ├── argocd-application.yaml         # ArgoCD app definition
+   │       ├── deployment.yaml                 # k8s deployment
+   │       ├── desktop-volume.yaml             # allows mounting of repo into pod
+   │       ├── env-configmap.yaml              # env vars
+   │       ├── env-secret.yaml                 # env secrets
+   │       ├── image-pull-secret.yaml          # image pull secret (ie ECR creds, etc)
+   │       ├── namespace.yaml                  # app namespace
+   │       ├── nginx-ingress.yaml              # Nginx ingress (HarvesterOS)
+   │       ├── repo-volume.yaml                # mount repo in volume
+   │       ├── service.yaml                    # app service
+   │       └── traefik-ingress.yaml            # Traefik ingress (RancherOS)
+```
+</div>
+<div style="background:#343434">
+
+```python
+   ├── notebooks
+   |   └── ...                                 # jupyter lab notebooks
+   ├── resources
+   |   └── ...                                 # resources used by app
+   ├── artifacts                               # (optional)
+   |   └── ...                                 # dash artifacts
+   └── templates                               # (optional)
+       └── ...                                 # dash templates
+```
+</div>
