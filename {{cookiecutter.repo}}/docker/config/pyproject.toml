@@ -81,6 +81,9 @@ lab = [
 ]
 dev = [
     "m2r2",
+{%- if cc.include_mkdocs == 'yes' %}
+    "mkdocs>=1.4.3",
+{%- endif %}
     "sphinx-autodoc-typehints>=1.22",
     "sphinx-rtd-theme",
     "sphinx>=5.3.0",
