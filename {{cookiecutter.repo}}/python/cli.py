@@ -85,11 +85,11 @@ def get_info():
     library-update       - Update dev dependencies
     library-update-pdm   - Update PDM
     quickstart           - Display quickstart guide
-{%- if cc.repo_type in ['dash', 'flask'] %}
-    session-app          - Run app inside Docker container
-{%- endif %}
     session-lab          - Run jupyter lab server
     session-python       - Run python session with dev dependencies
+{%- if cc.repo_type in ['dash', 'flask'] %}
+    session-server       - Run application server inside Docker container
+{%- endif %}
     state                - State of repository and Docker containers
     test-coverage        - Generate test coverage report
     test-dev             - Run all tests
@@ -732,11 +732,11 @@ def main():
         'library-update': x_tools_command('x_library_update', args),
         'library-update-pdm': x_tools_command('x_library_update_pdm', args),
         'quickstart': quickstart_command(),
-{%- if cc.repo_type in ['dash', 'flask'] %}
-        'session-app': x_tools_command('x_session_app', args),
-{%- endif %}
         'session-lab': x_tools_command('x_session_lab', args),
         'session-python': x_tools_command('x_session_python', args),
+{%- if cc.repo_type in ['dash', 'flask'] %}
+        'session-server': x_tools_command('x_session_server', args),
+{%- endif %}
         'state': state_command(),
         'test-coverage': x_tools_command('x_test_coverage', args),
         'test-dev': x_tools_command('x_test_dev', args),

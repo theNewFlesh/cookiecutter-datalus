@@ -550,13 +550,6 @@ x_quickstart () {
 }
 
 # SESSION-FUNCTIONS-------------------------------------------------------------
-x_session_app () {
-    # Run app
-    x_env_activate_dev;
-    echo "${CYAN2}APP${CLEAR}\n";
-    python3 $REPO_SUBPACKAGE/server/app.py;
-}
-
 x_session_lab () {
     # Run jupyter lab server
     x_env_activate_dev;
@@ -571,6 +564,13 @@ x_session_python () {
     # Run python session with dev dependencies
     x_env_activate_dev;
     python3;
+}
+
+x_session_server () {
+    # Run application server
+    x_env_activate_dev;
+    echo "${CYAN2}APP${CLEAR}\n";
+    python3 $REPO_SUBPACKAGE/server/app.py;
 }
 
 # TEST-FUNCTIONS----------------------------------------------------------------

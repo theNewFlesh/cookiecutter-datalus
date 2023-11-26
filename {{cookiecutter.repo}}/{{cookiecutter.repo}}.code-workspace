@@ -295,15 +295,6 @@
                     "x_quickstart"
                 ],
             },
-            // {
-            //     "label": "[session] app",
-            //     "detail": "Run app",
-            //     "icon": {"id": "beaker", "color": "terminal.ansiWhite"},
-            //     "command": [
-            //         "source $X_TOOLS_PATH &&",
-            //         "x_session_app"
-            //     ],
-            // },
             {
                 "label": "[session] lab",
                 "detail": "Run jupyter lab server",
@@ -322,6 +313,15 @@
                     "x_session_python"
                 ]
             },
+            // {
+            //     "label": "[session] server",
+            //     "detail": "Run application server",
+            //     "icon": {"id": "beaker", "color": "terminal.ansiWhite"},
+            //     "command": [
+            //         "source $X_TOOLS_PATH &&",
+            //         "x_session_server"
+            //     ],
+            // },
             {
                 "label": "[test] coverage",
                 "detail": "Generate test coverage report",

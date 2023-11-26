@@ -159,9 +159,9 @@ The following is a complete list of all available development commands:
 | library-update       | Update dev dependencies                                             |
 | library-update-pdm   | Update PDM                                                          |
 | quickstart           | Display quickstart guide                                            |
-| session-app          | Run app inside Docker container                                     |
 | session-lab          | Run jupyter lab server                                              |
 | session-python       | Run python session with dev dependencies                            |
+| session-server       | Run application server inside Docker container                      |
 | state                | State of repository and Docker containers                           |
 | test-coverage        | Generate test coverage report                                       |
 | test-dev             | Run all tests                                                       |
