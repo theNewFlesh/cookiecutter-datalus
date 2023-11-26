@@ -93,9 +93,9 @@ Development commands are grouped by one of 10 prefixes:
 Here are some frequently used commands to get you started:
 | Command           | Description                                               |
 | ----------------- | --------------------------------------------------------- |
-| docker-restart    | Restart {{cc.repo}} container                                 |
-| docker-start      | Start {{cc.repo}} container                                   |
-| docker-stop       | Stop {{cc.repo}} container                                    |
+| docker-restart    | Restart container                                         |
+| docker-start      | Start container                                           |
+| docker-stop       | Stop container                                            |
 | docs-full         | Generate documentation, coverage report, diagram and code |
 | library-add       | Add a given package to a given dependency group           |
 | library-graph-dev | Graph dependencies in dev environment                     |
@@ -103,10 +103,10 @@ Here are some frequently used commands to get you started:
 | library-search    | Search for pip packages                                   |
 | library-update    | Update dev dependencies                                   |
 | session-lab       | Run jupyter lab server                                    |
-| state             | State of {{cc.repo}}                                          |
+| state             | State of                                                  |
 | test-dev          | Run all tests                                             |
 | test-lint         | Run linting and type checking                             |
-| zsh               | Run ZSH session inside {{cc.repo}} container                  |
+| zsh               | Run ZSH session inside container                          |
 | zsh-complete      | Generate ZSH completion script                            |
 
 ---
@@ -127,18 +127,18 @@ The following is a complete list of all available development commands:
 | build-prod           | Publish pip package of repo to PyPi                                 |
 | build-publish        | Run production tests first then publish pip package of repo to PyPi |
 | build-test           | Build test version of repo for prod testing                         |
-| docker-build         | Build image of {{cc.repo}}                                              |
-| docker-build-prod    | Build production image of {{cc.repo}}                                   |
-| docker-container     | Display the Docker container id of {{cc.repo}}                          |
-| docker-destroy       | Shutdown {{cc.repo}} container and destroy its image                    |
-| docker-destroy-prod  | Shutdown {{cc.repo}} production container and destroy its image         |
-| docker-image         | Display the Docker image id of {{cc.repo}}                              |
-| docker-prod          | Start {{cc.repo}} production container                                  |
-| docker-push          | Push {{cc.repo}} production image to Dockerhub                          |
-| docker-remove        | Remove {{cc.repo}} Docker image                                         |
-| docker-restart       | Restart {{cc.repo}} container                                           |
-| docker-start         | Start {{cc.repo}} container                                             |
-| docker-stop          | Stop {{cc.repo}} container                                              |
+| docker-build         | Build Docker image                                                  |
+| docker-build-prod    | Build production image                                              |
+| docker-container     | Display the Docker container id                                     |
+| docker-destroy       | Shutdown Docker container and destroy its image                     |
+| docker-destroy-prod  | Shutdown production container and destroy its image                 |
+| docker-image         | Display the Docker image id                                         |
+| docker-prod          | Start production container                                          |
+| docker-push          | Push production image to Dockerhub                                  |
+| docker-remove        | Remove Docker image                                                 |
+| docker-restart       | Restart Docker container                                            |
+| docker-start         | Start Docker container                                              |
+| docker-stop          | Stop Docker container                                               |
 | docs                 | Generate sphinx documentation                                       |
 | docs-architecture    | Generate architecture.svg diagram from all import statements        |
 | docs-full            | Generate documentation, coverage report, diagram and code           |
@@ -159,10 +159,10 @@ The following is a complete list of all available development commands:
 | library-update       | Update dev dependencies                                             |
 | library-update-pdm   | Update PDM                                                          |
 | quickstart           | Display quickstart guide                                            |
-| session-app          | Run app                                                             |
+| session-app          | Run app inside Docker container                                     |
 | session-lab          | Run jupyter lab server                                              |
 | session-python       | Run python session with dev dependencies                            |
-| state                | State of {{cc.repo}}                                                    |
+| state                | State of repository and Docker containers                           |
 | test-coverage        | Generate test coverage report                                       |
 | test-dev             | Run all tests                                                       |
 | test-fast            | Test all code excepts tests marked with SKIP_SLOWS_TESTS decorator  |
@@ -172,9 +172,9 @@ The following is a complete list of all available development commands:
 | version-bump-major   | Bump pyproject major version                                        |
 | version-bump-minor   | Bump pyproject minor version                                        |
 | version-bump-patch   | Bump pyproject patch version                                        |
-| zsh                  | Run ZSH session inside {{cc.repo}} container                            |
+| zsh                  | Run ZSH session inside Docker container                             |
 | zsh-complete         | Generate oh-my-zsh completions                                      |
-| zsh-root             | Run ZSH session as root inside {{cc.repo}} container                    |
+| zsh-root             | Run ZSH session as root inside Docker container                     |
 
 ### Flags
 

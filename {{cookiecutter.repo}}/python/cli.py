@@ -53,18 +53,18 @@ def get_info():
     build-prod           - Publish pip package of repo to PyPi
     build-publish        - Run production tests first then publish pip package of repo to PyPi
     build-test           - Build test version of repo for prod testing
-    docker-build         - Build image of {repo}
-    docker-build-prod    - Build production image of {repo}
-    docker-container     - Display the Docker container id of {repo}
-    docker-destroy       - Shutdown {repo} container and destroy its image
-    docker-destroy-prod  - Shutdown {repo} production container and destroy its image
-    docker-image         - Display the Docker image id of {repo}
-    docker-prod          - Start {repo} production container
-    docker-push          - Push {repo} production image to Dockerhub
-    docker-remove        - Remove {repo} Docker image
-    docker-restart       - Restart {repo} container
-    docker-start         - Start {repo} container
-    docker-stop          - Stop {repo} container
+    docker-build         - Build Docker image
+    docker-build-prod    - Build production image
+    docker-container     - Display the Docker container id
+    docker-destroy       - Shutdown Docker container and destroy its image
+    docker-destroy-prod  - Shutdown production container and destroy its image
+    docker-image         - Display the Docker image id
+    docker-prod          - Start production container
+    docker-push          - Push production image to Dockerhub
+    docker-remove        - Remove Docker image
+    docker-restart       - Restart Docker container
+    docker-start         - Start Docker container
+    docker-stop          - Stop Docker container
     docs                 - Generate sphinx documentation
     docs-architecture    - Generate architecture.svg diagram from all import statements
     docs-full            - Generate documentation, coverage report, diagram and code
@@ -86,11 +86,11 @@ def get_info():
     library-update-pdm   - Update PDM
     quickstart           - Display quickstart guide
 {%- if cc.repo_type in ['dash', 'flask'] %}
-    session-app          - Run app inside {repo} container
+    session-app          - Run app inside Docker container
 {%- endif %}
     session-lab          - Run jupyter lab server
     session-python       - Run python session with dev dependencies
-    state                - State of {repo}
+    state                - State of repository and Docker containers
     test-coverage        - Generate test coverage report
     test-dev             - Run all tests
     test-fast            - Test all code excepts tests marked with SKIP_SLOWS_TESTS decorator
@@ -100,9 +100,9 @@ def get_info():
     version-bump-major   - Bump pyproject major version
     version-bump-minor   - Bump pyproject minor version
     version-bump-patch   - Bump pyproject patch version
-    zsh                  - Run ZSH session inside {repo} container
+    zsh                  - Run ZSH session inside Docker container
     zsh-complete         - Generate oh-my-zsh completions
-    zsh-root             - Run ZSH session as root inside {repo} container
+    zsh-root             - Run ZSH session as root inside Docker container
 '''.format(repo=REPO))
 
     parser.add_argument(
