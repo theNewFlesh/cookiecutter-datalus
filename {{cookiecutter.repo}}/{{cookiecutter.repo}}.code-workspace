@@ -54,6 +54,7 @@
             "**/.vscode": true,
             "**/CVS": true,
             "**/flask_monitoringdashboard.db": true,
+            "**/jupyter/serverconfig": true,
             "*/*/**/node_modules": true
         }
     },
@@ -70,7 +71,7 @@
         },
         "presentation": {
             "focus": true,
-            "panel": "new",
+            "panel": "dedicated",
             "showReuseMessage": false
         },
         "tasks": [
