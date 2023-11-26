@@ -93,9 +93,9 @@ Development commands are grouped by one of 10 prefixes:
 Here are some frequently used commands to get you started:
 | Command           | Description                                               |
 | ----------------- | --------------------------------------------------------- |
-| docker-restart    | Restart {REPO} container                                  |
-| docker-start      | Start {REPO} container                                    |
-| docker-stop       | Stop {REPO} container                                     |
+| docker-restart    | Restart {{cc.repo}} container                                 |
+| docker-start      | Start {{cc.repo}} container                                   |
+| docker-stop       | Stop {{cc.repo}} container                                    |
 | docs-full         | Generate documentation, coverage report, diagram and code |
 | library-add       | Add a given package to a given dependency group           |
 | library-graph-dev | Graph dependencies in dev environment                     |
@@ -103,10 +103,10 @@ Here are some frequently used commands to get you started:
 | library-search    | Search for pip packages                                   |
 | library-update    | Update dev dependencies                                   |
 | session-lab       | Run jupyter lab server                                    |
-| state             | State of {REPO}                                           |
+| state             | State of {{cc.repo}}                                          |
 | test-dev          | Run all tests                                             |
 | test-lint         | Run linting and type checking                             |
-| zsh               | Run ZSH session inside {REPO} container                   |
+| zsh               | Run ZSH session inside {{cc.repo}} container                  |
 | zsh-complete      | Generate ZSH completion script                            |
 
 ---
