@@ -101,7 +101,8 @@
                     "_x_build_publish",
                     "'${input:pypi_user}'",
                     "'${input:pypi_password}'",
-                    "'${input:pypi_comment}'"
+                    "'${input:pypi_comment}'",
+                    "'${input:pypi_url}'"
                 ],
                 "dependsOn": [
                     "[test] prod"
