@@ -292,7 +292,7 @@ x_build_prod () {
 
 _x_build_publish () {
     # Publish pip package of repo to PyPi
-    # args: user, password, comment
+    # args: user, password, comment, url
     x_build_package;
     cd $BUILD_DIR;
     echo "${CYAN2}PUBLISHING PIP PACKAGE TO PYPI${CLEAR}\n";
@@ -301,6 +301,8 @@ _x_build_publish () {
         --username "$1" \
         --password "$2" \
         --comment "$3" \
+        --repository "$4" \
+        --no-very-ssl \
         --verbose;
 }
 
@@ -314,7 +316,7 @@ x_build_publish () {
         echo "${RED2}ERROR: Encountered error in testing, exiting before publish.${CLEAR}" >&2;
         return $?;
     else
-        _x_build_publish $1 $2 $3;
+        _x_build_publish $1 $2 $3 $4;
     fi;
 }
 
