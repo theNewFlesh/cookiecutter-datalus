@@ -482,6 +482,12 @@
                 "id": "pypi_comment",
                 "description": "Comments:",
                 "type": "promptString"
+            },
+            {
+                "id": "pypi_url",
+                "description": "PyPI registry URL:",
+                "type": "promptString",
+                "default": "https://pypi.org"
             }
         ]
     }
