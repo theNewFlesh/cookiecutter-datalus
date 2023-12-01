@@ -1,3 +1,4 @@
+{%- set cc = cookiecutter -%}
 #!/usr/bin/env python
 
 try:
