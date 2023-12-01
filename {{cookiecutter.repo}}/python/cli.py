@@ -1,4 +1,3 @@
-{%- set cc = cookiecutter -%}
 #!/usr/bin/env python
 
 try:
@@ -259,18 +258,28 @@ def remove_container():
     return 'docker container rm --force {repo}'
 
 
-def docker_exec():
-    # type: () -> str
+def docker_exec(tty=False):
+    # type: (bool) -> str
     '''
+    Args:
+        tty (bool, optional): Include --tty flag. Default: False.
+
     Returns:
         str: Partial command to call 'docker exec'.
     '''
-    cmd = line('''
-        docker exec
-            --interactive
-            --tty
-            --user {user}
-    ''')
+    if tty:
+        cmd = line('''
+            docker exec
+                --interactive
+                --tty
+                --user {user}
+        ''')
+    else:
+        cmd = line('''
+            docker exec
+                --interactive
+                --user {user}
+        ''')
     return cmd
 
 
@@ -568,8 +577,8 @@ def stop_command():
     return resolve(cmds)
 
 
-def x_tools_command(command, args=[]):
-    # type: (str, list[str]) -> str
+def x_tools_command(command, args=[], tty=False):
+    # type: (str, list[str], bool) -> str
     '''
     Runs a x_tools command.
 
@@ -577,6 +586,7 @@ def x_tools_command(command, args=[]):
         command (str): x_tools command
         args (list, optional): List of arguments to be passed to the command.
             Default: []
+        tty (bool, optional): Include docker --tty flag. Default: False.
 
     Returns:
         str: x_tools command.
@@ -584,7 +594,7 @@ def x_tools_command(command, args=[]):
     cmds = [
         enter_repo(),
         start(),
-        docker_exec() + ' {repo} zsh -c ' + x_tools(command, args),
+        docker_exec(tty=tty) + ' {repo} zsh -c ' + zshrc_tools(command, args),
         exit_repo(),
     ]
     return resolve(cmds)
@@ -616,7 +626,7 @@ def zsh_command():
     cmds = [
         enter_repo(),
         start(),
-        docker_exec() + ' {repo} zsh',
+        docker_exec(tty=True) + ' {repo} zsh',
         exit_repo(),
     ]
     return resolve(cmds)
@@ -732,8 +742,8 @@ def main():
         'library-update': x_tools_command('x_library_update', args),
         'library-update-pdm': x_tools_command('x_library_update_pdm', args),
         'quickstart': quickstart_command(),
-        'session-lab': x_tools_command('x_session_lab', args),
-        'session-python': x_tools_command('x_session_python', args),
+        'session-lab': x_tools_command('x_session_lab', args, tty=True),
+        'session-python': x_tools_command('x_session_python', args, tty=True),
 {%- if cc.repo_type in ['dash', 'flask'] %}
         'session-server': x_tools_command('x_session_server', args),
 {%- endif %}
