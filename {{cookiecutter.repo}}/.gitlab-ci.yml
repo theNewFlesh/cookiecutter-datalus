@@ -1,0 +1,38 @@
+{%- set cc = cookiecutter -%}
+stages:
+  - run
+  - pages
+
+run:
+  stage: run
+  only:
+    - master
+  image:
+    name: cruizba/ubuntu-dind:latest
+  services:
+    - name: docker:dind
+      alias: dockerdaemon
+  variables:
+    repo: {{ cc.repo }}
+    dev_cli: "bin/$repo"
+    DOCKER_HOST: tcp://dockerdaemon:2375/
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  script:
+    - $dev_cli docker-build
+    - $dev_cli docker-start
+    - $dev_cli test-lint
+    - $dev_cli docs
+    - $dev_cli docs-metrics
+    - $dev_cli docs-architecture
+    - $dev_cli test-coverage
+
+pages:
+  stage: pages
+  only:
+    - master
+  script:
+    - "echo Updating GitLab Pages"
+  artifacts:
+    paths:
+      - public

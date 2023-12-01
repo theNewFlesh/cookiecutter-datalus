@@ -180,6 +180,7 @@ APP
    ├── APP.code-workspace                      # VSCode config (contains task commands)
    ├── .devcontainer.json                      # VSCode remote container config
    ├── .env                                    # needed by VSCode docker-compose
+   ├── .gitlab-ci.yml                          # GitLab CI script
    ├── bin
    |   └── APP                                 # shell wrapper for CLI
 ```

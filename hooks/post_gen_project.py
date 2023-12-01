@@ -40,6 +40,9 @@ def main():
     if git_host == 'gitlab':
         os.rename('docs', 'public')
 
+    if git_host != 'gitlab':
+        os.remove('.gitlab-ci.yml')
+
     os.remove(src)
 
 
