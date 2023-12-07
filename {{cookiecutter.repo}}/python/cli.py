@@ -459,8 +459,19 @@ def prod_command(args):
     return resolve(cmds)
 
 
-def push_command():
-    # type: () -> str
+def pull_command(tag='dev-latest'):
+    # type: (str) -> str
+    '''
+    Args:
+        tag (str, optional): Tag prefix. Default: 'dev-latest'.
+
+    Returns:
+        str: Command to pull Docker image from registry.
+    '''
+    cmds = [
+        'docker pull {registry}:' + tag,
+    ]
+    return resolve(cmds)
     '''
     Returns:
         str: Command to push prod docker image to dockerhub.
