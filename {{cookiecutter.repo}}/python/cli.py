@@ -15,6 +15,11 @@ import re
 REPO_PATH = os.path.join(os.sep, *os.path.realpath(__file__).split(os.sep)[:-2])
 REPO = os.path.split(REPO_PATH)[-1]
 GIT_USER = '{{cc.git_user}}'
+{%- if cc.docker_registry == 'gitlab' %}
+DOCKER_REGISTRY = 'registry.gitlab.com/{{cc.git_user}}/' + REPO
+{%- else %}
+DOCKER_REGISTRY = '{{cc.git_user}}/' + REPO
+{%- endif %}
 USER = 'ubuntu:ubuntu'
 PORT = 8080
 # ------------------------------------------------------------------------------
@@ -137,6 +142,7 @@ def resolve(commands):
         white='\033[0;37m',
         yellow='\033[0;33m',
         git_user=GIT_USER,
+        registry=DOCKER_REGISTRY,
         port=str(PORT),
         pythonpath='{PYTHONPATH}',
         repo_path=REPO_PATH,
