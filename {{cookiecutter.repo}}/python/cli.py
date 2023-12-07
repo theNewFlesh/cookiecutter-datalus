@@ -363,7 +363,7 @@ def build_prod_command():
                 --force-rm
                 --no-cache
                 --file prod.dockerfile
-                --tag {git_user}/{repo}:$VERSION .;
+                --tag {registry}:prod-$VERSION .;
             cd ..
         '''),
         exit_repo(),
