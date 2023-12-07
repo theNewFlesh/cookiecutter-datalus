@@ -472,15 +472,28 @@ def pull_command(tag='dev-latest'):
         'docker pull {registry}:' + tag,
     ]
     return resolve(cmds)
+
+
+def push_command(mode='dev', suffix='$VERSION'):
+    # type: (str, str) -> str
     '''
+    Args:
+        mode (str, optional): Mode. Default: 'dev'.
+        suffix (str, optional): Tag suffix. Default: '$VERSION'.
+
     Returns:
-        str: Command to push prod docker image to dockerhub.
+        str: Command to push Docker image to registry.
     '''
+    tag = mode + '-' + suffix
+    target = ' {registry}:' + tag
     cmds = [
         enter_repo(),
         version_variable(),
         start(),
-        'docker push {git_user}/{repo}:$VERSION',
+        version_variable(),
+        'docker tag {repo}:' + mode + target,
+        'docker push' + target,
+        'docker rmi' + target,
         exit_repo(),
     ]
     return resolve(cmds)
