@@ -189,6 +189,7 @@ APP
    |   ├── dev.dockerfile                      # development version of app image
    |   ├── prod.dockerfile                     # production version of app image
    |   ├── docker-compose.yml                  # dev means of starting container
+   |   ├── .dockerignore                       # tells docker which files to ignore
    │   ├── scripts
    │   |  └── x_tools.sh                       # developer tools
    │   └── config
