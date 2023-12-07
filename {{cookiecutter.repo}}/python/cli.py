@@ -90,20 +90,7 @@ def get_info():
 {%- if cc.repo_type in ['dash', 'flask'] %}
     session-server       - Run application server inside Docker container
 {%- endif %}
-    state                - State of repository and Docker containers
-    test-coverage        - Generate test coverage report
-    test-dev             - Run all tests
-    test-fast            - Test all code excepts tests marked with SKIP_SLOWS_TESTS decorator
-    test-lint            - Run linting and type checking
-    test-prod            - Run tests across all support python versions
-    version              - Full resolution of repo: dependencies, linting, tests, docs, etc
-    version-bump-major   - Bump pyproject major version
-    version-bump-minor   - Bump pyproject minor version
-    version-bump-patch   - Bump pyproject patch version
-    zsh                  - Run ZSH session inside Docker container
-    zsh-complete         - Generate oh-my-zsh completions
-    zsh-root             - Run ZSH session as root inside Docker container
-'''.format(repo=REPO))
+    version-commit          - Tag with version and commit changes to master
 
     parser.add_argument(
         '-a',
@@ -617,6 +604,31 @@ def quickstart_command():
         | grep -vE '^---$'
     ''')
 
+def version_commit_command(args=[]):
+    # type: (List[str]) -> str
+    '''
+    Args:
+        args (list[str], optional): List containing a target branch.
+          Default: ['master'].
+
+    Returns:
+        str: Git tag and commit command.
+    '''
+    args = list(filter(lambda x: x != '', args))
+    branch = 'master'
+    if args != []:
+        branch = args[0]
+    cmds = [
+        enter_repo(),
+        version_variable(),
+        'git add --all',
+        'git commit --message $VERSION',
+        'git tag --annotate $VERSION --message "version: $VERSION"',
+        'git push --follow-tags origin HEAD:' + branch + ' --push-option ci.skip',
+        exit_repo(),
+    ]
+    return resolve(cmds)
+
 
 def zsh_command():
     # type: () -> str
@@ -758,6 +770,7 @@ def main():
         'version-bump-major': x_tools_command('x_version_bump_major', args),
         'version-bump-minor': x_tools_command('x_version_bump_minor', args),
         'version-bump-patch': x_tools_command('x_version_bump_patch', args),
+        'version-commit': version_commit_command(args),
         'zsh': zsh_command(),
         'zsh-complete': zsh_complete_command(),
         'zsh-root': zsh_root_command(),
