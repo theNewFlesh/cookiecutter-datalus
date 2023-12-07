@@ -54,48 +54,68 @@ def get_info():
         nargs=1,
         action='store',
         help='''Command to run in {repo} app.
-    build-package        - Build production version of repo for publishing
-    build-prod           - Publish pip package of repo to PyPi
-    build-publish        - Run production tests first then publish pip package of repo to PyPi
-    build-test           - Build test version of repo for prod testing
-    docker-build         - Build Docker image
-    docker-build-prod    - Build production image
-    docker-container     - Display the Docker container id
-    docker-destroy       - Shutdown Docker container and destroy its image
-    docker-destroy-prod  - Shutdown production container and destroy its image
-    docker-image         - Display the Docker image id
-    docker-prod          - Start production container
-    docker-push          - Push production image to Dockerhub
-    docker-remove        - Remove Docker image
-    docker-restart       - Restart Docker container
-    docker-start         - Start Docker container
-    docker-stop          - Stop Docker container
-    docs                 - Generate sphinx documentation
-    docs-architecture    - Generate architecture.svg diagram from all import statements
-    docs-full            - Generate documentation, coverage report, diagram and code
-    docs-metrics         - Generate code metrics report, plots and tables
-    library-add          - Add a given package to a given dependency group
-    library-graph-dev    - Graph dependencies in dev environment
-    library-graph-prod   - Graph dependencies in prod environment
-    library-install-dev  - Install all dependencies into dev environment
-    library-install-prod - Install all dependencies into prod environment
-    library-list-dev     - List packages in dev environment
-    library-list-prod    - List packages in prod environment
-    library-lock-dev     - Resolve dev.lock file
-    library-lock-prod    - Resolve prod.lock file
-    library-remove       - Remove a given package from a given dependency group
-    library-search       - Search for pip packages
-    library-sync-dev     - Sync dev environment with packages listed in dev.lock
-    library-sync-prod    - Sync prod environment with packages listed in prod.lock
-    library-update       - Update dev dependencies
-    library-update-pdm   - Update PDM
-    quickstart           - Display quickstart guide
-    session-lab          - Run jupyter lab server
-    session-python       - Run python session with dev dependencies
+    build-package           - Build production version of repo for publishing
+    build-prod              - Publish pip package of repo to PyPi
+    build-publish           - Run production tests first then publish pip package of repo to PyPi
+    build-test              - Build test version of repo for prod testing
+    docker-build            - Build Docker image
+    docker-build-from-cache - Build Docker image from cached image
+    docker-build-prod       - Build production image
+    docker-container        - Display the Docker container id
+    docker-destroy          - Shutdown container and destroy its image
+    docker-destroy-prod     - Shutdown production container and destroy its image
+    docker-image            - Display the Docker image id
+    docker-prod             - Start production container
+    docker-pull-dev         - Pull development image from Docker registry
+    docker-pull-prod        - Pull production image from Docker registry
+    docker-push-dev         - Push development image to Docker registry
+    docker-push-dev-latest  - Push development image to Docker registry with dev-latest tag
+    docker-push-prod        - Push production image to Docker registry
+    docker-push-prod-latest - Push production image to Docker registry with prod-latest tag
+    docker-remove           - Remove Docker image
+    docker-restart          - Restart container
+    docker-start            - Start container
+    docker-stop             - Stop container
+    docs                    - Generate sphinx documentation
+    docs-architecture       - Generate architecture.svg diagram from all import statements
+    docs-full               - Generate documentation, coverage report, diagram and code
+    docs-metrics            - Generate code metrics report, plots and tables
+    library-add             - Add a given package to a given dependency group
+    library-graph-dev       - Graph dependencies in dev environment
+    library-graph-prod      - Graph dependencies in prod environment
+    library-install-dev     - Install all dependencies into dev environment
+    library-install-prod    - Install all dependencies into prod environment
+    library-list-dev        - List packages in dev environment
+    library-list-prod       - List packages in prod environment
+    library-lock-dev        - Resolve dev.lock file
+    library-lock-prod       - Resolve prod.lock file
+    library-remove          - Remove a given package from a given dependency group
+    library-search          - Search for pip packages
+    library-sync-dev        - Sync dev environment with packages listed in dev.lock
+    library-sync-prod       - Sync prod environment with packages listed in prod.lock
+    library-update          - Update dev dependencies
+    library-update-pdm      - Update PDM
+    quickstart              - Display quickstart guide
+    session-lab             - Run jupyter lab server
+    session-python          - Run python session with dev dependencies
 {%- if cc.repo_type in ['dash', 'flask'] %}
     session-server       - Run application server inside Docker container
 {%- endif %}
+    state                   - State of repository and Docker container
+    test-coverage           - Generate test coverage report
+    test-dev                - Run all tests
+    test-fast               - Test all code excepts tests marked with SKIP_SLOWS_TESTS decorator
+    test-lint               - Run linting and type checking
+    test-prod               - Run tests across all support python versions
+    version                 - Full resolution of repo: dependencies, linting, tests, docs, etc
+    version-bump-major      - Bump pyproject major version
+    version-bump-minor      - Bump pyproject minor version
+    version-bump-patch      - Bump pyproject patch version
     version-commit          - Tag with version and commit changes to master
+    zsh                     - Run ZSH session inside Docker container
+    zsh-complete            - Generate oh-my-zsh completions
+    zsh-root                - Run ZSH session as root inside Docker container
+'''.format(repo=REPO))  # noqa: E501
 
     parser.add_argument(
         '-a',
@@ -769,13 +789,19 @@ def main():
         'build-publish': x_tools_command('x_build_publish', args),
         'build-test': x_tools_command('x_build_test', args),
         'docker-build': build_dev_command(),
+        'docker-build-from-cache': build_dev_command(use_cache=True),
         'docker-build-prod': build_prod_command(),
         'docker-container': container_id_command(),
         'docker-destroy': destroy_dev_command(),
         'docker-destroy-prod': destroy_prod_command(),
         'docker-image': image_id_command(),
         'docker-prod': prod_command(args),
-        'docker-push': push_command(),
+        'docker-pull-dev': pull_command('dev-latest'),
+        'docker-pull-prod': pull_command('prod-latest'),
+        'docker-push-dev': push_command('dev'),
+        'docker-push-dev-latest': push_command('dev', 'latest'),
+        'docker-push-prod': push_command('prod'),
+        'docker-push-prod-latest': push_command('prod', 'latest'),
         'docker-remove': remove_command(),
         'docker-restart': restart_command(),
         'docker-start': start_command(),
