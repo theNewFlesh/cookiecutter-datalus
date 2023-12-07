@@ -347,19 +347,16 @@ def build_dev_command(use_cache=False):
         docker build
             --file dev.dockerfile
             --build-arg BUILDKIT_INLINE_CACHE=1
-            --tag {repo}:dev .;
-        cd ..
+            --label "repository={repo}"
+            --label "docker-registry={registry}"
+            --label "git-user={git_user}"
+            --label "git-branch=$(git branch --show-current)"
+            --label "git-commit=$(git rev-parse HEAD)"
     ''')
     if use_cache:
-        cmd = line('''
-            cd docker;
-            docker build
-                --file dev.dockerfile
-                --build-arg BUILDKIT_INLINE_CACHE=1
-                --cache-from {registry}:dev-latest
-                --tag {repo}:dev .;
-            cd ..
-        ''')
+        cmd += ' --cache-from {registry}:dev-latest'
+    cmd += ' --tag {repo}:dev .; cd ..'
+
     cmds = [
         enter_repo(),
         cmd,
@@ -383,6 +380,11 @@ def build_prod_command():
                 --force-rm
                 --no-cache
                 --file prod.dockerfile
+                --label "repository={repo}"
+                --label "docker-registry={registry}"
+                --label "git-user={git_user}"
+                --label "git-branch=$(git branch --show-current)"
+                --label "git-commit=$(git rev-parse HEAD)"
                 --tag {registry}:prod-$VERSION .;
             cd ..
         '''),
