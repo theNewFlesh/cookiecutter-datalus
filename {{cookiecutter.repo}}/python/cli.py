@@ -312,21 +312,37 @@ def zshrc_tools(command, args=[]):
 
 
 # COMMANDS----------------------------------------------------------------------
-def build_dev_command():
-    # type: () -> str
+def build_dev_command(use_cache=False):
+    # type: (bool) -> str
     '''
+    Args:
+        use_cache (bool, optional): Whether to use Docker image cache.
+            Default: False.
+
     Returns:
         str: Command to build dev image.
     '''
-    cmds = [
-        enter_repo(),
-        line('''
+    cmd = line('''
+        cd docker;
+        docker build
+            --file dev.dockerfile
+            --build-arg BUILDKIT_INLINE_CACHE=1
+            --tag {repo}:dev .;
+        cd ..
+    ''')
+    if use_cache:
+        cmd = line('''
             cd docker;
             docker build
                 --file dev.dockerfile
+                --build-arg BUILDKIT_INLINE_CACHE=1
+                --cache-from {registry}:dev-latest
                 --tag {repo}:dev .;
             cd ..
-        '''),
+        ''')
+    cmds = [
+        enter_repo(),
+        cmd,
         exit_repo(),
     ]
     return resolve(cmds)
