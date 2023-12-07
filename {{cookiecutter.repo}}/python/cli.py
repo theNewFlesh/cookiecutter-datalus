@@ -452,7 +452,7 @@ def prod_command(args):
             --rm
             --publish {port}:{port}
             --name {repo}-prod
-            {git_user}/{repo}:$VERSION
+            {registry}:prod-$VERSION
         '''),
         exit_repo(),
     ]
