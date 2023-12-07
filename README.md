@@ -146,7 +146,7 @@ Its usage pattern is: `bin/repo COMMAND [-a --args]=ARGS [-h --help] [--dryrun]`
 | version-bump-major      | Bump pyproject major version                                        | [version] bump-major   |
 | version-bump-minor      | Bump pyproject minor version                                        | [version] bump-minor   |
 | version-bump-patch      | Bump pyproject patch version                                        | [version] bump-patch   |
-| version-commit          | Tag with version and commit changes to master                       |                        |
+| version-commit          | Tag with version and commit changes to master                       | [version] commit       |
 | zsh                     | Run ZSH session inside Docker container                             |                        |
 | zsh-complete            | Generate oh-my-zsh completions                                      |                        |
 | zsh-root                | Run ZSH session as root inside Docker container                     |                        |

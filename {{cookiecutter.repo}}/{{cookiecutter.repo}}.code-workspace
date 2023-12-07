@@ -439,6 +439,15 @@
                     "source $X_TOOLS_PATH &&",
                     "x_version_bump_patch"
                 ]
+            },
+            {
+                "label": "[version] commit",
+                "detail": "Tag with version and commit changes to master",
+                "icon": {"id": "plus", "color": "terminal.ansiRed"},
+                "command": [
+                    "source $X_TOOLS_PATH &&",
+                    "x_version_commit '${input:commit_message}'"
+                ]
             }
         ],
         "inputs": [
@@ -490,6 +499,12 @@
                 "description": "PyPI registry URL:",
                 "type": "promptString",
                 "default": "https://pypi.org"
+            },
+            {
+                "id": "commit_message",
+                "description": "Git commit message",
+                "type": "promptString",
+                "default": ""
             }
         ]
     }
