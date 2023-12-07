@@ -285,20 +285,19 @@ def version_variable():
     ''')
 
 
-def x_tools(command, args=[]):
+def zshrc_tools(command, args=[]):
     # type: (str, list[str]) -> str
     '''
-    Creates a x_tools command string.
+    Creates a tools command string that sources zshrc first.
 
     Args:
-        command (str): x_tools command
+        command (str): command
         args (list, optional): List of arguments to be passed to the command.
             Default: []
 
     Returns:
-        str: x_tools command.
+        str: command.
     '''
-
     cmd = 'source /home/ubuntu/.zshrc && {cmd}'.format(cmd=command)
     if args != []:
         cmd = cmd + ' ' + ' '.join(args)
