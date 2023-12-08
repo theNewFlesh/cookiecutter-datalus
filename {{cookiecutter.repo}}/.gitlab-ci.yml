@@ -1,38 +1,136 @@
 {%- set cc = cookiecutter -%}
+# PIPELINE----------------------------------------------------------------------
 stages:
-  - run
+  - build
+  - test
+  - master
   - pages
+  - prod
 
-run:
-  stage: run
-  only:
-    - master
+# Please setup a project or group access token in GitLab:
+#  - name: GIT_ACCESS_TOKEN
+#  - scopes: write_repository
+#  - role: maintainer
+# Please setup a CI/CD variable:
+#  - name: GIT_ACCESS_TOKEN
+#  - value: value of access token
+variables:
+  repo: "$CI_PROJECT_NAME"
+  cli: "bin/$repo"
+  org: {{cc.git_user}}
+  org_url: gitlab.com
+  git_url: "https://gitlab-ci-token:$GIT_ACCESS_TOKEN@gitlab.com/$org/$repo.git"
+
+before_script:
+  - export timestamp=`echo $CI_PIPELINE_CREATED_AT | sed 's/:/-/g'`
+  - export test_image="$CI_REGISTRY/$org/$repo:test-$timestamp"
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  - apt update
+  - apt install -y git
+  - git config --global user.name devops
+  - git config --global user.email "devops@$org_url"
+  - git remote set-url origin $git_url
+
+.build-env:
   image:
     name: cruizba/ubuntu-dind:latest
   services:
     - name: docker:dind
       alias: dockerdaemon
   variables:
-    repo: {{ cc.repo }}
-    dev_cli: "bin/$repo"
     DOCKER_HOST: tcp://dockerdaemon:2375/
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
+
+# FEATURE-----------------------------------------------------------------------
+.feature-env:
+  extends: .build-env
+  rules:
+    - if: >-
+        $CI_PIPELINE_SOURCE == 'merge_request_event' &&
+        $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == 'master' &&
+        $CI_COMMIT_BRANCH != 'master' &&
+        $CI_COMMIT_BRANCH != 'prod'
+
+build:
+  stage: build
+  extends: .feature-env
   script:
-    - $dev_cli docker-build
-    - $dev_cli docker-start
-    - $dev_cli test-lint
-    - $dev_cli docs
-    - $dev_cli docs-metrics
-    - $dev_cli docs-architecture
-    - $dev_cli test-coverage
+    - $cli docker-pull-dev
+    - $cli docker-build-from-cache
+    - docker tag $repo:dev $test_image
+    - docker push $test_image
+
+docs:
+  stage: test
+  extends: .feature-env
+  script:
+    - docker pull $test_image
+    - docker tag $test_image $repo:dev
+    - $cli docker-start
+    - $cli docs
+    - $cli docs-metrics
+    - $cli docs-architecture
+
+lint:
+  stage: test
+  extends: .feature-env
+  script:
+    - docker pull $test_image
+    - docker tag $test_image $repo:dev
+    - $cli docker-start
+    - $cli test-lint
+
+test:
+  stage: test
+  extends: .feature-env
+  script:
+    - docker pull $test_image
+    - docker tag $test_image $repo:dev
+    - $cli docker-start
+    - $cli test-coverage
+
+# MASTER------------------------------------------------------------------------
+.master-rules:
+  rules:
+    - if: $CI_COMMIT_BRANCH == 'master'
+
+master:
+  stage: master
+  extends:
+    - .build-env
+    - .master-rules
+  script:
+    - $cli docker-build
+    - $cli version-bump-patch
+    - $cli version
+    - $cli version-commit
+    - $cli docker-push-dev
+    - $cli docker-push-dev-latest
 
 pages:
+  extends: .master-rules
   stage: pages
-  only:
-    - master
-  script:
-    - "echo Updating GitLab Pages"
+  script: echo 'Updating GitLab Pages'
   artifacts:
     paths:
       - public
+
+# PROD--------------------------------------------------------------------------
+prod:
+  stage: prod
+  extends: .build-env
+  rules:
+    - if: >-
+        $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == 'master' &&
+        $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == 'prod'
+  script:
+    - $cli docker-pull-dev
+    - docker tag $repo:dev-latest $repo:dev
+    - $cli docker-start
+    - $cli library-install-prod
+    - $cli test-prod
+    - $cli build-publish
+    - $cli docker-build-prod
+    - $cli docker-push-prod
+    - $cli docker-push-prod-latest
