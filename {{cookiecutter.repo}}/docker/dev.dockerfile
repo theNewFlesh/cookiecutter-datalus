@@ -45,15 +45,19 @@ RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
         btop \
         ca-certificates \
         curl \
-{%- if cc.include_tensorflow == "yes" %}
+{%- if cc.include_tensorflow == "no" %}
+        exa \
+        ripgrep \
+{%- endif %}
         git \
+        gnupg \
         graphviz \
-        npm \
         parallel \
         software-properties-common \
         unzip \
         vim \
         wget && \
+{%- if cc.include_tensorflow == "yes" %}
     rm -rf /var/lib/apt/lists/* && \
     curl -fsSL \
         "https://github.com/ogham/exa/releases/latest/download/exa-linux-x86_64-v0.10.1.zip" \
@@ -65,18 +69,10 @@ RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
         -o ripgrep.deb && \
     apt install -y ./ripgrep.deb && \
     rm -rf ripgrep.deb
-{% else %}
-        exa \
-        git \
-        graphviz \
-        npm \
-        parallel \
-        ripgrep \
-        software-properties-common \
-        vim \
-        wget && \
+{%- else -%}
     rm -rf /var/lib/apt/lists/*
 {%- endif %}
+
 {% if cc.include_tensorflow == "yes" -%}
 # install nvidia drivers
 RUN echo "\n${CYAN}INSTALL NVIDIA DRIVERS${CLEAR}"; \
@@ -106,6 +102,21 @@ RUN echo "\n${CYAN}INSTALL PIP${CLEAR}"; \
     python3.{{ max_ver }} get-pip.py && \
     pip3.{{ max_ver }} install --upgrade pip && \
     rm -rf get-pip.py
+
+# install nodejs (needed by jupyter lab)
+RUN echo "\n${CYAN}INSTALL NODEJS${CLEAR}"; \
+    sudo mkdir -p /etc/apt/keyrings && \
+    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
+        | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
+    export NODE_VERSION=18 && \
+    echo "deb \
+        [signed-by=/etc/apt/keyrings/nodesource.gpg] \
+        https://deb.nodesource.com/node_$NODE_VERSION.x \
+        nodistro main" \
+        | sudo tee /etc/apt/sources.list.d/nodesource.list && \
+    sudo apt update && \
+    sudo apt install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
 
 # install and setup zsh
 RUN echo "\n${CYAN}SETUP ZSH${CLEAR}"; \
