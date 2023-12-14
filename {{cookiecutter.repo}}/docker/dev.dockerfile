@@ -137,6 +137,26 @@ RUN echo "\n${CYAN}SETUP ZSH${CLEAR}"; \
     rm -rf install-oh-my-zsh.sh && \
     echo 'UTC' > /etc/timezone
 
+# install s6-overlay
+RUN echo "\n${CYAN}INSTALL S6${CLEAR}"; \
+    export S6_ARCH="x86_64" && \
+    export S6_VERSION="v3.1.5.0" && \
+    export S6_URL="https://github.com/just-containers/s6-overlay/releases/download" && \
+    curl -fsSL "${S6_URL}/${S6_VERSION}/s6-overlay-noarch.tar.xz" \
+        -o /tmp/s6-overlay-noarch.tar.xz && \
+    curl -fsSL "${S6_URL}/${S6_VERSION}/s6-overlay-noarch.tar.xz.sha256" \
+        -o /tmp/s6-overlay-noarch.tar.xz.sha256 && \
+    curl -fsSL "${S6_URL}/${S6_VERSION}/s6-overlay-${S6_ARCH}.tar.xz" \
+        -o /tmp/s6-overlay-${S6_ARCH}.tar.xz && \
+    curl -fsSL "${S6_URL}/${S6_VERSION}/s6-overlay-${S6_ARCH}.tar.xz.sha256" \
+        -o /tmp/s6-overlay-${S6_ARCH}.tar.xz.sha256 && \
+    tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz && \
+    tar -C / -Jxpf /tmp/s6-overlay-${S6_ARCH}.tar.xz && \
+    rm /tmp/s6-overlay-noarch.tar.xz \
+       /tmp/s6-overlay-noarch.tar.xz.sha256 \
+       /tmp/s6-overlay-${S6_ARCH}.tar.xz \
+       /tmp/s6-overlay-${S6_ARCH}.tar.xz.sha256
+
 USER ubuntu
 ENV PATH="/home/ubuntu/.local/bin:$PATH"
 COPY ./config/henanigans.zsh-theme .oh-my-zsh/custom/themes/henanigans.zsh-theme
@@ -226,3 +246,20 @@ RUN echo "\n${CYAN}REMOVE DIRECTORIES${CLEAR}"; \
 ENV REPO='{{cc.repo}}'
 ENV PYTHONPATH ":/home/ubuntu/$REPO/python:/home/ubuntu/.local/lib"
 ENV PYTHONPYCACHEPREFIX "/home/ubuntu/.python_cache"
+
+USER root
+
+# add s6 service and init scripts
+RUN echo "\n${CYAN}CREATE S6 DIRECTORIES${CLEAR}"; \
+    mkdir -p /etc/services.d/jupyterlab && \
+    mkdir -p /etc/cont-init.d
+COPY --chown=ubuntu:ubuntu --chmod=755 scripts/s6-service.sh /etc/services.d/jupyterlab/run
+COPY --chown=ubuntu:ubuntu --chmod=755 scripts/s6-init.sh /etc/cont-init.d/01-copy-repo-files
+
+USER ubuntu
+
+ENV HOME /home/ubuntu
+ENV JUPYTER_RUNTIME_DIR /tmp/jupyter_runtime
+
+EXPOSE 8888/tcp
+ENTRYPOINT ["/init"]
