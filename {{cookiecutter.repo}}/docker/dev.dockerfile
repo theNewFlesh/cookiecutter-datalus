@@ -40,7 +40,10 @@ WORKDIR /home/ubuntu
 RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
     apt update && \
     apt install -y \
+        apt-transport-https \
         bat \
+        btop \
+        ca-certificates \
         curl \
 {%- if cc.include_tensorflow == "yes" %}
         git \
