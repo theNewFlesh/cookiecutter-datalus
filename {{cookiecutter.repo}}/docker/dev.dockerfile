@@ -238,6 +238,14 @@ RUN echo "\n${CYAN}INSTALL PROD ENVIRONMENTS${CLEAR}"; \
 {%- endfor %}
     x_env_init prod 3.{{ min_ver }}
 
+# build jupyter lab
+RUN echo "\n${CYAN}BUILD JUPYTER LAB${CLEAR}"; \
+    . /home/ubuntu/scripts/x_tools.sh && \
+    export CONFIG_DIR=/home/ubuntu/config && \
+    export SCRIPT_DIR=/home/ubuntu/scripts && \
+    x_env_activate_dev && \
+    jupyter lab build
+
 # cleanup dirs
 WORKDIR /home/ubuntu
 RUN echo "\n${CYAN}REMOVE DIRECTORIES${CLEAR}"; \
