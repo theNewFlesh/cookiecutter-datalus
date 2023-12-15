@@ -217,7 +217,9 @@ COPY --chown=ubuntu:ubuntu config/dev.lock /home/ubuntu/config/
 COPY --chown=ubuntu:ubuntu config/pdm.toml /home/ubuntu/config/
 COPY --chown=ubuntu:ubuntu config/prod.lock /home/ubuntu/config/
 COPY --chown=ubuntu:ubuntu config/pyproject.toml /home/ubuntu/config/
+{%- if cc.include_prod_cli == 'yes' -%}
 COPY --chown=ubuntu:ubuntu scripts/prod-cli /home/ubuntu/scripts/
+{%- endif %}
 COPY --chown=ubuntu:ubuntu scripts/x_tools.sh /home/ubuntu/scripts/
 RUN echo "\n${CYAN}SETUP DIRECTORIES${CLEAR}"; \
     mkdir pdm
@@ -243,10 +245,12 @@ RUN echo "\n${CYAN}INSTALL PROD ENVIRONMENTS${CLEAR}"; \
 {%- endfor %}
     x_env_init prod 3.{{ min_ver }}
 
+{%- if cc.include_prod_cli == 'yes' -%}
 # install prod cli
 RUN echo "\n${CYAN}INSTALL PROD CLI${CLEAR}"; \
     cp /home/ubuntu/scripts/prod-cli /home/ubuntu/.local/bin/{{ cc.repo }} && \
     chmod 755 /home/ubuntu/.local/bin/{{ cc.repo }}
+{%- endif %}
 
 # build jupyter lab
 RUN echo "\n${CYAN}BUILD JUPYTER LAB${CLEAR}"; \

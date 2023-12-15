@@ -17,6 +17,7 @@ def main():
     mkdocs = config['include_mkdocs']
     helm = config['include_helm']
     git_host = config['git_host']
+    prod_cli = config['include_prod_cli']
 
     if rtype == 'library':
         shutil.rmtree('helm')
@@ -42,6 +43,9 @@ def main():
 
     if git_host != 'gitlab':
         os.remove('.gitlab-ci.yml')
+
+    if prod_cli == 'no':
+        os.remove('docker/scripts/prod-cli')
 
     os.remove(src)
 
