@@ -212,8 +212,13 @@ RUN echo "\n${CYAN}INSTALL DEV DEPENDENCIES${CLEAR}"; \
     pdm completion zsh > /home/ubuntu/.oh-my-zsh/custom/completions/_pdm
 
 # setup pdm
-COPY --chown=ubuntu:ubuntu config/* /home/ubuntu/config/
-COPY --chown=ubuntu:ubuntu scripts/* /home/ubuntu/scripts/
+COPY --chown=ubuntu:ubuntu config/build.yaml /home/ubuntu/config/
+COPY --chown=ubuntu:ubuntu config/dev.lock /home/ubuntu/config/
+COPY --chown=ubuntu:ubuntu config/pdm.toml /home/ubuntu/config/
+COPY --chown=ubuntu:ubuntu config/prod.lock /home/ubuntu/config/
+COPY --chown=ubuntu:ubuntu config/pyproject.toml /home/ubuntu/config/
+COPY --chown=ubuntu:ubuntu scripts/prod-cli /home/ubuntu/scripts/
+COPY --chown=ubuntu:ubuntu scripts/x_tools.sh /home/ubuntu/scripts/
 RUN echo "\n${CYAN}SETUP DIRECTORIES${CLEAR}"; \
     mkdir pdm
 
