@@ -238,6 +238,11 @@ RUN echo "\n${CYAN}INSTALL PROD ENVIRONMENTS${CLEAR}"; \
 {%- endfor %}
     x_env_init prod 3.{{ min_ver }}
 
+# install prod cli
+RUN echo "\n${CYAN}INSTALL PROD CLI${CLEAR}"; \
+    cp /home/ubuntu/scripts/prod-cli /home/ubuntu/.local/bin/{{ cc.repo }} && \
+    chmod 755 /home/ubuntu/.local/bin/{{ cc.repo }}
+
 # build jupyter lab
 RUN echo "\n${CYAN}BUILD JUPYTER LAB${CLEAR}"; \
     . /home/ubuntu/scripts/x_tools.sh && \
