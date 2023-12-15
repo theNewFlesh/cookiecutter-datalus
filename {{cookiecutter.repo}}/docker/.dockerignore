@@ -1,7 +1,4 @@
 *
 !../docker
-!config/*.lock
-!config/*.toml
-!config/zshrc
-!config/henanigans.zsh-theme
+!config
 !scripts
