@@ -10,6 +10,7 @@
     "port_prefix": {{ cc.port_prefix }},
     "git_user": "{{ cc.git_user }}",
     "git_host": "{{ cc.git_host }}",
+    "git_organization": "{{ cc.git_organization }}",
     "description": "{{ cc.description }}",
     "author": "{{ cc.author }}",
     "email": "{{ cc.email }}",
