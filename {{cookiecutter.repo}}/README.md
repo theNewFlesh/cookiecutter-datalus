@@ -191,7 +191,7 @@ The following is a complete list of all available development commands:
 | -h    | --help    | Prints command help message to stdout                |
 |       | --dryrun  | Prints command that would otherwise be run to stdout |
 
-{%- if cc.include_prod_cli == 'yes' -%}
+{% if cc.include_prod_cli == 'yes' -%}
 ---
 
 # Production CLI
@@ -215,4 +215,4 @@ Usage: `{{cc.repo}} bash-completion`
 Prints ZSH completion code to be written to a _{{cc.repo}} completion file
 
 Usage: `{{cc.repo}} zsh-completion`
-{% endif -%}
+{% endif %}
