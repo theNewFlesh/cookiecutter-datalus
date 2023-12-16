@@ -69,11 +69,12 @@ RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
         -o ripgrep.deb && \
     apt install -y ./ripgrep.deb && \
     rm -rf ripgrep.deb
-{%- else -%}
+{%- else %}
     rm -rf /var/lib/apt/lists/*
 {%- endif %}
 
-{% if cc.include_tensorflow == "yes" -%}
+{%- if cc.include_tensorflow == "yes" %}
+
 # install nvidia drivers
 RUN echo "\n${CYAN}INSTALL NVIDIA DRIVERS${CLEAR}"; \
     apt update && \
