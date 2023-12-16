@@ -16,7 +16,7 @@ REPO_PATH = os.path.join(os.sep, *os.path.realpath(__file__).split(os.sep)[:-2])
 REPO = os.path.split(REPO_PATH)[-1]
 GIT_USER = '{{cc.git_user}}'
 {%- if cc.docker_registry == 'gitlab' %}
-DOCKER_REGISTRY = 'registry.gitlab.com/{{cc.git_user}}/' + REPO
+DOCKER_REGISTRY = 'registry.gitlab.com/{{cc.git_organization}}/' + REPO
 {%- else %}
 DOCKER_REGISTRY = '{{cc.git_user}}/' + REPO
 {%- endif %}
