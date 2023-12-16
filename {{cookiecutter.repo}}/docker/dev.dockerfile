@@ -115,8 +115,8 @@ RUN echo "\n${CYAN}INSTALL NODEJS${CLEAR}"; \
         nodistro main" \
         | sudo tee /etc/apt/sources.list.d/nodesource.list && \
     sudo apt update && \
-    sudo apt install -y nodejs \
-    && rm -rf /var/lib/apt/lists/*
+    sudo apt install -y nodejs && \
+    rm -rf /var/lib/apt/lists/*
 
 # install and setup zsh
 RUN echo "\n${CYAN}SETUP ZSH${CLEAR}"; \
