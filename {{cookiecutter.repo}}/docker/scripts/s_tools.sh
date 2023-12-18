@@ -131,7 +131,7 @@ EOF
 s_setup_services () {
     # setup s6 services
     s_create_init;
-{% if cc.include_vscode_server == "yes" -%}
+{%- if cc.include_vscode_server == "yes" -%}
     s_create_vscode_extensions;
     s_create_vscode_server;
     s_add_dependency extensions init;
