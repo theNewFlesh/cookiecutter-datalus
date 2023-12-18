@@ -158,6 +158,17 @@ RUN echo "\n${CYAN}INSTALL S6${CLEAR}"; \
        /tmp/s6-overlay-${S6_ARCH}.tar.xz \
        /tmp/s6-overlay-${S6_ARCH}.tar.xz.sha256
 
+{% if cc.include_vscode_server == "yes" -%}
+# install vscode server
+RUN echo "\n${CYAN}INSTALL VSCODE SERVER${CLEAR}"; \
+    export CODE_ARCH="amd64" && \
+    export CODE_VERSION="4.19.1" && \
+    export CODE_URL="https://github.com/coder/code-server/releases/download/v$CODE_VERSION/code-server_${CODE_VERSION}_$CODE_ARCH.deb" && \
+    curl -fsSL $CODE_URL -o /tmp/code-server.deb && \
+    dpkg -i /tmp/code-server.deb && \
+    rm -f /tmp/code-server.deb
+{%- endif %}
+
 USER ubuntu
 ENV PATH="/home/ubuntu/.local/bin:$PATH"
 COPY ./config/henanigans.zsh-theme .oh-my-zsh/custom/themes/henanigans.zsh-theme

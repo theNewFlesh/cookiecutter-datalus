@@ -6,6 +6,7 @@
     "include_openexr": ["yes", "no"],
     "include_tensorflow": ["yes", "no"],
     "include_prod_cli": ["yes", "no"],
+    "include_vscode_server": ["yes", "no"],
     "port_prefix": 10,
     "git_user": "git_user",
     "git_host": ["github", "gitlab", "bitbucket"],
