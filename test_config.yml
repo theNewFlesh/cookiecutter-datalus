@@ -6,7 +6,7 @@ default_context:
   include_openexr: "yes"
   include_tensorflow: "yes"
   include_prod_cli: "no"
-  include_vscode_server: "yes",
+  include_vscode_server: "yes"
   port_prefix: 99
   git_organization: theNewFlesh
   git_user: thenewflesh
