@@ -198,7 +198,7 @@ APP
    |   ├── docker-compose.yml                  # dev means of starting container
    |   ├── .dockerignore                       # tells docker which files to ignore
    │   ├── scripts
-   │   |  ├── prod-cli                         # prod cli script used by dev container
+   │   |  ├── prod-cli                         # prod cli script used by dev container (optional)
    │   |  ├── s_tools.sh                       # s6 daemon supervisor tools
    │   |  └── x_tools.sh                       # developer tools
    │   └── config
