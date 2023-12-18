@@ -52,6 +52,7 @@ RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
         git \
         gnupg \
         graphviz \
+        jq \
         parallel \
         software-properties-common \
         unzip \
@@ -72,6 +73,12 @@ RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
 {%- else %}
     rm -rf /var/lib/apt/lists/*
 {%- endif %}
+
+# install yq
+RUN echo "\n${CYAN}INSTALL YQ${CLEAR}"; \
+    curl https://github.com/mikefarah/yq/releases/download/v4.9.1/yq_linux_amd64 \
+        -Lo /usr/local/bin/yq && \
+    chmod +x /usr/local/bin/yq
 
 {%- if cc.include_tensorflow == "yes" %}
 
