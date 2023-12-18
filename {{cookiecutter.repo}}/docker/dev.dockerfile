@@ -272,26 +272,24 @@ RUN echo "\n${CYAN}BUILD JUPYTER LAB${CLEAR}"; \
     x_env_activate_dev && \
     jupyter lab build
 
-# cleanup dirs
+USER root
+
+# add s6 service and init scripts
+COPY --chown=ubuntu:ubuntu --chmod=755 scripts/s_tools.sh /home/ubuntu/scripts/
+RUN echo "\n${CYAN}SETUP S6 SERVICES${CLEAR}"; \
+    . /home/ubuntu/scripts/s_tools.sh && \
+    s_setup_services
+
+USER ubuntu
 WORKDIR /home/ubuntu
+
+# cleanup dirs
 RUN echo "\n${CYAN}REMOVE DIRECTORIES${CLEAR}"; \
-    rm -rf config scripts
+    rm -rf /home/ubuntu/config /home/ubuntu/scripts
 
 ENV REPO='{{cc.repo}}'
 ENV PYTHONPATH ":/home/ubuntu/$REPO/python:/home/ubuntu/.local/lib"
 ENV PYTHONPYCACHEPREFIX "/home/ubuntu/.python_cache"
-
-USER root
-
-# add s6 service and init scripts
-RUN echo "\n${CYAN}CREATE S6 DIRECTORIES${CLEAR}"; \
-    mkdir -p /etc/services.d/jupyterlab && \
-    mkdir -p /etc/cont-init.d
-COPY --chown=ubuntu:ubuntu --chmod=755 scripts/s6-service.sh /etc/services.d/jupyterlab/run
-COPY --chown=ubuntu:ubuntu --chmod=755 scripts/s6-init.sh /etc/cont-init.d/01-copy-repo-files
-
-USER ubuntu
-
 ENV HOME /home/ubuntu
 ENV JUPYTER_RUNTIME_DIR /tmp/jupyter_runtime
 
