@@ -55,8 +55,9 @@ s_create_init () {
     cat << EOF > /etc/s6-overlay/scripts/init.sh
 #!/command/with-contenv bash
 
-if [ "$SKIP_S6_SERVICE" != "true" ]; then
-    cp -r $REPO_DIR/docker/config/jupyter $HOME/.jupyter;
+if [ "\$SKIP_S6_SERVICE" != "true" ]; then
+    mkdir -p $HOME/.jupyter;
+    cp -ran $REPO_DIR/docker/config/jupyter/* $HOME/.jupyter/;
     cp $REPO_DIR/docker/config/zshrc $HOME/.zshrc;
 fi;
 EOF
