@@ -81,23 +81,6 @@ RUN echo "\n${CYAN}INSTALL YQ${CLEAR}"; \
         -o /usr/local/bin/yq && \
     chmod +x /usr/local/bin/yq
 
-{%- if cc.include_nvidia == "yes" %}
-
-# install nvidia container toolkit
-RUN echo "\n${CYAN}INSTALL NVIDIA CONTAINER TOOLKIT${CLEAR}"; \
-    curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey \
-    | gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg && \
-    curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list \
-        | sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' \
-        | tee /etc/apt/sources.list.d/nvidia-container-toolkit.list && \
-    sed -i -e '/experimental/ s/^#//g' /etc/apt/sources.list.d/nvidia-container-toolkit.list && \
-    apt update && \
-    apt install -y \
-        libgl1-mesa-glx \
-        nvidia-container-toolkit && \
-    rm -rf /var/lib/apt/lists/*
-{%- endif %}
-
 # install all python versions
 RUN echo "\n${CYAN}INSTALL PYTHON${CLEAR}"; \
     add-apt-repository -y ppa:deadsnakes/ppa && \
@@ -202,6 +185,23 @@ ENV PATH=$PATH:/lib/chromedriver
 RUN echo "\n${CYAN}INSTALL CHROMEDRIVER${CLEAR}"; \
     apt update && \
     apt install -y chromium-chromedriver && \
+    rm -rf /var/lib/apt/lists/*
+{%- endif %}
+
+{%- if cc.include_nvidia == "yes" %}
+
+# install nvidia container toolkit
+RUN echo "\n${CYAN}INSTALL NVIDIA CONTAINER TOOLKIT${CLEAR}"; \
+    curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey \
+    | gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg && \
+    curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list \
+        | sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' \
+        | tee /etc/apt/sources.list.d/nvidia-container-toolkit.list && \
+    sed -i -e '/experimental/ s/^#//g' /etc/apt/sources.list.d/nvidia-container-toolkit.list && \
+    apt update && \
+    apt install -y \
+        libgl1-mesa-glx \
+        nvidia-container-toolkit && \
     rm -rf /var/lib/apt/lists/*
 {%- endif %}
 

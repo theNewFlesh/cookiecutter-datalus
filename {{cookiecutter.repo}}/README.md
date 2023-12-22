@@ -14,6 +14,7 @@
 [![](https://img.shields.io/pypi/dm/{{cc.repo}}?style=for-the-badge&label=Downloads&color=5F95DE)](https://pepy.tech/project/{{cc.repo}})
 
 # Introduction
+
 {{cc.description}}
 
 See [documentation](https://{{cc.git_organization}}.{{cc.git_host}}.io/{{cc.repo}}/) for details.

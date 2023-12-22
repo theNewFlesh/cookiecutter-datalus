@@ -1,9 +1,9 @@
 {%- set cc = cookiecutter -%}
-{%- if cc.include_mkdocs == 'yes' %}
+{%- if cc.include_mkdocs == 'yes' -%}
 {%- set sphinx_dir = "$DOCS_DIR/python" -%}
-{%- else %}
+{%- else -%}
 {%- set sphinx_dir = "$DOCS_DIR" -%}
-{%- endif %}
+{%- endif -%}
 # VARIABLES---------------------------------------------------------------------
 export HOME="/home/ubuntu"
 export REPO="{{cc.repo}}"

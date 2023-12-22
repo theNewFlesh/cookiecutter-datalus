@@ -1,6 +1,6 @@
 {%- set cc = cookiecutter -%}
-{%- set min_ver = cc.python_min_version | int %}
-{%- set max_ver = cc.python_max_version | int %}
+{%- set min_ver = cc.python_min_version | int -%}
+{%- set max_ver = cc.python_max_version | int -%}
 [project]
 name = "{{cc.repo}}"
 version = "{{cc.initial_repo_version}}"
