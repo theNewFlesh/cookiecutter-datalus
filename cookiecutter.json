@@ -3,6 +3,7 @@
     "repo_type": ["dash", "flask", "library"],
     "include_mkdocs": ["yes", "no"],
     "include_helm": ["yes", "no"],
+    "include_nvidia": ["yes", "no"],
     "include_openexr": ["yes", "no"],
     "include_tensorflow": ["yes", "no"],
     "include_prod_cli": ["yes", "no"],

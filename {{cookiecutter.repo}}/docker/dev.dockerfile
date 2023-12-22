@@ -1,8 +1,8 @@
 {%- set cc = cookiecutter -%}
 {%- set min_ver = cc.python_min_version | int %}
 {%- set max_ver = cc.python_max_version | int -%}
-{% if cc.include_tensorflow == "yes" -%}
-FROM tensorflow/tensorflow:nightly-gpu AS base
+{% if cc.include_nvidia == "yes" -%}
+FROM nvidia/cuda:12.2.2-base-ubuntu22.04 AS base
 {%- else -%}
 FROM ubuntu:22.04 AS base
 {%- endif %}
@@ -76,18 +76,25 @@ RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
 
 # install yq
 RUN echo "\n${CYAN}INSTALL YQ${CLEAR}"; \
-    curl https://github.com/mikefarah/yq/releases/download/v4.9.1/yq_linux_amd64 \
-        -Lo /usr/local/bin/yq && \
+    curl -fsSL \
+        https://github.com/mikefarah/yq/releases/download/v4.9.1/yq_linux_amd64 \
+        -o /usr/local/bin/yq && \
     chmod +x /usr/local/bin/yq
 
-{%- if cc.include_tensorflow == "yes" %}
+{%- if cc.include_nvidia == "yes" %}
 
-# install nvidia drivers
-RUN echo "\n${CYAN}INSTALL NVIDIA DRIVERS${CLEAR}"; \
+# install nvidia container toolkit
+RUN echo "\n${CYAN}INSTALL NVIDIA CONTAINER TOOLKIT${CLEAR}"; \
+    curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey \
+    | gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg && \
+    curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list \
+        | sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' \
+        | tee /etc/apt/sources.list.d/nvidia-container-toolkit.list && \
+    sed -i -e '/experimental/ s/^#//g' /etc/apt/sources.list.d/nvidia-container-toolkit.list && \
     apt update && \
     apt install -y \
-        nvidia-utils-525 \
-        nvidia-driver-525 && \
+        libgl1-mesa-glx \
+        nvidia-container-toolkit && \
     rm -rf /var/lib/apt/lists/*
 {%- endif %}
 
@@ -165,7 +172,8 @@ RUN echo "\n${CYAN}INSTALL S6${CLEAR}"; \
        /tmp/s6-overlay-${S6_ARCH}.tar.xz \
        /tmp/s6-overlay-${S6_ARCH}.tar.xz.sha256
 
-{% if cc.include_vscode_server == "yes" -%}
+{%- if cc.include_vscode_server == "yes" %}
+
 # install vscode server
 RUN echo "\n${CYAN}INSTALL VSCODE SERVER${CLEAR}"; \
     export CODE_ARCH="amd64" && \

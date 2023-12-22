@@ -90,6 +90,7 @@ fi;
 EOF
 }
 
+{%- if cc.include_vscode_server == "yes" -%}
 s_create_vscode_extensions () {
     # create s6 vscode extensions service
     s_create_oneshot vscode-extensions;
@@ -128,6 +129,7 @@ if [ "\$SKIP_S6_SERVICE" != "true" ]; then
 fi;
 EOF
 }
+{%- endif %}
 
 s_setup_services () {
     # setup s6 services

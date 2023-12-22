@@ -3,6 +3,7 @@ default_context:
   repo_type: library
   include_mkdocs: "yes"
   include_helm: "no"
+  include_nvidia: "no"
   include_openexr: "yes"
   include_tensorflow: "yes"
   include_prod_cli: "no"

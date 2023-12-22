@@ -4,6 +4,7 @@
     "repo_type": "{{ cc.repo_type }}",
     "include_mkdocs": "{{ cc.include_mkdocs }}",
     "include_helm": "{{ cc.include_helm }}",
+    "include_nvidia": "{{ cc.include_nvidia }}",
     "include_openexr": "{{ cc.include_openexr }}",
     "include_tensorflow": "{{ cc.include_tensorflow }}",
     "include_prod_cli": "{{ cc.include_prod_cli }}",

@@ -24,7 +24,7 @@ services:
       - {{cc.volume}}:/mnt/storage
 {%- endif %}
     working_dir: "/home/ubuntu"
-{%- if cc.include_tensorflow == "yes" %}
+{%- if cc.include_nvidia == "yes" %}
     deploy:
       resources:
         reservations:
