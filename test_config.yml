@@ -1,12 +1,12 @@
 default_context:
   repo: datalus
   repo_type: library
-  include_mkdocs: "yes"
   include_helm: "no"
+  include_mkdocs: "yes"
   include_nvidia: "no"
   include_openexr: "yes"
-  include_tensorflow: "yes"
   include_prod_cli: "no"
+  include_tensorflow: "yes"
   include_vscode_server: "yes"
   port_prefix: 99
   git_organization: theNewFlesh
