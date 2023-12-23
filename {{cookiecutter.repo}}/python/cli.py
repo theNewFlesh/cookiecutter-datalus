@@ -671,6 +671,7 @@ def quickstart_command():
         | grep -vE '^---$'
     ''')
 
+
 def version_commit_command(args=[]):
     # type: (List[str]) -> str
     '''
