@@ -26,3 +26,4 @@ def run_app():
     logging.getLogger('werkzeug').setLevel(logging.ERROR)
     app.run(app.APP, CONFIG_PATH, debug=False, test=True)
     yield app.APP, app.APP.client
+

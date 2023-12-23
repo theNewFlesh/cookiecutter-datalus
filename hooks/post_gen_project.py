@@ -30,7 +30,7 @@ def main():
         os.remove('python/conftest.py')
 
     if cli == 'no':
-        os.remove('python/' + repo + '/command.py')
+        os.remove('python/' + repo_ + '/command.py')
 
     if mkdocs == 'no':
         shutil.rmtree('mkdocs')

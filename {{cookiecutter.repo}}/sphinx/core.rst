@@ -1,10 +1,11 @@
 {%- set cc = cookiecutter -%}
+{%- set repo_ = (cc.repo | replace('-', '_')) -%}
 core
 ====
 
-foobar
-------
-.. automodule:: {{ cc.repo }}.core.foobar
+tools
+-----
+.. automodule:: {{ repo_ }}.core.tools
     :members:
     :private-members:
     :undoc-members:
