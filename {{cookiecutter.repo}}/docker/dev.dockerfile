@@ -244,7 +244,7 @@ COPY --chown=ubuntu:ubuntu config/dev.lock /home/ubuntu/config/
 COPY --chown=ubuntu:ubuntu config/pdm.toml /home/ubuntu/config/
 COPY --chown=ubuntu:ubuntu config/prod.lock /home/ubuntu/config/
 COPY --chown=ubuntu:ubuntu config/pyproject.toml /home/ubuntu/config/
-{%- if cc.include_prod_cli == 'yes' -%}
+{%- if cc.include_prod_cli == 'yes' %}
 COPY --chown=ubuntu:ubuntu scripts/prod-cli /home/ubuntu/scripts/
 {%- endif %}
 COPY --chown=ubuntu:ubuntu scripts/x_tools.sh /home/ubuntu/scripts/
