@@ -272,7 +272,8 @@ RUN echo "\n${CYAN}INSTALL PROD ENVIRONMENTS${CLEAR}"; \
 {%- endfor %}
     x_env_init prod 3.{{ min_ver }}
 
-{%- if cc.include_prod_cli == 'yes' -%}
+{%- if cc.include_prod_cli == 'yes' %}
+
 # install prod cli
 RUN echo "\n${CYAN}INSTALL PROD CLI${CLEAR}"; \
     cp /home/ubuntu/scripts/prod-cli /home/ubuntu/.local/bin/{{ cc.repo }} && \
