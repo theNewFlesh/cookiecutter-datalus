@@ -1,10 +1,13 @@
 {%- set cc = cookiecutter -%}
+{%- set repo_ = (cc.repo | replace('-', '_')) -%}
 import logging
 
 from selenium.webdriver.chrome.options import Options
 import pytest
 
 import {{cc.repo}}.server.app as app
+
+CONFIG_PATH = '/home/ubuntu/{{repo_}}/resources/test_config.yaml'
 # ------------------------------------------------------------------------------
 
 
