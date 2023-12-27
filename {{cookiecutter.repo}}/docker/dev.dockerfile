@@ -45,34 +45,18 @@ RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
         btop \
         ca-certificates \
         curl \
-{%- if cc.include_tensorflow == "no" %}
         exa \
-        ripgrep \
-{%- endif %}
         git \
         gnupg \
         graphviz \
         jq \
         parallel \
+        ripgrep \
         software-properties-common \
         unzip \
         vim \
         wget && \
-{%- if cc.include_tensorflow == "yes" %}
-    rm -rf /var/lib/apt/lists/* && \
-    curl -fsSL \
-        "https://github.com/ogham/exa/releases/latest/download/exa-linux-x86_64-v0.10.1.zip" \
-        -o exa.zip && \
-    unzip -q exa.zip bin/exa -d /usr/local && \
-    rm -rf exa.zip && \
-    curl -fsSL \
-        "https://github.com/BurntSushi/ripgrep/releases/latest/download/ripgrep_13.0.0_amd64.deb" \
-        -o ripgrep.deb && \
-    apt install -y ./ripgrep.deb && \
-    rm -rf ripgrep.deb
-{%- else %}
     rm -rf /var/lib/apt/lists/*
-{%- endif %}
 
 # install yq
 RUN echo "\n${CYAN}INSTALL YQ${CLEAR}"; \
