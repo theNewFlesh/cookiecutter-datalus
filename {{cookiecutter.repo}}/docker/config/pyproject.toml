@@ -99,6 +99,11 @@ test = [
 {%- if cc.include_tensorflow == 'yes' %}
     "types-tensorflow>=2.11.0.2",
 {%- endif %}
+{%- if cc.repo_type == 'dash' %}
+    "dash[testing]>=2.0.0",
+    "percy",
+    "selenium",
+{%- endif %}
 ]
 
 [tool.pytest.ini_options]
