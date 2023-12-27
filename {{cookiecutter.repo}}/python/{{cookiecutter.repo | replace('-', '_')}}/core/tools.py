@@ -6,4 +6,3 @@ def dummy():
     This should be erased when you have real python code.
     '''
     pass
-

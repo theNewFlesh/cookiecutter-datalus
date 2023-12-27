@@ -10,4 +10,3 @@ import {{ repo_ }}.core.tools as {{ abrv }}
 class ToolsTests(unittest.TestCase):
     def test_dummy(self):
         {{ abrv }}.dummy()
-
