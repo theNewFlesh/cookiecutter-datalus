@@ -49,7 +49,6 @@ dependencies = [
     "pandas",
 {%- if cc.include_tensorflow == 'yes' %}
     "tensorboard>=2.0.0",
-    "tensorflow>=2.0.0",
 {%- endif %}
 ]
 
