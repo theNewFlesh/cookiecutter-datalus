@@ -660,7 +660,13 @@ x_test_coverage () {
         --verbosity $TEST_VERBOSITY \
         --cov=$REPO_DIR/python \
         --cov-config=$CONFIG_DIR/pyproject.toml \
+{%- endraw -%}
+{%- if cc.include_mkdocs == 'yes' %}
+        --cov-report=html:$DOCS_DIR/python/htmlcov \
+{%- else %}
         --cov-report=html:$DOCS_DIR/htmlcov \
+{%- endif %}
+{%- raw %}
         $REPO_SUBPACKAGE;
 }
 
