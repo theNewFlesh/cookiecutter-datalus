@@ -2,10 +2,10 @@
 server
 ======
 
-barfoo
-------
-.. automodule:: {{ cc.repo }}.server.barfoo
-    :members:
-    :private-members:
-    :undoc-members:
-    :show-inheritance:
+# app
+# ---
+# .. automodule:: {{ cc.repo }}.server.app
+#     :members:
+#     :private-members:
+#     :undoc-members:
+#     :show-inheritance:
