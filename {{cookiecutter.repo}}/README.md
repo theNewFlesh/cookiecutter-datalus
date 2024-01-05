@@ -92,6 +92,7 @@ Development commands are grouped by one of 10 prefixes:
 ### Common Commands
 
 Here are some frequently used commands to get you started:
+
 | Command           | Description                                               |
 | ----------------- | --------------------------------------------------------- |
 | docker-restart    | Restart container                                         |
