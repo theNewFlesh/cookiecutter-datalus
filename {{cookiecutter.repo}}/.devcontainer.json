@@ -51,7 +51,7 @@
                 "tombonnike.vscode-status-bar-format-toggle",
                 "uctakeoff.vscode-counter",
                 "visualstudioexptteam.vscodeintellicode",
-{% if cc.include_rsync == "yes" %}
+{%- if cc.include_rsync == "yes" %}
                 "vscode-ext.sync-rsync",
 {%- endif %}
                 "yzhang.markdown-all-in-one"
