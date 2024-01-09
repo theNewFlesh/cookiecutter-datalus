@@ -52,6 +52,9 @@ RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
         jq \
         parallel \
         ripgrep \
+{% if cc.include_rsync == "yes" -%}
+        rsync \
+{%- endif %}
         software-properties-common \
         unzip \
         vim \
