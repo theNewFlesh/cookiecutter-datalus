@@ -175,7 +175,18 @@ RUN echo "\n${CYAN}INSTALL CHROMEDRIVER${CLEAR}"; \
     rm -rf /var/lib/apt/lists/*
 {%- endif %}
 
-{%- if cc.include_nvidia == "yes" %}
+ENV CC=gcc
+ENV CXX=g++
+RUN echo "\n${CYAN}INSTALL GCC${CLEAR}"; \
+    apt update && \
+    apt install -y \
+        build-essential \
+        g++ \
+        gcc \
+        zlib1g-dev && \
+    rm -rf /var/lib/apt/lists/*
+
+{% if cc.include_nvidia == "yes" %}
 
 # install nvidia container toolkit
 RUN echo "\n${CYAN}INSTALL NVIDIA CONTAINER TOOLKIT${CLEAR}"; \
@@ -192,31 +203,14 @@ RUN echo "\n${CYAN}INSTALL NVIDIA CONTAINER TOOLKIT${CLEAR}"; \
     rm -rf /var/lib/apt/lists/*
 {%- endif %}
 
-ENV CC=gcc
-ENV CXX=g++
-RUN echo "\n${CYAN}INSTALL GCC${CLEAR}"; \
-    apt update && \
-    apt install -y \
-        build-essential \
-        g++ \
-        gcc \
-        zlib1g-dev && \
-    rm -rf /var/lib/apt/lists/*
-
 {%- if cc.include_openexr == "yes" -%}
 # install OpenEXR
-ENV CC=gcc
-ENV CXX=g++
 ENV LD_LIBRARY_PATH='/usr/include/python3.{{ max_ver }}m/dist-packages'
 RUN echo "\n${CYAN}INSTALL OPENEXR${CLEAR}"; \
     apt update && \
     apt install -y \
-        build-essential \
-        g++ \
-        gcc \
         libopenexr-dev \
-        openexr \
-        zlib1g-dev && \
+        openexr && \
     rm -rf /var/lib/apt/lists/*
 {%- endif %}
 
