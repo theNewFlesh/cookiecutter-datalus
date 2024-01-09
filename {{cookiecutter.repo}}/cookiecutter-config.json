@@ -15,6 +15,7 @@
     "git_host": "{{ cc.git_host }}",
     "git_organization": "{{ cc.git_organization }}",
     "description": "{{ cc.description }}",
+    "organization_url": "{{ cc.organization_url }}",
     "author": "{{ cc.author }}",
     "email": "{{ cc.email }}",
     "website": "{{ cc.website }}",

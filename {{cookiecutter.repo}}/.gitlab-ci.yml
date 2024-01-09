@@ -17,8 +17,8 @@ stages:
 variables:
   repo: "$CI_PROJECT_NAME"
   cli: "bin/$repo"
-  org: {{cc.git_organization}}
-  org_url: gitlab.com
+  org: "{{ cc.git_organization }}"
+  org_url: "{{ cc.organization_url }}"
   git_url: "https://gitlab-ci-token:$GIT_ACCESS_TOKEN@gitlab.com/$org/$repo.git"
 
 .build-env:
