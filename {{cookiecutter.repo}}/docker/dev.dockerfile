@@ -192,6 +192,17 @@ RUN echo "\n${CYAN}INSTALL NVIDIA CONTAINER TOOLKIT${CLEAR}"; \
     rm -rf /var/lib/apt/lists/*
 {%- endif %}
 
+ENV CC=gcc
+ENV CXX=g++
+RUN echo "\n${CYAN}INSTALL GCC${CLEAR}"; \
+    sduo apt update && \
+    sudo apt install -y \
+        build-essential \
+        g++ \
+        gcc \
+        zlib1g-dev && \
+    sudo rm -rf /var/lib/apt/lists/*
+
 {% if cc.include_openexr == "yes" -%}
 # install OpenEXR
 ENV CC=gcc
