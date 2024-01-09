@@ -185,8 +185,7 @@ RUN echo "\n${CYAN}INSTALL GCC${CLEAR}"; \
         gcc \
         zlib1g-dev && \
     rm -rf /var/lib/apt/lists/*
-
-{% if cc.include_nvidia == "yes" %}
+{%- if cc.include_nvidia == "yes" %}
 
 # install nvidia container toolkit
 RUN echo "\n${CYAN}INSTALL NVIDIA CONTAINER TOOLKIT${CLEAR}"; \
@@ -202,8 +201,8 @@ RUN echo "\n${CYAN}INSTALL NVIDIA CONTAINER TOOLKIT${CLEAR}"; \
         nvidia-container-toolkit && \
     rm -rf /var/lib/apt/lists/*
 {%- endif %}
+{%- if cc.include_openexr == "yes" %}
 
-{%- if cc.include_openexr == "yes" -%}
 # install OpenEXR
 ENV LD_LIBRARY_PATH='/usr/include/python3.{{ max_ver }}m/dist-packages'
 RUN echo "\n${CYAN}INSTALL OPENEXR${CLEAR}"; \
