@@ -7,12 +7,12 @@
     "settings": {
         "ansible.python.interpreterPath": "/home/ubuntu/.dev-env/bin/python3",
         "debug.allowBreakpointsEverywhere": true,
-        "editor.rulers": [80, 100],
 {%- endraw %}
 {%- if cc.include_black == "yes" %}
         "editor.defaultFormatter": "ms-python.black-formatter",
         "editor.formatOnSave": true,
 {%- endif %}
+        "editor.rulers": [80, 100],
 {%- raw %}
         "flake8.args": ["--config=docker/config/flake8.ini"],
         "forbeslindesay-taskrunner.prefix": "[",
