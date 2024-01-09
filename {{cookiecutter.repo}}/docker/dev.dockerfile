@@ -250,6 +250,7 @@ RUN echo "\n${CYAN}INSTALL DEV ENVIRONMENT${CLEAR}"; \
     ln -s `_x_env_get_path dev 3.{{ max_ver }}`/lib/python3.{{ max_ver }}/site-packages .dev-packages
 
 # create prod envs
+{%- if cc.include_prod_envs == 'yes' %}
 RUN echo "\n${CYAN}INSTALL PROD ENVIRONMENTS${CLEAR}"; \
     . /home/ubuntu/scripts/x_tools.sh && \
     export CONFIG_DIR=/home/ubuntu/config && \
@@ -258,7 +259,16 @@ RUN echo "\n${CYAN}INSTALL PROD ENVIRONMENTS${CLEAR}"; \
     x_env_init prod 3.{{ version }} && \
 {%- endfor %}
     x_env_init prod 3.{{ min_ver }}
-
+{%- else %}
+# RUN echo "\n${CYAN}INSTALL PROD ENVIRONMENTS${CLEAR}"; \
+#     . /home/ubuntu/scripts/x_tools.sh && \
+#     export CONFIG_DIR=/home/ubuntu/config && \
+#     export SCRIPT_DIR=/home/ubuntu/scripts && \
+{%- for version in range(min_ver + 1, max_ver + 1) | reverse %}
+#     x_env_init prod 3.{{ version }} && \
+{%- endfor %}
+#     x_env_init prod 3.{{ min_ver }}
+{%- endif %}
 {%- if cc.include_prod_cli == 'yes' %}
 
 # install prod cli
