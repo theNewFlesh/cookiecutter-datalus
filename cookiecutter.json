@@ -2,6 +2,7 @@
 	"repo": "repo_name",
     "repo_type": ["dash", "flask", "library"],
     "include_black": ["yes", "no"],
+    "include_gcc": ["yes", "no"],
     "include_helm": ["yes", "no"],
     "include_mkdocs": ["yes", "no"],
     "include_nvidia": ["yes", "no"],

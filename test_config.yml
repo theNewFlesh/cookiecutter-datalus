@@ -2,6 +2,7 @@ default_context:
   repo: datalus
   repo_type: library
   include_black: "no"
+  include_gcc: "no"
   include_helm: "no"
   include_mkdocs: "yes"
   include_nvidia: "no"

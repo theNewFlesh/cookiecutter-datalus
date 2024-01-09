@@ -174,7 +174,9 @@ RUN echo "\n${CYAN}INSTALL CHROMEDRIVER${CLEAR}"; \
     apt install -y chromium-chromedriver && \
     rm -rf /var/lib/apt/lists/*
 {%- endif %}
+{%- if cc.include_gcc == "yes" %}
 
+# install gcc
 ENV CC=gcc
 ENV CXX=g++
 RUN echo "\n${CYAN}INSTALL GCC${CLEAR}"; \
@@ -185,6 +187,7 @@ RUN echo "\n${CYAN}INSTALL GCC${CLEAR}"; \
         gcc \
         zlib1g-dev && \
     rm -rf /var/lib/apt/lists/*
+{%- endif %}
 {%- if cc.include_nvidia == "yes" %}
 
 # install nvidia container toolkit
