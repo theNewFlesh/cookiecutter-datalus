@@ -1,7 +1,7 @@
 {%- set cc = cookiecutter -%}
 {%- set min_ver = cc.python_min_version | int %}
 {%- set max_ver = cc.python_max_version | int %}
-{%- raw %}
+{%- raw -%}
 {
     "folders": [{"path": "./"}],
     "settings": {
