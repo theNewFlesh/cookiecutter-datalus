@@ -64,12 +64,11 @@ documentation = "https://{{cc.git_user}}.gitlab.io/{{cc.repo}}"
 {% elif cc.git_host == 'bitbucket' %}
 repository = "https://bitbucket.org/{{cc.git_organization}}/{{ cc.repo }}"
 documentation = "https://{{cc.git_user}}.bitbucket.io/docs/{{cc.repo}}"
-{% endif %}
-{% if cc.include_prod_cli == 'yes' -%}
+{%- endif %}
+{%- if cc.include_prod_cli == 'yes' %}
 [project.scripts]
 {{ cc.repo }} = "{{ cc.repo | replace('-', '_') }}.command:main"
-{%- endif %}
-
+{% endif %}
 [project.optional-dependencies]
 
 [tool.pdm.dev-dependencies]
