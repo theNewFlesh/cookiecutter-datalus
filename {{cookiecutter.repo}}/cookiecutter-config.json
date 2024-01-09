@@ -7,6 +7,7 @@
     "include_nvidia": "{{ cc.include_nvidia }}",
     "include_openexr": "{{ cc.include_openexr }}",
     "include_prod_cli": "{{ cc.include_prod_cli }}",
+    "include_rsync": "{{ cc.include_rsync }}",
     "include_tensorflow": "{{ cc.include_tensorflow }}",
     "include_vscode_server": "{{ cc.include_vscode_server }}",
     "port_prefix": {{ cc.port_prefix }},
