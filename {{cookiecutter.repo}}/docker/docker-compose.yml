@@ -19,7 +19,9 @@ services:
       - ~/.ssh:/home/ubuntu/.ssh:ro
       - ./config/jupyter:/home/ubuntu/.jupyter
       - ./config/zshrc:/home/ubuntu/.zshrc
+{%- if cc.repo_type == 'dash' %}
       - ../artifacts:/tmp/dash_artifacts
+{%- endif %}
 {%- if cc.volume != '' %}
       - {{cc.volume}}:/mnt/storage
 {%- endif %}
