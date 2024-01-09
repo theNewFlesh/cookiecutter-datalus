@@ -1,23 +1,26 @@
 default_context:
   repo: datalus
   repo_type: library
+  include_black: "no"
   include_helm: "no"
   include_mkdocs: "yes"
   include_nvidia: "no"
   include_openexr: "yes"
   include_prod_cli: "no"
+  include_prod_envs: "yes"
   include_tensorflow: "yes"
   include_vscode_server: "yes"
   port_prefix: 99
-  git_organization: theNewFlesh
   git_user: thenewflesh
   git_host: gitlab
+  git_organization: theNewFlesh
   docker_registry: gitlab
+  organization_url: mycompany.com
   description: A cloud-native, custom dashboard and ephemeral database application.
   author: Alex Braun
   email: alexander.g.braun@gmail.com
   website: http://www.alexgbraun.com
-  volume: ""
+  volume: "/tmp/storage"
   keywords: data, cloud, app
   year: 2023
   python_min_version: 7
