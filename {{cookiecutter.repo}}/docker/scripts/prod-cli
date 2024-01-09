@@ -5,7 +5,7 @@ import re
 import sys
 
 sys.path.append('/home/ubuntu/{{ cc.repo }}/python')
-from infrastructure.command import main
+from {{ cc.repo | replace('-', '_') }}.command import main
 
 if __name__ == '__main__':
     sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
