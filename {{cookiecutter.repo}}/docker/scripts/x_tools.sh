@@ -668,6 +668,7 @@ x_test_coverage () {
 {%- endif %}
 {%- raw %}
         $REPO_SUBPACKAGE;
+    rm -f $DOCS_DIR/htmlcov/.gitignore;
 }
 
 x_test_dev () {
