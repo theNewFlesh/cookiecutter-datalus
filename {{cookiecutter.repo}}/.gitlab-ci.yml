@@ -55,7 +55,7 @@ build:
   stage: build
   extends: .feature-env
   script:
-    - $cli docker-pull-dev
+    - trap "$cli docker-pull-dev" EXIT
     - $cli docker-build-from-cache
     - docker tag $repo:dev $test_image
     - docker push $test_image
