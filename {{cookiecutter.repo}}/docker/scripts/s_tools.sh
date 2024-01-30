@@ -85,7 +85,7 @@ if [ "\$SKIP_S6_SERVICE" != "true" ]; then
         --ServerApp.allow_origin="*" \\
         --ServerApp.allow_remote_access=True \\
         --ServerApp.authenticate_prometheus=False \\
-        --ServerApp.base_url="$NB_PREFIX";
+        --ServerApp.base_url="\$NB_PREFIX";
 fi;
 EOF
 }
