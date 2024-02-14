@@ -420,7 +420,13 @@ x_docs_architecture () {
     echo "${CYAN2}GENERATING ARCHITECTURE DIAGRAM${CLEAR}\n";
     x_env_activate_dev;
     rolling-pin graph \
+{%- endraw -%}
+{%- if cc.include_mkdocs == 'yes' %}
+        $REPO_DIR/python $DOCS_DIR/python/architecture.svg \
+{%- else %}
         $REPO_DIR/python $DOCS_DIR/architecture.svg \
+{%- endif %}
+{%- raw %}
         --exclude 'test|mock|__init__' \
         --orient 'lr';
 }
@@ -436,10 +442,19 @@ x_docs_metrics () {
     echo "${CYAN2}GENERATING METRICS${CLEAR}\n";
     x_env_activate_dev;
     cd $REPO_DIR;
+{%- endraw -%}
+{%- if cc.include_mkdocs == 'yes' %}
+    rolling-pin plot \
+        $REPO_DIR/python $DOCS_DIR/python/plots.html;
+    rolling-pin table \
+        $REPO_DIR/python $DOCS_DIR/python;
+{%- else %}
     rolling-pin plot \
         $REPO_DIR/python $DOCS_DIR/plots.html;
     rolling-pin table \
         $REPO_DIR/python $DOCS_DIR;
+{%- endif %}
+{%- raw %}
 }
 
 # LIBRARY-FUNCTIONS-------------------------------------------------------------
