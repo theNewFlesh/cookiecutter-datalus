@@ -834,7 +834,6 @@ x_version_commit () {
     git tag --annotate $version --message "$1";
     git push --follow-tags origin HEAD:master --push-option ci.skip;
 }
-{%- endraw %}
 
 # VSCODE-FUNCTIONS--------------------------------------------------------------
 x_vscode_reinstall_extensions () {
@@ -845,3 +844,4 @@ x_vscode_reinstall_extensions () {
         | sed 's/"//g' \
         | parallel "$VSCODE_SERVER --install-extension {}";
 }
+{%- endraw %}
