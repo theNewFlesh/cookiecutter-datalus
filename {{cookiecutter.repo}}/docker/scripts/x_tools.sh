@@ -32,6 +32,7 @@ export TEST_VERBOSITY=0
 export TEST_PROCS="auto"
 export JUPYTER_PLATFORM_DIRS=0
 export JUPYTER_CONFIG_PATH=/home/ubuntu/.jupyter
+export VSCODE_SERVER="$HOME/.vscode-server/bin/*/bin/code-server"
 alias cp=cp  # "cp -i" default alias asks you if you want to clobber files
 
 {% raw -%}
@@ -834,3 +835,13 @@ x_version_commit () {
     git push --follow-tags origin HEAD:master --push-option ci.skip;
 }
 {%- endraw %}
+
+# VSCODE-FUNCTIONS--------------------------------------------------------------
+x_vscode_reinstall_extensions () {
+    # Reinstall all VSCode extensions
+    echo "${CYAN2}REINSTALLING VSCODE EXTENSIONS${CLEAR}\n";
+    cat $REPO_DIR/.devcontainer.json \
+        | jq '.customizations.vscode.extensions[]' \
+        | sed 's/"//g' \
+        | parallel "$VSCODE_SERVER --install-extension {}";
+}
