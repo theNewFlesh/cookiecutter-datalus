@@ -485,7 +485,19 @@
                     "source $X_TOOLS_PATH &&",
                     "x_vscode_reinstall_extensions"
                 ]
-            }
+            },
+{%- endraw %}
+{%- if cc.include_rsync == "yes" %}
+            {
+                "label": "[vscode] rsync-all",
+                "detail": "Rsync the entire repo to target server",
+                "icon": {"id": "code", "color": "terminal.ansiBlue"},
+                "command": [
+                    "${command:sync-rsync.syncUp}"
+                ]
+            },
+{%- endif %}
+{%- raw %}
         ],
         "inputs": [
             {
