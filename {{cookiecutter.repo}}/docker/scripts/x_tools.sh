@@ -765,8 +765,6 @@ x_test_prod () {
 }
 
 # VERSION-FUNCTIONS-------------------------------------------------------------
-{%- endraw -%}
-{%- if cc.include_mkdocs == 'yes' %}
 _x_get_version () {
     # get current pyproject version
     cat $CONFIG_DIR/pyproject.toml \
@@ -774,7 +772,9 @@ _x_get_version () {
         | awk '{print $3}' \
         | sed 's/\"//g';
 }
+{% endraw -%}
 
+{%- if cc.include_mkdocs == 'yes' %}
 _x_version_file_update () {
     # update non-pyproject files with new pyproject version
     # args: old_version, new_version
