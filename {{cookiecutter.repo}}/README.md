@@ -44,7 +44,7 @@ Run `bin/{{cc.repo}} --help` for more help on the command line tool.
 1. `bin/{{cc.repo}}` must be run from this repository's top level directory.
 2. Therefore, if using zsh, it is recommended that you paste the following line
     in your ~/.zshrc file:
-    - ```alias {{cc.repo}}=`cd [parent dir]/{{cc.repo}}; bin/{{cc.repo}}` ```
+    - `alias {{cc.repo}}="cd [parent dir]/{{cc.repo}}; bin/{{cc.repo}}"`
     - Replace `[parent dir]` with the parent directory of this repository
 3. Running the `zsh-complete` command will enable tab completions of the cli
    commands, in the next shell session.
