@@ -385,7 +385,7 @@ def build_prod_command():
                 --label "git-user={git_user}"
                 --label "git-branch=$(git branch --show-current)"
                 --label "git-commit=$(git rev-parse HEAD)"
-                --tag {registry}:prod-$VERSION .;
+                --tag {repo}:prod .;
             cd ..
         '''),
         exit_repo(),
@@ -428,10 +428,8 @@ def destroy_prod_command():
         str: Command to destroy prod image.
     '''
     cmds = [
-        "export PROD_CID=`docker ps --filter name=^{repo}-prod$ --format '{{{{.ID}}}}'`",
-        "export PROD_IID=`docker images {git_user}/{repo} --format '{{{{.ID}}}}'`",
-        'docker container stop $PROD_CID',
-        'docker image rm --force $PROD_IID',
+        'docker container rm --force {repo}-prod:prod',
+        'docker image rm {repo}:prod',
     ]
     return resolve(cmds)
 
@@ -474,7 +472,7 @@ def prod_command(args):
             --rm
             --publish {port}:{port}
             --name {repo}-prod
-            {registry}:prod-$VERSION
+            {repo}:prod
         '''),
         exit_repo(),
     ]
