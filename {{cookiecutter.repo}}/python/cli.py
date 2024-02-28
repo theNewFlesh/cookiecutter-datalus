@@ -16,9 +16,9 @@ REPO_PATH = os.path.join(os.sep, *os.path.realpath(__file__).split(os.sep)[:-2])
 REPO = os.path.split(REPO_PATH)[-1]
 GIT_USER = '{{cc.git_user}}'
 {%- if cc.docker_registry == 'gitlab' %}
-DOCKER_REGISTRY = 'registry.gitlab.com/{{cc.git_organization}}/' + REPO
+DOCKER_REGISTRY = 'registry.gitlab.com/{{ cc.git_organization | lower }}/' + REPO
 {%- else %}
-DOCKER_REGISTRY = '{{cc.git_user}}/' + REPO
+DOCKER_REGISTRY = '{{ cc.git_user | lower }}/' + REPO
 {%- endif %}
 USER = 'ubuntu:ubuntu'
 PORT = 8080
