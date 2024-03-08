@@ -671,7 +671,7 @@ x_test_coverage () {
     mkdir /tmp/coverage;
     cd /tmp/coverage;
     pytest \
-        -c $CONFIG_DIR/pyproject.toml \
+        --config-file $CONFIG_DIR/pyproject.toml \
         --numprocesses $TEST_PROCS \
         --verbosity $TEST_VERBOSITY \
         --cov=$REPO_DIR/python \
@@ -699,7 +699,7 @@ x_test_dev () {
     echo "${CYAN2}TESTING DEV${CLEAR}\n";
     cd $REPO_DIR;
     pytest \
-        -c $CONFIG_DIR/pyproject.toml \
+        --config-file $CONFIG_DIR/pyproject.toml \
         --numprocesses $TEST_PROCS \
         --verbosity $TEST_VERBOSITY \
         --durations 20 \
@@ -713,7 +713,7 @@ x_test_fast () {
     cd $REPO_DIR;
     SKIP_SLOW_TESTS=true \
     pytest \
-        -c $CONFIG_DIR/pyproject.toml \
+        --config-file $CONFIG_DIR/pyproject.toml \
         --numprocesses $TEST_PROCS \
         --verbosity $TEST_VERBOSITY \
         $REPO_SUBPACKAGE;
