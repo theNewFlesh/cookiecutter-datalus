@@ -722,11 +722,18 @@ x_test_fast () {
 x_test_lint () {
     # Run linting and type checking
     x_env_activate_dev;
+    local exit_code=$?;
     cd $REPO_DIR;
+
     echo "${CYAN2}LINTING${CLEAR}\n";
     flake8 python --config $CONFIG_DIR/flake8.ini;
+    exit_code=`_x_resolve_exit_code $exit_code $?`;
+
     echo "${CYAN2}TYPE CHECKING${CLEAR}\n";
     mypy python --config-file $CONFIG_DIR/pyproject.toml;
+    exit_code=`_x_resolve_exit_code $exit_code $?`;
+
+    return $exit_code;
 }
 
 x_test_run () {
