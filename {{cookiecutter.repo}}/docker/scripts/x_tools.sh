@@ -684,12 +684,14 @@ x_test_coverage () {
 {%- endif %}
 {%- raw %}
         $REPO_SUBPACKAGE;
-{%- endraw -%}
+{%- endraw %}
+    exit_code=$?;
 {%- if cc.include_mkdocs == 'yes' %}
     rm -f $DOCS_DIR/python/htmlcov/.gitignore;
 {%- else %}
     rm -f $DOCS_DIR/htmlcov/.gitignore;
 {%- endif %}
+    return $exit_code;
 {%- raw %}
 }
 
