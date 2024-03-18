@@ -21,7 +21,7 @@ default_context:
   description: A cloud-native, custom dashboard and ephemeral database application.
   author: Alex Braun
   email: alexander.g.braun@gmail.com
-  website: http://www.alexgbraun.com
+  website: https://www.alexgbraun.com
   volume: "/tmp/storage"
   keywords: data, cloud, app
   year: 2023
