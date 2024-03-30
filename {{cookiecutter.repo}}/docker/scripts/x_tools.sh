@@ -195,9 +195,8 @@ _x_build_add_tensorflow () {
         | sed "s/\]/ \"tensorflow>=$MIN_TENSORFLOW_VERSION\"]/"`;
     rolling-pin toml $1 --edit "project.dependencies=$DEPS" --target $1;
 }
-{%- endif %}
+{% endif %}
 {%- raw %}
-
 # ENV-FUNCTIONS-----------------------------------------------------------------
 _x_env_exists () {
     # determines if given env exists
