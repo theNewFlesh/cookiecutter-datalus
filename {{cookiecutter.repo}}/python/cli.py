@@ -99,7 +99,7 @@ def get_info():
     session-lab             - Run jupyter lab server
     session-python          - Run python session with dev dependencies
 {%- if cc.repo_type in ['dash', 'flask'] %}
-    session-server       - Run application server inside Docker container
+    session-server          - Run application server inside Docker container
 {%- endif %}
     state                   - State of repository and Docker container
     test-coverage           - Generate test coverage report
