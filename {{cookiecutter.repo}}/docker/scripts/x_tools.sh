@@ -754,7 +754,7 @@ x_test_run () {
 
     echo "${CYAN2}TESTING $1-$2${CLEAR}\n";
     pytest \
-        -c pyproject.toml \
+        --config-file pyproject.toml \
         --numprocesses $TEST_PROCS \
         --verbosity $TEST_VERBOSITY \
         $REPO_SUBPACKAGE;
