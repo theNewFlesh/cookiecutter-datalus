@@ -125,7 +125,11 @@ prod:
         $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == 'prod'
   script:
     - $cli docker-pull-dev
+{%- if cc.docker_registry == 'gitlab' %}
+    - docker tag registry.gitlab.com/$org/$repo:dev-latest $repo:dev
+{%- else %}
     - docker tag $repo:dev-latest $repo:dev
+{%- endif %}
     - $cli docker-start
     - $cli library-install-prod
     - $cli test-prod
