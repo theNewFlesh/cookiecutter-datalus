@@ -11,9 +11,14 @@ stages:
 #  - name: GIT_ACCESS_TOKEN
 #  - scopes: write_repository
 #  - role: maintainer
+#  - name: PYPI_ACCESS_TOKEN
+#  - scopes: api, api_read
+#  - role: maintainer
 # Please setup a CI/CD variable:
 #  - name: GIT_ACCESS_TOKEN
-#  - value: value of access token
+#  - value: value of git access token
+#  - name: PYPI_ACCESS_TOKEN
+#  - value: value of pypi access token
 variables:
   repo: "$CI_PROJECT_NAME"
   cli: "bin/$repo"
@@ -133,7 +138,7 @@ prod:
     - $cli docker-start
     - $cli library-install-prod
     - $cli test-prod
-    - $cli build-publish
-    - $cli docker-build-prod
+    - $cli build-publish -a $PYPI_ACCESS_TOKEN
+    - $cli docker-build-prod -a $PYPI_ACCESS_TOKEN
     - $cli docker-push-prod
     - $cli docker-push-prod-latest
