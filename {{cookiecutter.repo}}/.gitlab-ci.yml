@@ -138,7 +138,7 @@ prod:
     - $cli docker-start
     - $cli library-install-prod
     - $cli test-prod
-    - $cli build-publish -a $PYPI_ACCESS_TOKEN
-    - $cli docker-build-prod -a $PYPI_ACCESS_TOKEN
+    - $cli build-publish -a "$PYPI_ACCESS_TOKEN"
+    - $cli docker-build-prod -a "$PYPI_ACCESS_TOKEN"
     - $cli docker-push-prod
     - $cli docker-push-prod-latest
