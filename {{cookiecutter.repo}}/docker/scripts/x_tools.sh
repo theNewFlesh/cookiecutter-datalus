@@ -379,7 +379,6 @@ x_build_publish () {
     # args: password
     local version=`_x_get_version`;
     _x_build_publish __token__ $1 $version $PYPI_URL;
-    fi;
 }
 
 x_build_test () {
