@@ -65,6 +65,6 @@ USER ubuntu
 ENV REPO='{{cc.repo}}'
 ENV PYTHONPATH "${PYTHONPATH}:/home/ubuntu/$REPO/python"
 RUN echo "\n${CYAN}INSTALL {{ cc.repo | upper }}{CLEAR}"; \
-    pip3.{{ max_ver }} install --user --upgrade {{cc.repo}}
+    pip3.{{ max_ver }} install --user {{cc.repo}}==$VERSION
 
 ENV PATH=$PATH:/home/ubuntu/.local/bin
