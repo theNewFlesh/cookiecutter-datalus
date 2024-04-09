@@ -64,6 +64,7 @@ RUN echo "\n${CYAN}SETUP PYTHON3.{{ max_ver }}${CLEAR}"; \
 USER ubuntu
 ENV REPO='{{cc.repo}}'
 ENV PYTHONPATH "${PYTHONPATH}:/home/ubuntu/$REPO/python"
+ARG VERSION
 RUN echo "\n${CYAN}INSTALL {{ cc.repo | upper }}{CLEAR}"; \
     pip3.{{ max_ver }} install --user {{cc.repo}}==$VERSION
 
