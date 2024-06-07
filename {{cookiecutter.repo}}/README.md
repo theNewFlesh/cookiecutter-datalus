@@ -19,21 +19,16 @@
 
 See [documentation](https://{{cc.git_organization}}.{{cc.git_host}}.io/{{cc.repo}}/) for details.
 
-# Installation
-### Python
-`pip install {{cc.repo}}`
+# Installation for Developers
 
 ### Docker
-1. Install [docker-desktop](https://docs.docker.com/desktop/)
-2. `docker pull {{cc.git_user}}/{{cc.repo}}:[version]`
-
-### Docker For Developers
 1. Install [docker-desktop](https://docs.docker.com/desktop/)
 2. Ensure docker-desktop has at least 4 GB of memory allocated to it.
 3. `git clone git@{{url}}:{{cc.git_user}}/{{cc.repo}}.git`
 4. `cd {{cc.repo}}`
 5. `chmod +x bin/{{cc.repo}}`
 6. `bin/{{cc.repo}} docker-start`
+   - If building on a M1 Mac run `export DOCKER_DEFAULT_PLATFORM=linux/amd64` first.
 
 The service should take a few minutes to start up.
 
@@ -46,7 +41,9 @@ Run `bin/{{cc.repo}} --help` for more help on the command line tool.
     in your ~/.zshrc file:
     - `alias {{cc.repo}}="cd [parent dir]/{{cc.repo}}; bin/{{cc.repo}}"`
     - Replace `[parent dir]` with the parent directory of this repository
-3. Running the `zsh-complete` command will enable tab completions of the cli
+3. Consider adding the following line to your ~/.zshrc if you are using a M1 Mac:
+    - `export DOCKER_DEFAULT_PLATFORM=linux/amd64`
+4. Running the `zsh-complete` command will enable tab completions of the cli
    commands, in the next shell session.
 
    For example:
@@ -54,6 +51,16 @@ Run `bin/{{cc.repo}} --help` for more help on the command line tool.
      tab to cycle through
    - `{{cc.repo}} docker-[tab]` will show you only the cli options that begin with
      "docker-"
+
+# Installation for Production
+
+### Python
+`pip install {{cc.repo}}`
+
+### Docker
+1. Install [docker-desktop](https://docs.docker.com/desktop/)
+2. `docker pull {{cc.git_user}}/{{cc.repo}}:[version]`
+
 
 ---
 
