@@ -273,17 +273,21 @@ _x_env_sync () {
     x_env_activate $1 $2 && \
     # run `pdm lock`` if lock file is empty
     if [ `cat pdm.lock | wc -l` = 0 ]; then
-        pdm lock -v
-    fi && \
-    pdm sync --no-self --dev --clean -v && \
+        pdm lock -v;
+        exit_code=`_x_resolve_exit_code $exit_code $?`;
+    fi;
+    pdm sync --no-self --dev --clean -v;
+    exit_code=`_x_resolve_exit_code $exit_code $?`;
 {%- endraw -%}
 {%- if cc.include_tensorflow == "yes" %}
-    deactivate && \
+    deactivate;
     _x_env_install_tensorflow $1 $2;
+    exit_code=`_x_resolve_exit_code $exit_code $?`;
 {%- else %}
     deactivate;
 {%- endif %}
-{% raw -%}
+{%- raw %}
+    return $exit_code;
 }
 
 x_env_activate_dev () {
