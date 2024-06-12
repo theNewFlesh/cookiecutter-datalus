@@ -125,9 +125,7 @@ prod:
   stage: prod
   extends: .build-env
   rules:
-    - if: >-
-        $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == 'master' &&
-        $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == 'prod'
+    - if: $CI_COMMIT_BRANCH == 'prod'
   script:
     - $cli docker-pull-dev
 {%- if cc.docker_registry == 'gitlab' %}
