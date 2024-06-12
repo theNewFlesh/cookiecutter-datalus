@@ -106,6 +106,7 @@ master:
     - .master-rules
   script:
     - $cli docker-build
+    - git pull origin master
     - $cli version-bump-patch
     - $cli version
     - $cli version-commit
