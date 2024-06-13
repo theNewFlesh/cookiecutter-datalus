@@ -10,6 +10,7 @@
     "include_prod_cli": ["yes", "no"],
     "include_prod_envs": ["yes", "no"],
     "include_rsync": ["yes", "no"],
+    "include_secret_env": ["yes", "no"],
     "include_tensorflow": ["yes", "no"],
     "include_vscode_server": ["yes", "no"],
     "port_prefix": 10,
