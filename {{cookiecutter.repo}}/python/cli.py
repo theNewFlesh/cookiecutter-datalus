@@ -368,27 +368,38 @@ def build_dev_command(use_cache=False):
 def build_prod_command():
     # type: () -> str
     '''
+    Build production image.
+
     Returns:
         str: Command to build prod image.
     '''
+    cmd = line('''
+{%- endraw %}
+{%- if cc.include_secret_env == 'yes' %}
+        export DOCKER_BUILDKIT=1;
+{%- endif %}
+        cd docker;
+        docker build
+            --force-rm
+            --no-cache
+            --file prod.dockerfile
+            --build-arg VERSION='$VERSION'
+{%- if cc.include_secret_env == 'yes' %}
+            --secret id=secret-env,src=config/secret-env
+{%- endif %}
+{%- raw %}
+            --label "repository={repo}"
+            --label "docker-registry={registry}"
+            --label "git-user={git_user}"
+            --label "git-branch=$(git branch --show-current)"
+            --label "git-commit=$(git rev-parse HEAD)"
+            --tag {repo}:prod .;
+        cd ..
+    ''')
     cmds = [
         enter_repo(),
         version_variable(),
-        line('''
-            cd docker;
-            docker build
-                --force-rm
-                --no-cache
-                --file prod.dockerfile
-                --label "repository={repo}"
-                --label "docker-registry={registry}"
-                --label "git-user={git_user}"
-                --label "git-branch=$(git branch --show-current)"
-                --label "git-commit=$(git rev-parse HEAD)"
-                --build-arg VERSION="$VERSION"
-                --tag {repo}:prod .;
-            cd ..
-        '''),
+        cmd,
         exit_repo(),
     ]
     return resolve(cmds)

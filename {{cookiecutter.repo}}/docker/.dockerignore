@@ -1,4 +1,8 @@
+{%- set cc = cookiecutter -%}
 *
 !../docker
 !config
 !scripts
+{%- if cc.include_secret_env == 'yes' %}
+config/secret-env
+{%- endif %}

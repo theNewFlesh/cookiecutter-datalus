@@ -18,6 +18,7 @@ def main():
     helm = config['include_helm']
     git_host = config['git_host']
     prod_cli = config['include_prod_cli']
+    secret_env = config['include_secret_env']
 
     if rtype == 'library':
         shutil.rmtree('helm')
@@ -46,6 +47,9 @@ def main():
 
     if prod_cli == 'no':
         os.remove('docker/scripts/prod-cli')
+
+    if secret_env == 'no':
+        os.remove('docker/config/secret-env')
 
     os.remove(src)
 

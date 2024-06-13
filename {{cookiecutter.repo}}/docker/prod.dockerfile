@@ -65,7 +65,18 @@ USER ubuntu
 ENV REPO='{{cc.repo}}'
 ENV PYTHONPATH "${PYTHONPATH}:/home/ubuntu/$REPO/python"
 ARG VERSION
+{%- if cc.include_secret_env == 'yes' %}
+ARG URL="YOUR PRIVATE PYPI URL"
+RUN --mount=type=secret,id=secret-env,mode=0444 \
+    . /run/secrets/secret-env && \
+    echo "\n${CYAN}INSTALL {{ cc.repo | upper }}${CLEAR}"; \
+    pip3.{{ max_ver }} install \
+        --user \
+        --index-url "https://__token__:$PYPI_ACCESS_TOKEN@$URL" \
+        {{cc.repo}}==$VERSION
+{%- else %}
 RUN echo "\n${CYAN}INSTALL {{ cc.repo | upper }}${CLEAR}"; \
     pip3.{{ max_ver }} install --user {{cc.repo}}==$VERSION
+{%- endif %}
 
 ENV PATH=$PATH:/home/ubuntu/.local/bin

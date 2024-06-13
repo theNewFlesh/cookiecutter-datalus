@@ -7,6 +7,10 @@ services:
     build:
       context: .
       dockerfile: dev.dockerfile
+{%- if cc.include_secret_env == 'yes' %}
+      secrets:
+        - secret-env
+{%- endif %}
     ports:
       - "{{cc.port_prefix}}00:9000"
       - "{{cc.port_prefix}}80:8080"
@@ -14,6 +18,9 @@ services:
     user: ubuntu
     env_file:
       - config/dev-env
+{%- if cc.include_secret_env == 'yes' %}
+      - config/secret-env
+{%- endif %}
     volumes:
       - ../:/home/ubuntu/{{cc.repo}}
       - ~/.ssh:/home/ubuntu/.ssh:ro
@@ -34,4 +41,9 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
+{%- endif %}
+{%- if cc.include_secret_env == 'yes' %}
+secrets:
+  secret-env:
+    file: config/secret-env
 {%- endif %}

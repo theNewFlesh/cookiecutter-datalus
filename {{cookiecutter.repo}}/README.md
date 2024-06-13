@@ -34,8 +34,20 @@ The service should take a few minutes to start up.
 
 Run `bin/{{cc.repo}} --help` for more help on the command line tool.
 
-### ZSH Setup
+{%- if cc.include_secret_env == 'yes' %}
 
+### Secret Env Setup
+The secret-env file is a environment file which holds various secrets used by
+pyproject.toml and CI.
+
+1. Create a [GitLab Personal Access Token](https://gitlab.com/-/user_settings/personal_access_tokens)
+   1. Name it `[FIRST_NAME]_[LAST_NAME]_TOKEN`
+   2. Give it `read_api` permissions
+2. Create the file: `{{cc.repo}}/docker/config/secret-env`
+3. In that file paste: `PYPI_ACCESS_TOKEN=[gitlab-pypi-token]`
+{%- endif %}
+
+### ZSH Setup
 1. `bin/{{cc.repo}}` must be run from this repository's top level directory.
 2. Therefore, if using zsh, it is recommended that you paste the following line
     in your ~/.zshrc file:
