@@ -44,7 +44,7 @@ pyproject.toml and CI.
    1. Name it `[FIRST_NAME]_[LAST_NAME]_TOKEN`
    2. Give it `read_api` permissions
 2. Create the file: `{{cc.repo}}/docker/config/secret-env`
-3. In that file paste: `PYPI_ACCESS_TOKEN=[gitlab-pypi-token]`
+3. In that file paste: `export PYPI_ACCESS_TOKEN=[gitlab-pypi-token]`
 {%- endif %}
 
 ### ZSH Setup

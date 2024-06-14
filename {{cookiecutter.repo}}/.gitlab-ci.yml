@@ -46,7 +46,7 @@ variables:
     - git config --global user.email "devops@$org_url"
     - git remote set-url origin $git_url
 {%- if cc.include_secret_env == 'yes' %}
-    - echo "PYPI_ACCESS_TOKEN=$PYPI_ACCESS_TOKEN" > docker/config/secret-env
+    - echo "export PYPI_ACCESS_TOKEN=$PYPI_ACCESS_TOKEN" > docker/config/secret-env
 {%- endif %}
 
 # FEATURE-----------------------------------------------------------------------
