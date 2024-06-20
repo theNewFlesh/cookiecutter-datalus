@@ -383,7 +383,7 @@ def build_prod_command():
             --force-rm
             --no-cache
             --file prod.dockerfile
-            --build-arg VERSION='$VERSION'
+            --build-arg VERSION="$VERSION"
 {%- if cc.include_secret_env == 'yes' %}
             --secret id=secret-env,src=config/secret-env
 {%- endif %}
