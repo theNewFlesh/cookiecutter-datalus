@@ -39,6 +39,11 @@
         "sync-rsync.showProgress": false,
         "sync-rsync.autoShowOutput": false,
         "sync-rsync.autoShowOutputOnError": false,
+        "sync-rsync.exclude": [
+            ".git",
+            ".vscode",
+            ".Trash*"
+        ],
         // please assign with correct user_name in vscode settings user tab
         // "sync-rsync.remote": "ubuntu@192.168.2.1:/mnt/nfs/volume",
         "sync-rsync.sites": [{
