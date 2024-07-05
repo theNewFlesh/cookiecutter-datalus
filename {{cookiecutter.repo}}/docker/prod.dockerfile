@@ -62,8 +62,6 @@ RUN echo "\n${CYAN}SETUP PYTHON3.{{ max_ver }}${CLEAR}"; \
 
 # install {{cc.repo}}
 USER ubuntu
-ENV REPO='{{cc.repo}}'
-ENV PYTHONPATH "${PYTHONPATH}:/home/ubuntu/$REPO/python"
 ARG VERSION
 {%- if cc.include_secret_env == 'yes' %}
 ARG URL="YOUR PRIVATE PYPI URL"
@@ -79,4 +77,4 @@ RUN echo "\n${CYAN}INSTALL {{ cc.repo | upper }}${CLEAR}"; \
     pip3.{{ max_ver }} install --user {{cc.repo}}==$VERSION
 {%- endif %}
 
-ENV PATH=$PATH:/home/ubuntu/.local/bin
+ENV PATH="$PATH:/home/ubuntu/.local/bin"
