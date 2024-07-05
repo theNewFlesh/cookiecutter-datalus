@@ -56,7 +56,7 @@ RUN echo "\n${CYAN}SETUP PYTHON3.{{ max_ver }}${CLEAR}"; \
     apt update && \
     apt install --fix-missing -y python3.{{ max_ver }} && \
     rm -rf /var/lib/apt/lists/* && \
-    curl -fsSL  https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
+    curl -fsSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
     python3.{{ max_ver }} get-pip.py && \
     rm -rf /home/ubuntu/get-pip.py
 
