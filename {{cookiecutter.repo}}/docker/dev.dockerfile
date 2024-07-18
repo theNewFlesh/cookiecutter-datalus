@@ -248,9 +248,10 @@ RUN echo "\n${CYAN}SETUP DIRECTORIES${CLEAR}"; \
 # create dev env
 WORKDIR /home/ubuntu/pdm
 {%- if cc.include_secret_env == 'yes' %}
-RUN --mount=type=secret,id=secret-env,mode=0444 \
-    . /run/secrets/secret-env && \
-    echo "\n${CYAN}INSTALL DEV ENVIRONMENT${CLEAR}"; \
+# uncomment if you need to install private packages
+# RUN --mount=type=secret,id=secret-env,mode=0444 \
+#     . /run/secrets/secret-env && \
+RUN echo "\n${CYAN}INSTALL DEV ENVIRONMENT${CLEAR}"; \
 {%- else %}
 RUN echo "\n${CYAN}INSTALL DEV ENVIRONMENT${CLEAR}"; \
 {%- endif %}

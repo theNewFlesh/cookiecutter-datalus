@@ -34,13 +34,13 @@ services:
 {%- endif %}
     working_dir: "/home/ubuntu"
 {%- if cc.include_nvidia == "yes" %}
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
 {%- endif %}
 {%- if cc.include_secret_env == 'yes' %}
 secrets:
