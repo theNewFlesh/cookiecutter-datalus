@@ -368,7 +368,7 @@ x_build_prod () {
 
 _x_build_publish () {
     # Publish pip package of repo to PyPi
-    # args: user, password, comment, url
+    # args: user, token, comment, url
     x_build_package;
     cd $BUILD_DIR;
     echo "${CYAN2}PUBLISHING PIP PACKAGE TO PYPI${CLEAR}\n";
@@ -383,7 +383,7 @@ _x_build_publish () {
 
 x_build_publish () {
     # Run production tests first then publish pip package of repo to PyPi
-    # args: password
+    # args: token
     local version=`_x_get_version`;
     _x_build_publish __token__ $1 $version $PYPI_URL;
 }
