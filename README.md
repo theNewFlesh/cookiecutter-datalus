@@ -96,7 +96,8 @@ Its usage pattern is: `bin/repo COMMAND [-a --args]=ARGS [-h --help] [--dryrun]`
 | build-publish           | Run production tests first then publish pip package of repo to PyPi | [build] publish        |
 | build-test              | Build test version of repo for prod testing                         | [build] test           |
 | docker-build            | Build Docker image                                                  |                        |
-| docker-build-from-cache | Build Docker image from cached image                                |                        |
+| docker-build-from-cache | Build Docker image from registry cache                              |                        |
+| docker-build-no-cache   | Build Docker image without cache                                    |                        |
 | docker-build-prod       | Build production image                                              |                        |
 | docker-container        | Display the Docker container id                                     |                        |
 | docker-destroy          | Shutdown container and destroy its image                            |                        |
