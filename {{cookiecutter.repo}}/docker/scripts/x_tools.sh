@@ -35,6 +35,7 @@ export JUPYTER_CONFIG_PATH=/home/ubuntu/.jupyter
 export VSCODE_SERVER="$HOME/.vscode-server/bin/*/bin/code-server"
 export PYPI_URL="pypi"
 alias cp=cp  # "cp -i" default alias asks you if you want to clobber files
+alias rolling-pin="/home/ubuntu/.local/bin/rolling-pin"
 
 {% raw -%}
 # COLORS------------------------------------------------------------------------
