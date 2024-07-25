@@ -79,5 +79,5 @@ ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
 export PROMPT='$(_user)$(_at)$(_hostname)$(_dir)
 $(git_prompt_info)$(_prompt)$(_text)'
 
-export RPROMPT='$(_date)$(_time)$(_timezone)'
+#export RPROMPT='$(_date)$(_time)$(_timezone)'
 {%- endraw %}
