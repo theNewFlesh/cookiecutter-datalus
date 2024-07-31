@@ -348,6 +348,9 @@ def build_dev_command(mode='normal'):
         docker build
             --file dev.dockerfile
             --build-arg BUILDKIT_INLINE_CACHE=1
+{%- if cc.include_secret_env == 'yes' %}
+            --secret id=secret-env,src=config/secret-env
+{%- endif %}
             --label "repository={repo}"
             --label "docker-registry={registry}"
             --label "git-user={git_user}"
