@@ -4,6 +4,7 @@ services:
   {{cc.repo}}:
     container_name: {{cc.repo}}
     image: {{cc.repo}}:dev
+    platform: linux/amd64
     build:
       context: .
       dockerfile: dev.dockerfile
