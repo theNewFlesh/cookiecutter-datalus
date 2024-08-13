@@ -189,7 +189,9 @@ The following is a complete list of all available development commands:
 | quickstart              | Display quickstart guide                                            |
 | session-lab             | Run jupyter lab server                                              |
 | session-python          | Run python session with dev dependencies                            |
+{%- if cc.repo_type in ['dash', 'flask'] %}
 | session-server          | Runn application server inside Docker container                     |
+{%- endif %}
 | state                   | State of repository and Docker container                            |
 | test-coverage           | Generate test coverage report                                       |
 | test-dev                | Run all tests                                                       |
