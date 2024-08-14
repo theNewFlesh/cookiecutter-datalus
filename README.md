@@ -190,18 +190,18 @@ APP
    ├── .env                                    # needed by VSCode docker-compose
    ├── .gitlab-ci.yml                          # GitLab CI script
    ├── bin
-   |   └── APP                                 # shell wrapper for CLI
+   │   └── APP                                 # shell wrapper for CLI
 ```
 ```yaml
    ├── docker                                  # everything needed to build and run container
-   |   ├── dev.dockerfile                      # development version of app image
-   |   ├── prod.dockerfile                     # production version of app image
-   |   ├── docker-compose.yml                  # dev means of starting container
-   |   ├── .dockerignore                       # tells docker which files to ignore
+   │   ├── dev.dockerfile                      # development version of app image
+   │   ├── prod.dockerfile                     # production version of app image
+   │   ├── docker-compose.yml                  # dev means of starting container
+   │   ├── .dockerignore                       # tells docker which files to ignore
    │   ├── scripts
-   │   |  ├── prod-cli                         # prod cli script used by dev container (optional)
-   │   |  ├── s_tools.sh                       # s6 daemon supervisor tools
-   │   |  └── x_tools.sh                       # developer tools
+   │   │  ├── prod-cli                         # prod cli script used by dev container (optional)
+   │   │  ├── s_tools.sh                       # s6 daemon supervisor tools
+   │   │  └── x_tools.sh                       # developer tools
    │   └── config
    │      ├── pyproject.toml                   # defines all dependencies
    │      ├── flake8.ini                       # linting config
@@ -219,59 +219,59 @@ APP
 ```
 ```yaml
    ├── python
-   |   ├── cli.py                              # dev command line interface
-   |   ├── conftest.py                         # pytest config (optional)
-   |   └── APP                                 # app source code
+   │   ├── cli.py                              # dev command line interface
+   │   ├── conftest.py                         # pytest config (optional)
+   │   └── APP                                 # app source code
    │      ├── __init__.py
    │      ├── command.py                       # prod CLI module (optional)
    │      ├── core
    │      │   ├── __init__.py
-   |      |   └── ...                          # core logic modules
+   │      │   └── ...                          # core logic modules
    │      └── server                           # (optional)
    │         ├── __init__.py
-   |         └── ...                           # server logic modules
+   │         └── ...                           # server logic modules
 ```
 ```yaml
    ├── sphinx                                  # automatic documentation config
-   |   ├── conf.py                             # sphinx config
-   |   ├── make.bat                            # sphinx config
-   |   ├── Makefile                            # sphinx config
-   |   ├── cli.rst                             # cli docs
-   |   ├── core.rst                            # core logic docs
-   |   ├── index.rst                           # sphinx toc tree
-   |   ├── modules.rst                         # sphinx toc tree
-   |   ├── server.rst                          # server.py docs (optional)
+   │   ├── conf.py                             # sphinx config
+   │   ├── make.bat                            # sphinx config
+   │   ├── Makefile                            # sphinx config
+   │   ├── cli.rst                             # cli docs
+   │   ├── core.rst                            # core logic docs
+   │   ├── index.rst                           # sphinx toc tree
+   │   ├── modules.rst                         # sphinx toc tree
+   │   ├── server.rst                          # server.py docs (optional)
    │   ├── intro.rst                           # README.md as rst
    │   └── style.css                           # used by sphinx for styling docs
 ```
 ```yaml
    ├── mkdocs                                  # markdown documentation config (optional)
-   |   ├── mkdocs.yml                          # mkdocs file index
-   |   └── md
-   |       ├── index.md                        # markdown docs homepage
-   |       ├── style.css                       # custom stylesheet
-   |       └── ...                             # markdown files
+   │   ├── mkdocs.yml                          # mkdocs file index
+   │   └── md
+   │       ├── index.md                        # markdown docs homepage
+   │       ├── style.css                       # custom stylesheet
+   │       └── ...                             # markdown files
 ```
 ```yaml
    ├── docs                                    # documentation build (/public if using gitlab)
-   |   ├── index.html                          # docs homepage
-   |   ├── architecture.svg                    # auto-generated graph of app dependecies
-   |   ├── plots.html                          # code metric plots
-   |   ├── all_metrics.html                    # master code metrics table
-   |   ├── cyclomatic_complexity_metrics.html  # code metrics table
-   |   ├── halstead_metrics.html               # code metrics table
-   |   ├── htmlcov
-   |   |   └── index.html                      # code coverage report
-   |   └── resources
-   |       └── ...                             # additional media for docs
+   │   ├── index.html                          # docs homepage
+   │   ├── architecture.svg                    # auto-generated graph of app dependecies
+   │   ├── plots.html                          # code metric plots
+   │   ├── all_metrics.html                    # master code metrics table
+   │   ├── cyclomatic_complexity_metrics.html  # code metrics table
+   │   ├── halstead_metrics.html               # code metrics table
+   │   ├── htmlcov
+   │   │   └── index.html                      # code coverage report
+   │   └── resources
+   │       └── ...                             # additional media for docs
 ```
 ```yaml
    ├── helm                                    # Helm app definition (optional)
-   |   ├── README.md                           # app README
-   |   ├── Chart.yaml                          # Helm chart
-   |   ├── values.yaml                         # default values
-   |   ├── .helmignore                         # ignores files
-   |   └── templates
+   │   ├── README.md                           # app README
+   │   ├── Chart.yaml                          # Helm chart
+   │   ├── values.yaml                         # default values
+   │   ├── .helmignore                         # ignores files
+   │   └── templates
    │       ├── _helpers.tpl                    # creates vars from values.yml
    │       ├── argocd-application.yaml         # ArgoCD app definition
    │       ├── deployment.yaml                 # k8s deployment
@@ -287,11 +287,11 @@ APP
 ```
 ```yaml
    ├── notebooks
-   |   └── ...                                 # jupyter lab notebooks
+   │   └── ...                                 # jupyter lab notebooks
    ├── resources
-   |   └── ...                                 # resources used by app
+   │   └── ...                                 # resources used by app
    ├── artifacts                               # (optional)
-   |   └── ...                                 # dash artifacts
+   │   └── ...                                 # dash artifacts
    └── templates                               # (optional)
        └── ...                                 # dash templates
 ```
