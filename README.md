@@ -82,7 +82,7 @@ for running the repository code as an installed pip package.
 Datalus repos come with a development command line interface (defined in cli.py)
 that works with any version of python 2.7 and above, as it has no dependencies.
 Additionally, a subset of these commands are defined in the VSCode workspace
-file. Appending `--dryrun` to any command will outputs the exact shell code that
+file. Appending `--dryrun` to any command will output the exact shell code that
 would have been run without the flag.
 
 Its usage pattern is: `bin/repo COMMAND [-a --args]=ARGS [-h --help] [--dryrun]`
@@ -133,7 +133,7 @@ Its usage pattern is: `bin/repo COMMAND [-a --args]=ARGS [-h --help] [--dryrun]`
 | library-sync-prod       | Sync prod environment with packages listed in prod.lock             | [library] sync-prod    |
 | library-update          | Update dev dependencies                                             | [library] update       |
 | library-update-pdm      | Update PDM                                                          | [library] update-pdm   |
-| quickstart              | Display quickstart guide                                            |                        |
+| quickstart              | Display quickstart guide                                            | quickstart             |
 | session-lab             | Run jupyter lab server                                              | [session] lab          |
 | session-python          | Run python session with dev dependencies                            | [session] python       |
 | session-server          | Runn application server inside Docker container                     | [session] server       |
@@ -238,7 +238,7 @@ APP
    |   ├── Makefile                            # sphinx config
    |   ├── cli.rst                             # cli docs
    |   ├── core.rst                            # core logic docs
-   |   ├── index.rst                           # sphinx tox tree
+   |   ├── index.rst                           # sphinx toc tree
    |   ├── modules.rst                         # sphinx toc tree
    |   ├── server.rst                          # server.py docs (optional)
    │   ├── intro.rst                           # README.md as rst
