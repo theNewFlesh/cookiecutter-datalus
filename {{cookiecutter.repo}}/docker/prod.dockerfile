@@ -25,6 +25,14 @@ RUN echo "\n${CYAN}SETUP UBUNTU USER${CLEAR}"; \
         --gid $GID_ ubuntu
 WORKDIR /home/ubuntu
 
+# update ubuntu and install basic dependencies
+RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
+    apt update && \
+    apt install -y \
+        curl \
+        software-properties-common && \
+    rm -rf /var/lib/apt/lists/*
+
 {%- if cc.include_nvidia == "yes" %}
 
 # install nvidia container toolkit
@@ -41,14 +49,6 @@ RUN echo "\n${CYAN}INSTALL NVIDIA CONTAINER TOOLKIT${CLEAR}"; \
         nvidia-container-toolkit && \
     rm -rf /var/lib/apt/lists/*
 {%- endif %}
-
-# update ubuntu and install basic dependencies
-RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
-    apt update && \
-    apt install -y \
-        curl \
-        software-properties-common && \
-    rm -rf /var/lib/apt/lists/*
 
 # install python3.{{ max_ver }} and pip
 RUN echo "\n${CYAN}SETUP PYTHON3.{{ max_ver }}${CLEAR}"; \
