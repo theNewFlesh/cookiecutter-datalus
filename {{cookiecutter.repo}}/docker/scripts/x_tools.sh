@@ -408,7 +408,9 @@ x_docs () {
     mkdocs build --config-file mkdocs/mkdocs.yml;
 {%- endif %}
     mkdir -p {{sphinx_dir}};
+    cp $REPO_DIR/README.md $REPO_DIR/sphinx/readme.md;
     sphinx-build sphinx {{sphinx_dir}};
+    rm $REPO_DIR/sphinx/readme.md;
     cp -f sphinx/style.css {{sphinx_dir}}/_static/style.css;
     touch {{sphinx_dir}}/.nojekyll;
 {%- raw %}

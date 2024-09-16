@@ -83,12 +83,12 @@ dev = [
 {%- if cc.include_black == 'yes' %}
     "black",
 {%- endif %}
-    "m2r2",
 {%- if cc.include_mkdocs == 'yes' %}
     "mkdocs>=1.4.3",
 {%- endif %}
+    "myst-parser>=4.0.0",
     "sphinx-autodoc-typehints>=1.22",
-    "sphinx-rtd-theme",
+    "sphinx-rtd-theme>=2.0.0",
     "sphinx>=5.3.0",
     "sphinxcontrib-jquery>=4.1",
     "toml>=0.10.2",

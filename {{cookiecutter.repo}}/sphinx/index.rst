@@ -7,7 +7,7 @@ Welcome to {{ cc.repo }}'s documentation!
    :maxdepth: 1
    :caption: Getting Started
 
-   intro
+   readme
 
 .. toctree::
    :maxdepth: 1
