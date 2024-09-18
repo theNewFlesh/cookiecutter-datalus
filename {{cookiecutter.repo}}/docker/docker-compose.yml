@@ -1,5 +1,4 @@
 {%- set cc = cookiecutter -%}
-version: "3.8"
 services:
   {{cc.repo}}:
     container_name: {{cc.repo}}
