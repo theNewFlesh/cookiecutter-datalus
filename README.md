@@ -26,9 +26,18 @@
     </a>
 </p>
 
+<p><img src="logo.png"width="666px" height="360px"></p>
+
 # Introduction
-Cookiecutter-Datalus is a cookiecutter template for generating datalus
-repositories.
+Datalus is a cookiecutter template for end-to-end automated, modular python repos.
+From bare-bones local machine to Docker to CI to pip packages and Helm Charts.
+
+A datalus repo is one in which the entire developer environment, including VSCode
+and CI runs inside a development container. Through CI, that container is used
+to publish a pip package which is then installed in the production container
+built by this repo. That production container is then referenced by a Helm Chart
+built by this repo. All of this is managed by a standardized python CLI that has
+comes with each repo and has no dependencies.
 
 # Usage
 1. Install [cookiecutter](https://github.com/cookiecutter/cookiecutter) CLI
