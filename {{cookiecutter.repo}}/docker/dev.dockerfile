@@ -93,7 +93,7 @@ RUN echo "\n${CYAN}INSTALL NODEJS${CLEAR}"; \
     mkdir -p /etc/apt/keyrings && \
     curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
         | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
-    export NODE_VERSION=18 && \
+    export NODE_VERSION=20 && \
     echo "deb \
         [signed-by=/etc/apt/keyrings/nodesource.gpg] \
         https://deb.nodesource.com/node_$NODE_VERSION.x \
@@ -225,9 +225,10 @@ RUN echo "\n${CYAN}INSTALL DEV DEPENDENCIES${CLEAR}"; \
         https://raw.githubusercontent.com/pdm-project/pdm/main/install-pdm.py \
         | python3.{{ max_ver }} - && \
     pip3.{{ max_ver }} install --upgrade --user \
-        pdm \
+        'pdm>=2.19.1' \
         'pdm-bump<0.7.0' \
-        'rolling-pin>=0.10.1' && \
+        'rolling-pin>=0.10.1' \
+        'uv' && \
     mkdir -p /home/ubuntu/.oh-my-zsh/custom/completions && \
     pdm self update --pip-args='--user' && \
     pdm completion zsh > /home/ubuntu/.oh-my-zsh/custom/completions/_pdm
@@ -248,10 +249,9 @@ RUN echo "\n${CYAN}SETUP DIRECTORIES${CLEAR}"; \
 # create dev env
 WORKDIR /home/ubuntu/pdm
 {%- if cc.include_secret_env == 'yes' %}
-# uncomment if you need to install private packages
-# RUN --mount=type=secret,id=secret-env,mode=0444 \
-#     . /run/secrets/secret-env && \
-RUN echo "\n${CYAN}INSTALL DEV ENVIRONMENT${CLEAR}"; \
+RUN echo "\n${CYAN}INSTALL DEV ENVIRONMENT${CLEAR}"
+RUN --mount=type=secret,id=secret-env,mode=0444 \
+    . /run/secrets/secret-env && \
 {%- else %}
 RUN echo "\n${CYAN}INSTALL DEV ENVIRONMENT${CLEAR}"; \
 {%- endif %}
@@ -265,7 +265,13 @@ RUN echo "\n${CYAN}INSTALL DEV ENVIRONMENT${CLEAR}"; \
 
 # create prod envs
 {%- if cc.include_prod_envs == 'yes' %}
+{%- if cc.include_secret_env == 'yes' %}
+RUN echo "\n${CYAN}INSTALL PROD ENVIRONMENTS${CLEAR}"
+RUN --mount=type=secret,id=secret-env,mode=0444 \
+    . /run/secrets/secret-env && \
+{%- else %}
 RUN echo "\n${CYAN}INSTALL PROD ENVIRONMENTS${CLEAR}"; \
+{%- endif %}
     . /home/ubuntu/scripts/x_tools.sh && \
     export CONFIG_DIR=/home/ubuntu/config && \
     export SCRIPT_DIR=/home/ubuntu/scripts && \
@@ -274,10 +280,16 @@ RUN echo "\n${CYAN}INSTALL PROD ENVIRONMENTS${CLEAR}"; \
 {%- endfor %}
     x_env_init prod 3.{{ min_ver }}
 {%- else %}
-# RUN echo "\n${CYAN}INSTALL PROD ENVIRONMENTS${CLEAR}"; \
-#     . /home/ubuntu/scripts/x_tools.sh && \
-#     export CONFIG_DIR=/home/ubuntu/config && \
-#     export SCRIPT_DIR=/home/ubuntu/scripts && \
+{%- if cc.include_secret_env == 'yes' %}
+RUN echo "\n${CYAN}INSTALL PROD ENVIRONMENTS${CLEAR}"
+RUN --mount=type=secret,id=secret-env,mode=0444 \
+    . /run/secrets/secret-env && \
+{%- else %}
+RUN echo "\n${CYAN}INSTALL PROD ENVIRONMENT${CLEAR}"; \
+{%- endif %}
+    . /home/ubuntu/scripts/x_tools.sh && \
+    export CONFIG_DIR=/home/ubuntu/config && \
+    export SCRIPT_DIR=/home/ubuntu/scripts && \
 {%- for version in range(min_ver + 1, max_ver + 1) | reverse %}
 #     x_env_init prod 3.{{ version }} && \
 {%- endfor %}

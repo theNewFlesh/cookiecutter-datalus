@@ -33,6 +33,7 @@ flask_monitoringdashboard*
 .Trash*
 
 # packaging
+docker/dist/*
 .eggs
 .installed.cfg
 .Python

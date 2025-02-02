@@ -46,7 +46,7 @@ comes with each repo and has no dependencies.
 # Purpose
 Datalus is designed to facilitate the development of modern python applications.
 It supports:
-- Dash app development (ie Plotly + Flask + ReactJS) 
+- Dash app development (ie Plotly + Flask + ReactJS)
 - Flask app development
 - Kuberenetes app development via Helm and ArgoCD
 - Python library development (multi version pip packages via pyproject and PDM)
@@ -86,6 +86,18 @@ and repository structure. The developer tools are accessed through the command
 line and as VSCode tasks. Development is done against a dev docker container
 defined in dev.dockerfile. Prod.dockerfile defines a slim production container
 for running the repository code as an installed pip package.
+
+# Gotchas
+
+* The `default` dependency group is what your published package will require.
+  No other groups are included.
+* The `test` dependency group is for testing in dev and prod.
+* The `lab` dependency group is for jupyter lab related libraries.
+* The `dev` dependency group is for everything else.
+* `[library] install-dev` and `[library] install-prod` updates `pyproject.toml`
+  and the `dev.lock` and `prod.lock` files repectively.
+* Always update `pyproject.toml` and lock files (`dev.lock` and `prod.lock`)
+  togheter (ie single commit).
 
 # Development CLI
 Datalus repos come with a development command line interface (defined in cli.py)
@@ -212,15 +224,17 @@ APP
    │   │  ├── s_tools.sh                       # s6 daemon supervisor tools
    │   │  └── x_tools.sh                       # developer tools
    │   └── config
-   │      ├── pyproject.toml                   # defines all dependencies
-   │      ├── flake8.ini                       # linting config
-   │      ├── dev-env                          # dev environment variables
-   │      ├── pdm.toml                         # needed by PDM
-   │      ├── dev.lock                         # frozen dev dependencies
-   │      ├── prod.lock                        # frozen prod dependencies
    │      ├── build.yaml                       # defines pip package builds
-   │      ├── zshrc                            # zsh environment setup
+   │      ├── dev-env                          # dev environment variables
+   │      ├── dev.lock                         # frozen dev dependencies
+   │      ├── flake8.ini                       # linting config
    │      ├── henanigans.zsh-theme             # zsh theme
+   │      ├── pdm.toml                         # needed by PDM
+   │      ├── prod.lock                        # frozen prod dependencies
+   │      ├── prod.toml                        # used by prod.dockerfile
+   │      ├── pyproject.toml                   # defines all dependencies
+   │      ├── secret-env                       # credentials used for CI and developers
+   │      ├── zshrc                            # zsh environment setup
    │      └── jupyter
    │         ├── jupyter_lab_config.py         # jupyter lab config
    │         └── lab
