@@ -68,7 +68,6 @@ Datalus supports the following via a command line interface and VSCode tasks:
 - automated publishing to PyPI
   - including CLI for package (ie command.py)
 - automated jupyter lab serving, pre-customized with color theme and plugins
-- tensorflow installation
 - openexr installation
 
 # Developer Level Agreement

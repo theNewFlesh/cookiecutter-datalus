@@ -11,7 +11,6 @@ default_context:
   include_prod_envs: "yes"
   include_rsync: "yes"
   include_secret_env: "yes"
-  include_tensorflow: "yes"
   include_vscode_server: "yes"
   port_prefix: 99
   git_user: theNewFlesh

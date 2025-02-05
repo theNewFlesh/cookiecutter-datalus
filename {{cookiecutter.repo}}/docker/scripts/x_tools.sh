@@ -23,9 +23,6 @@ export DOCS_DIR="$REPO_DIR/docs"
 {%- endif %}
 export MIN_PYTHON_VERSION="3.{{ cc.python_min_version }}"
 export MAX_PYTHON_VERSION="3.{{ cc.python_max_version }}"
-{%- if cc.include_tensorflow == "yes" %}
-export MIN_TENSORFLOW_VERSION="2.0.0"
-{%- endif %}
 export MKDOCS_DIR="$REPO_DIR/mkdocs"
 export PDM_DIR="$HOME/pdm"
 export PYPI_URL="pypi"
@@ -161,51 +158,7 @@ _x_set_uv_vars () {
     # args: mode, python_version
     export UV_PROJECT_ENVIRONMENT=`find $PDM_DIR/envs -maxdepth 1 -type d | grep $1-$2`;
 }
-{% endraw %}
 
-{%- if cc.include_tensorflow == "yes" %}
-# TENSORFLOW--------------------------------------------------------------------
-x_env_activate () {
-    # Activate a virtual env given a mode and python version
-    # args: mode, python_version
-    local CWD=`pwd`;
-    cd $PDM_DIR;
-    _x_gen_pdm_files $1 $2;
-    . `pdm venv activate $1-$2 | awk '{print $2}'`;
-    _x_set_uv_vars $1 $2;
-    cd $CWD;
-}
-
-# TODO: remove this once PDM will install tensorflow
-_x_env_pip_install () {
-    # Pip install packages pdm refuses to
-    # args: mode, python_version, packages
-    cd $PDM_DIR;
-    x_env_activate $1 $2 && \
-    python3 -m pip install "$3";
-    deactivate;
-}
-
-# TODO: remove this once PDM will install tensorflow
-_x_env_install_tensorflow () {
-    # install tensorflow in given environment
-    # args: mode, python_version
-    echo "\n${CYAN2}INSTALL TENSORFLOW${CLEAR}\n";
-    _x_env_pip_install $1 $2 "tensorflow>=$MIN_TENSORFLOW_VERSION";
-}
-
-# TODO: remove this once PDM will install tensorflow
-_x_build_add_tensorflow () {
-    # add tensorflow to pyproject file
-    # args: pyproject.toml file
-    DEPS=`rolling-pin toml $1 --search project.dependencies \
-        | grep dependencies \
-        | sed 's/.* = \[/[/' \
-        | sed "s/\]/ \"tensorflow>=$MIN_TENSORFLOW_VERSION\"]/"`;
-    rolling-pin toml $1 --edit "project.dependencies=$DEPS" --target $1;
-}
-{% endif %}
-{%- raw %}
 # ENV-FUNCTIONS-----------------------------------------------------------------
 _x_env_exists () {
     # determines if given env exists
@@ -242,15 +195,8 @@ _x_env_create () {
     # args: mode, python_version
     cd $PDM_DIR;
     _x_gen_pdm_files $1 $2;
-{%- endraw -%}
-{%- if cc.include_tensorflow == "yes" %}
-    pdm venv create -n $1-$2 --with-pip;
-{%- else %}
     pdm venv create -n $1-$2;
-{%- endif %}
 }
-
-{%- if cc.include_tensorflow == "no" %}
 
 x_env_activate () {
     # Activate a virtual env given a mode and python version
@@ -262,8 +208,6 @@ x_env_activate () {
     _x_set_uv_vars $1 $2;
     cd $CWD;
 }
-{%- endif %}
-{%- raw %}
 
 _x_env_lock () {
     # Resolve dependencies listed in pyrproject.toml into a pdm.lock file
@@ -287,15 +231,7 @@ _x_env_sync () {
     fi;
     pdm sync --no-self --dev --clean -v;
     exit_code=`_x_resolve_exit_code $exit_code $?`;
-{%- endraw -%}
-{%- if cc.include_tensorflow == "yes" %}
     deactivate;
-    _x_env_install_tensorflow $1 $2;
-    exit_code=`_x_resolve_exit_code $exit_code $?`;
-{%- else %}
-    deactivate;
-{%- endif %}
-{%- raw %}
     return $exit_code;
 }
 
@@ -386,11 +322,6 @@ x_build_prod () {
     echo "${CYAN2}BUILDING PROD REPO${CLEAR}\n";
     _x_build prod;
     _x_gen_pyproject package > $BUILD_DIR/repo/pyproject.toml;
-{%- endraw -%}
-{%- if cc.include_tensorflow == "yes" %}
-    _x_build_add_tensorflow $BUILD_DIR/repo/pyproject.toml;
-{%- endif %}
-{%- raw %}
     _x_build_show_dir;
 }
 
@@ -515,11 +446,6 @@ _x_library_sync () {
     cd $PDM_DIR;
     pdm sync --no-self --dev --clean -v;
     deactivate;
-{%- endraw -%}
-{%- if cc.include_tensorflow == "yes" %}
-    _x_env_install_tensorflow $1 $2;
-{%- endif %}
-{%- raw %}
     x_env_activate_dev;
 }
 
