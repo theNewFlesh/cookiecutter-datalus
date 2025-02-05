@@ -278,15 +278,15 @@ RUN echo "\n${CYAN}INSTALL PROD ENVIRONMENTS${CLEAR}"; \
     x_env_init prod 3.{{ min_ver }}
 {%- else %}
 {%- if cc.include_secret_env == 'yes' %}
-RUN echo "\n${CYAN}INSTALL PROD ENVIRONMENTS${CLEAR}"
-RUN --mount=type=secret,id=secret-env,mode=0444 \
-    . /run/secrets/secret-env && \
+# RUN echo "\n${CYAN}INSTALL PROD ENVIRONMENTS${CLEAR}"
+# RUN --mount=type=secret,id=secret-env,mode=0444 \
+#     . /run/secrets/secret-env && \
 {%- else %}
-RUN echo "\n${CYAN}INSTALL PROD ENVIRONMENT${CLEAR}"; \
+# RUN echo "\n${CYAN}INSTALL PROD ENVIRONMENT${CLEAR}"; \
 {%- endif %}
-    . /home/ubuntu/scripts/x_tools.sh && \
-    export CONFIG_DIR=/home/ubuntu/config && \
-    export SCRIPT_DIR=/home/ubuntu/scripts && \
+#     . /home/ubuntu/scripts/x_tools.sh && \
+#     export CONFIG_DIR=/home/ubuntu/config && \
+#     export SCRIPT_DIR=/home/ubuntu/scripts && \
 {%- for version in range(min_ver + 1, max_ver + 1) | reverse %}
 #     x_env_init prod 3.{{ version }} && \
 {%- endfor %}
