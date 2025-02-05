@@ -31,28 +31,6 @@
         "python.testing.pytestEnabled": true,
         "python.testing.unittestEnabled": false,
         "pythonTestExplorer.testFramework": "pytest",
-{%- endraw %}
-{%- if cc.include_rsync == "yes" %}
-        "sync-rsync.executableShell": "/bin/zsh",
-        // "sync-rsync.onSave": true,
-        "sync-rsync.onSaveIndividual": true,
-        "sync-rsync.showProgress": false,
-        "sync-rsync.autoShowOutput": false,
-        "sync-rsync.autoShowOutputOnError": false,
-        "sync-rsync.exclude": [
-            ".git",
-            ".vscode",
-            ".Trash*"
-        ],
-        // please assign with correct user_name in vscode settings user tab
-        // "sync-rsync.remote": "ubuntu@192.168.2.1:/mnt/nfs/volume",
-        "sync-rsync.sites": [{
-            "localPath": "${workspaceFolder}",
-            "shell": "ssh -i /home/ubuntu/.ssh/id_rsa",
-            "exclude": [".git", ".mypy_cache", ".pytest_cache"],
-        }],
-{%- endif %}
-{%- raw %}
         "terminal.integrated.defaultProfile.linux": "zsh",
         "terminal.integrated.defaultProfile.osx": "zsh",
         "testExplorer.codeLens": true,
@@ -508,19 +486,7 @@
                     "source $X_TOOLS_PATH &&",
                     "x_vscode_reinstall_extensions"
                 ]
-            },
-{%- endraw %}
-{%- if cc.include_rsync == "yes" %}
-            {
-                "label": "[vscode] rsync-all",
-                "detail": "Rsync the entire repo to target server",
-                "icon": {"id": "code", "color": "terminal.ansiBlue"},
-                "command": [
-                    "${command:sync-rsync.syncUp}"
-                ]
-            },
-{%- endif %}
-{%- raw %}
+            }
         ],
         "inputs": [
             {

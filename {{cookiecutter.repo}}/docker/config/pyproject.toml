@@ -109,8 +109,7 @@ cache_dir = "/home/ubuntu/.pytest_cache"
 filterwarnings = [
     # "ignore::UserWarning",
     # "ignore::DeprecationWarning",
-    # "ignore::PendingDeprecationWarning",
-    "ignore:The --rsyncdir command line argument"
+    # "ignore::PendingDeprecationWarning"
 ]
 markers = [
     "flaky:Flaky test",
