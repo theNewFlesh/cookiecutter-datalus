@@ -44,6 +44,7 @@ RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
         bat \
         btop \
         ca-certificates \
+        cargo \
         curl \
         exa \
         git \
@@ -74,6 +75,8 @@ RUN echo "\n${CYAN}INSTALL PYTHON${CLEAR}"; \
     {%- for version in range(min_ver, max_ver + 1) | reverse %}
         python3.{{ version }}-dev \
         python3.{{ version }}-venv \
+    {%- endfor %}
+    {%- for version in range(min_ver, ([11, max_ver] | min) + 1) | reverse %}
         python3.{{ version }}-distutils \
     {%- endfor %}
     && rm -rf /var/lib/apt/lists/*
