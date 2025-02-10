@@ -17,6 +17,7 @@ Helper CLI for datalus repos.
 
 Commands:
   - test
+  - patch
   - update
   - generate'''
     )
@@ -27,6 +28,8 @@ Commands:
     args = parser.parse_args()
     if args.command == 'test':
         test(args.target)
+    elif args.command == 'patch':
+        patch(args.target)
     elif args.command == 'update':
         update(args.target, args.branch)
     elif args.command == 'generate':
@@ -41,6 +44,29 @@ def test(target):
     os.makedirs(tgt)
     cmd = 'cookiecutter . --no-input --config-file test_config.yml --output-dir {}'.format(tgt)
     subprocess.Popen(cmd, shell=True).wait()
+
+
+def patch(target):
+    tgt = Path(target, '.cruft.json').as_posix()
+    repo = re.sub('-', '_', Path(target).name)
+    with open(tgt) as f:
+        data = json.load(f)
+
+    data['skip'] = [
+        '__init__\\.py$',
+        '\\.gitignore$',
+        '\\.gitkeep$',
+        'docker/config/.*\\.lock$',
+        'docker/config/build\\.yaml',
+        'docs/.*',
+        'mkdocs/md/(?!index\\.md|style\\.css)',
+        'public/.*',
+        'python/{}/.*(?!command\\.py$)'.format(repo),
+        'resources/.*',
+        'sphinx/.*rst$',
+    ]
+    with open(tgt, 'w') as f:
+        json.dump(data, f, indent=4)
 
 
 def update(target, branch):
