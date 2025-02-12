@@ -43,11 +43,15 @@ def main():
     build.add_argument('--target', type=str, help='parent directory of test repo', required=True)
 
     # patch_cruft_json
-    patch = commands.add_parser('patch-cruft-json', help='Patch .cruft.json file with skip patterns')
+    patch = commands.add_parser(
+        'patch-cruft-json', help='Patch .cruft.json file with skip patterns'
+    )
     patch.add_argument('--target', type=str, help='cruft.json file', required=True)
 
     # cruft_update_repo
-    cruft = commands.add_parser('cruft-update-repo', help='Apply silent cruft update to target repo')
+    cruft = commands.add_parser(
+        'cruft-update-repo', help='Apply silent cruft update to target repo'
+    )
     cruft.add_argument('--target', type=str, help='cruft.json file', required=True)
     cruft.add_argument('--branch', type=str, help='datalus branch or commmit', default='HEAD')
 
