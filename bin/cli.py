@@ -47,7 +47,7 @@ def main():
     patch.add_argument('--target', type=str, help='cruft.json file', required=True)
 
     # cruft_update_repo
-    cruft = commands.add_parser('cruft-update-repo', help='Apply cruft update to target repo')
+    cruft = commands.add_parser('cruft-update-repo', help='Apply silent cruft update to target repo')
     cruft.add_argument('--target', type=str, help='cruft.json file', required=True)
     cruft.add_argument('--branch', type=str, help='datalus branch or commmit', default='HEAD')
 
@@ -131,7 +131,8 @@ def patch_cruft_json(target):
 def cruft_update_repo(target, branch='HEAD'):
     # type: (str, str) -> None
     '''
-    Apply cruft update to target repo.
+    Applies a silent cruft update to target repo, such that when `cruft update`
+    is later called, all the changes .rej files can be ignored.
 
     Args:
         target (str): Repo directory.
