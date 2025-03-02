@@ -23,7 +23,7 @@
     "volume": "",
     "keywords": "comma, separated, list",
     "year": 2023,
-    "python_min_version": 7,
-    "python_max_version": 10,
+    "python_min_version": 10,
+    "python_max_version": 13,
     "initial_repo_version": "0.1.0"
 }
