@@ -2,7 +2,6 @@
 {
     "repo": "{{ cc.repo }}",
     "repo_type": "{{ cc.repo_type }}",
-    "include_black": "{{ cc.include_black }}",
     "include_gcc": "{{ cc.include_gcc }}",
     "include_helm": "{{ cc.include_helm }}",
     "include_mkdocs": "{{ cc.include_mkdocs }}",

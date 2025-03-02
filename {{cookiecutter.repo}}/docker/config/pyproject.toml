@@ -77,9 +77,6 @@ lab = [
     "jupyterlab",
 ]
 dev = [
-{%- if cc.include_black == 'yes' %}
-    "black",
-{%- endif %}
 {%- if cc.include_mkdocs == 'yes' %}
     "mkdocs>=1.4.3",
 {%- endif %}
