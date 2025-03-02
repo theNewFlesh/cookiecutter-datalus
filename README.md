@@ -60,7 +60,8 @@ Datalus supports the following via a command line interface and VSCode tasks:
   - separate python environments per version per mode (dev and prod)
 - automated invocation of most PDM commands (sync, lock, add, etc)
 - automated, parallel testing across all environments (pytest)
-- automated linting across all environments (flake8)
+- automated linting across all environments (ruff)
+- automated formatting (ruff)
 - automated type checking across all environments (mypy)
 - automated documentation generation (sphinx)
 - automated dependency graph generation (rolling-pin)
@@ -226,7 +227,6 @@ APP
    │      ├── build.yaml                       # defines pip package builds
    │      ├── dev-env                          # dev environment variables
    │      ├── dev.lock                         # frozen dev dependencies
-   │      ├── flake8.ini                       # linting config
    │      ├── henanigans.zsh-theme             # zsh theme
    │      ├── pdm.toml                         # needed by PDM
    │      ├── prod.lock                        # frozen prod dependencies
