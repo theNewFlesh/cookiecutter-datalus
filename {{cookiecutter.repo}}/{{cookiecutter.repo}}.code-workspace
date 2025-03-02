@@ -13,8 +13,8 @@
         "editor.formatOnSave": true,
 {%- endif %}
         "editor.rulers": [80, 100],
+        "editor.defaultFormatter": "charliermarsh.ruff",
 {%- raw %}
-        "flake8.args": ["--config=docker/config/flake8.ini"],
         "mypy.configFile": "docker/config/pyproject.toml",
         "mypy.enabled": true,
         "mypy.targets": ["python"],
@@ -29,6 +29,15 @@
         "python.testing.pytestEnabled": true,
         "python.testing.unittestEnabled": false,
         "pythonTestExplorer.testFramework": "pytest",
+        "[python]": {
+            "editor.defaultFormatter": "charliermarsh.ruff"
+        },
+        "ruff.configuration": "docker/config/pyproject.toml",
+        "ruff.configurationPreference": "editorFirst",
+        "ruff.format.preview": true,
+        "ruff.lineLength": 100,
+        "ruff.lint.preview": true,
+        "ruff.enable": true,
         "terminal.integrated.defaultProfile.linux": "zsh",
         "terminal.integrated.defaultProfile.osx": "zsh",
         "testExplorer.codeLens": true,
@@ -378,6 +387,15 @@
                 "command": [
                     "source $X_TOOLS_PATH &&",
                     "x_test_fast"
+                ]
+            },
+            {
+                "label": "[test] format",
+                "detail": "Format all python files",
+                "icon": {"id": "check", "color": "terminal.ansiGreen"},
+                "command": [
+                    "source $X_TOOLS_PATH &&",
+                    "x_test_format"
                 ]
             },
             {
