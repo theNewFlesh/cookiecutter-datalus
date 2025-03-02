@@ -22,7 +22,7 @@ default_context:
   website: https://www.alexgbraun.com
   volume: "/tmp/storage"
   keywords: data, cloud, app
-  year: 2023
+  year: 2025
   python_min_version: 7
   python_max_version: 13
   initial_repo_version: "0.1.0"
