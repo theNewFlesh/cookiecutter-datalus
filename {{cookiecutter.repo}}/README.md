@@ -93,6 +93,9 @@ apt install -y \
 ```
 {%- endif %}
 
+Please see the prod.dockerfile for an official example of how to build a docker
+image with {{cc.repo}}.
+
 ### Docker
 1. Install [docker-desktop](https://docs.docker.com/desktop/)
 2. `docker pull {{cc.git_user}}/{{cc.repo}}:[mode]-[version]`
