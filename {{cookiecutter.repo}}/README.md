@@ -1,4 +1,5 @@
 {%- set cc = cookiecutter -%}
+{%- set max_ver = cc.python_max_version | int %}
 {%- if cc.git_host == 'github' %}
 {%- set url = "github.com" %}
 {%- elif cc.git_host == 'gitlab' %}
@@ -70,6 +71,27 @@ If using GitLab private python package registry:
 
 ### Python
 `pip install {{cc.repo}}`
+{%- if cc.include_openexr == "yes" or cc.include_gcc == "yes" or cc.include_nvidia == "yes" %}
+
+If you are on Debian-based Linux and you run into C library issues such as with
+OpenEXR, the following may help:
+```
+apt update && \
+apt install --fix-missing -y python3.{{ max_ver }}-dev && \
+apt install -y \
+    build-essential \
+    g++ \
+    gcc \
+    zlib1g-dev
+```
+
+For OpenEXR you will also need this:
+```
+apt install -y \
+    libopenexr-dev \
+    openexr
+```
+{%- endif %}
 
 ### Docker
 1. Install [docker-desktop](https://docs.docker.com/desktop/)
