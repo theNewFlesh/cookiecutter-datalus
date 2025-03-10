@@ -33,6 +33,21 @@ RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
         software-properties-common && \
     rm -rf /var/lib/apt/lists/*
 
+{%- if cc.include_gcc == "yes" %}
+
+# install gcc
+ENV CC=gcc
+ENV CXX=g++
+RUN echo "\n${CYAN}INSTALL GCC${CLEAR}"; \
+    apt update && \
+    apt install -y \
+        build-essential \
+        g++ \
+        gcc \
+        zlib1g-dev && \
+    rm -rf /var/lib/apt/lists/*
+{%- endif %}
+
 {%- if cc.include_nvidia == "yes" %}
 
 # install nvidia container toolkit
@@ -50,11 +65,23 @@ RUN echo "\n${CYAN}INSTALL NVIDIA CONTAINER TOOLKIT${CLEAR}"; \
     rm -rf /var/lib/apt/lists/*
 {%- endif %}
 
+{%- if cc.include_openexr == "yes" %}
+
+# install OpenEXR
+ENV LD_LIBRARY_PATH='/usr/include/python3.{{ max_ver }}m/dist-packages'
+RUN echo "\n${CYAN}INSTALL OPENEXR${CLEAR}"; \
+    apt update && \
+    apt install -y \
+        libopenexr-dev \
+        openexr && \
+    rm -rf /var/lib/apt/lists/*
+{%- endif %}
+
 # install python3.{{ max_ver }} and pip
 RUN echo "\n${CYAN}SETUP PYTHON3.{{ max_ver }}${CLEAR}"; \
     add-apt-repository -y ppa:deadsnakes/ppa && \
     apt update && \
-    apt install --fix-missing -y python3.{{ max_ver }} && \
+    apt install --fix-missing -y python3.{{ max_ver }}-dev && \
     rm -rf /var/lib/apt/lists/* && \
     curl -fsSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
     python3.{{ max_ver }} get-pip.py && \
