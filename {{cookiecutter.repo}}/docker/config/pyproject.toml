@@ -70,10 +70,8 @@ documentation = "https://{{cc.git_user}}.bitbucket.io/docs/{{cc.repo}}"
 
 [tool.pdm.dev-dependencies]
 lab = [
-    "cufflinks",
     "jupyterlab-git>=0.39.3",
     "jupyterlab-henanigans>=0.2.2",
-    "jupyterlab-sublime",
     "jupyterlab",
 ]
 dev = [
