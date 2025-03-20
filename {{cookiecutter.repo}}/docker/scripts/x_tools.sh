@@ -372,6 +372,7 @@ x_docs () {
 {%- endif %}
     mkdir -p {{sphinx_dir}};
     cp $REPO_DIR/README.md $REPO_DIR/sphinx/readme.md;
+    sed --in-place -E 's/sphinx\/images/_images/g' $REPO_DIR/sphinx/readme.md;
     sphinx-build sphinx {{sphinx_dir}};
     exit_code=`_x_resolve_exit_code $exit_code $?`;
     rm -f $REPO_DIR/sphinx/readme.md;
@@ -380,6 +381,7 @@ x_docs () {
 {%- raw %}
     # mkdir -p $DOCS_DIR/resources;
     # cp resources/* $DOCS_DIR/resources/;
+    # cp sphinx/images/logo.png $DOCS_DIR/_images/;
     exit_code=`_x_resolve_exit_code $exit_code $?`;
     return $exit_code;
 }
