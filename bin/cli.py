@@ -153,7 +153,7 @@ def cruft_update_repo(target, branch='HEAD'):
     # set cruft.json template field to local repo
     data['template'] = Path(os.getcwd()).absolute().as_posix()
     with open(target, 'w') as f:
-        json.dump(data, f, indent=4)
+        json.dump(data, f, indent=2)
 
     # run cruft diff
     cmd = 'cruft diff --checkout {} > /tmp/cruft.diff'.format(branch)
