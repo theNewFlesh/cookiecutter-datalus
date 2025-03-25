@@ -113,7 +113,7 @@ def patch_cruft_json(target):
         target (str): .cruft.json file.
     '''
     repo = re.sub('-', '_', Path(target).parent.as_posix())
-    with open(tgt) as f:
+    with open(target) as f:
         data = json.load(f)
 
     data['skip'] = [
