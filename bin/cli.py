@@ -131,7 +131,7 @@ def patch_cruft_json(target):
         'sphinx/.*rst$',
     ]
     with open(target, 'w') as f:
-        json.dump(data, f, indent=4)
+        json.dump(data, f, indent=2)
 
 
 def cruft_update_repo(target, branch='HEAD'):
