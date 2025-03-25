@@ -123,6 +123,7 @@ def patch_cruft_json(target):
         'docker/config/.*\\.lock$',
         'docker/config/build\\.yaml',
         'docs/.*',
+        'LICENSE',
         'mkdocs/md/(?!index\\.md|style\\.css)',
         'public/.*',
         'python/{}/.*(?!command\\.py$)'.format(repo),
