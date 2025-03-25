@@ -145,14 +145,14 @@ def cruft_update_repo(target, branch='HEAD'):
         branch (str, optional): Cruft template branch. Default: master.
     '''
     # get cruft.json data
-    tgt = Path(target, '.cruft.json').as_posix()
-    with open(tgt) as f:
+    target = Path(target, '.cruft.json').as_posix()
+    with open(target) as f:
         raw_data = f.read()
         data = json.loads(raw_data)
 
     # set cruft.json template field to local repo
     data['template'] = Path(os.getcwd()).absolute().as_posix()
-    with open(tgt, 'w') as f:
+    with open(target, 'w') as f:
         json.dump(data, f, indent=4)
 
     # run cruft diff
@@ -160,7 +160,7 @@ def cruft_update_repo(target, branch='HEAD'):
     subprocess.Popen(cmd, shell=True, cwd=target).wait()
 
     # revert cruft.json to orginal form
-    with open(tgt, 'w') as f:
+    with open(target, 'w') as f:
         f.write(raw_data)
 
     # apply git diff
