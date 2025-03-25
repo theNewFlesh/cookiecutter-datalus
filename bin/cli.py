@@ -128,6 +128,7 @@ def patch_cruft_json(target):
         'public/.*',
         'python/{}/.*(?!command\\.py$)'.format(repo),
         'resources/.*',
+        "secret-env",
         'sphinx/.*rst$',
     ]
     with open(target, 'w') as f:
