@@ -145,7 +145,10 @@ def cruft_update_repo(target, branch='HEAD'):
         branch (str, optional): Cruft template branch. Default: master.
     '''
     # get cruft.json data
-    target = Path(target, '.cruft.json').as_posix()
+    target = Path(target, '.cruft.json')
+    assert target.is_file(), '{} is not a file'.format(target)
+    cwd = target.parent
+
     with open(target) as f:
         raw_data = f.read()
         data = json.loads(raw_data)
@@ -157,7 +160,7 @@ def cruft_update_repo(target, branch='HEAD'):
 
     # run cruft diff
     cmd = 'cruft diff --checkout {} > /tmp/cruft.diff'.format(branch)
-    subprocess.Popen(cmd, shell=True, cwd=target).wait()
+    subprocess.Popen(cmd, shell=True, cwd=cwd).wait()
 
     # revert cruft.json to orginal form
     with open(target, 'w') as f:
@@ -165,7 +168,7 @@ def cruft_update_repo(target, branch='HEAD'):
 
     # apply git diff
     cmd = 'git apply /tmp/cruft.diff'
-    subprocess.Popen(cmd, shell=True, cwd=target).wait()
+    subprocess.Popen(cmd, shell=True, cwd=cwd).wait()
 
     # delete temp file
     os.remove('/tmp/cruft.diff')
@@ -175,7 +178,7 @@ def cruft_update_repo(target, branch='HEAD'):
     if skip != []:
         # find git diff filepaths
         cmd = 'git --no-pager diff --name-only'
-        proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, cwd=target)
+        proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, cwd=cwd)
         proc.wait()
 
         # filter by skip patterns
@@ -185,7 +188,7 @@ def cruft_update_repo(target, branch='HEAD'):
 
         # revert matching files
         cmd = 'git checkout HEAD -- {}'.format(revert)
-        subprocess.Popen(cmd, shell=True, cwd=target).wait()
+        subprocess.Popen(cmd, shell=True, cwd=cwd).wait()
 
 
 def extract_cookiecutter_yaml(source, target):
