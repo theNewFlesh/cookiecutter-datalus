@@ -15,7 +15,7 @@
     "git_user": "{{ cc.git_user }}",
     "git_host": "{{ cc.git_host }}",
     "git_organization": "{{ cc.git_organization }}",
-    "docker_registry": "{{ cc.docker_regsitry }}",
+    "docker_registry": "{{ cc.docker_registry }}",
 	"description": "{{ cc.description }}",
     "organization_url": "{{ cc.organization_url }}",
     "author": "{{ cc.author }}",
