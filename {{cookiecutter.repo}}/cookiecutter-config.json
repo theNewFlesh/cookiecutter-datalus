@@ -15,7 +15,8 @@
     "git_user": "{{ cc.git_user }}",
     "git_host": "{{ cc.git_host }}",
     "git_organization": "{{ cc.git_organization }}",
-    "description": "{{ cc.description }}",
+    "docker_registry": "{{ cc.docker_regsitry }}",
+	"description": "{{ cc.description }}",
     "organization_url": "{{ cc.organization_url }}",
     "author": "{{ cc.author }}",
     "email": "{{ cc.email }}",
@@ -24,6 +25,6 @@
     "keywords": "{{ cc.keywords }}",
     "year": {{ cc.year }},
     "python_min_version": "{{ cc.python_min_version }}",
-    "python_min_version": {{ cc.python_min_version }},
+    "python_max_version": "{{ cc.python_max_version }}",
     "initial_repo_version": "{{ cc.initial_repo_version }}"
 }
