@@ -18,4 +18,3 @@ exclude_packages = ["*"]
 
 [tool.pdm]
 distribution = false
-
