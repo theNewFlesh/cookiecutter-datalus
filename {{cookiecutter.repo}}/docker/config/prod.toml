@@ -2,7 +2,7 @@
 {%- set max_ver = cc.python_max_version | int -%}
 [project]
 name = "pdm"
-version = "0.1.0"
+version = "{{ cc.initial_repo_version }}"
 requires-python = "==3.{{ max_ver }}"
 dependencies = []
 
@@ -18,3 +18,4 @@ exclude_packages = ["*"]
 
 [tool.pdm]
 distribution = false
+
