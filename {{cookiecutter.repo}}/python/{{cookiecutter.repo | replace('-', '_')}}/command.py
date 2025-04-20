@@ -3,11 +3,14 @@
 import subprocess
 
 import click
+import lunchbox.theme as lbc
 # ------------------------------------------------------------------------------
 
 '''
 Command line interface to {{ cc.repo }} library
 '''
+
+click.Context.formatter_class = lbc.ThemeFormatter
 
 
 @click.group()
