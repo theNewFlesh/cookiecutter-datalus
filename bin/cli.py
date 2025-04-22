@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from enum import Enum
 from pathlib import Path
 import argparse
 import re
@@ -11,19 +12,49 @@ import sys
 # ------------------------------------------------------------------------------
 
 
+class TerminalColorscheme(Enum):
+    '''
+    Terminal color scheme.
+    '''
+    BLUE1 = '\033[0;34m'
+    BLUE2 = '\033[0;94m'
+    CYAN1 = '\033[0;36m'
+    CYAN2 = '\033[0;96m'
+    GREEN1 = '\033[0;32m'
+    GREEN2 = '\033[0;92m'
+    GREY1 = '\033[0;90m'
+    GREY2 = '\033[0;37m'
+    PURPLE1 = '\033[0;35m'
+    PURPLE2 = '\033[0;95m'
+    RED1 = '\033[0;31m'
+    RED2 = '\033[0;91m'
+    WHITE = '\033[0;97m'
+    YELLOW1 = '\033[0;33m'
+    YELLOW2 = '\033[0;93m'
+    CLEAR = '\033[0m'
+
+
 class PrettyHelpFormatter(argparse.RawTextHelpFormatter):
     '''
     Argparse formatters suck at text wrapping.
     So, I created this.
     '''
     def _format_action(self, action):
+        cyan2 = TerminalColorscheme.CYAN2.value
+        green2 = TerminalColorscheme.GREEN2.value
+        clear = TerminalColorscheme.CLEAR.value
         if isinstance(action, argparse._SubParsersAction):
             lines = []
             for item in set(action._choices_actions):
-                line = '    {:<25} - {}'.format(item.dest, item.help.strip())
+                line = '    {a}{b:<25}{c} - {d}'.format(
+                    a=cyan2,
+                    b=item.dest,
+                    c=clear,
+                    d=item.help.strip(),
+                )
                 lines.append(line)
             output = '\n'.join(lines)
-            output = '\n' + output + '\n'
+            output = '\n' + output + green2 + '\n'
             return output
         return super()._format_action(action)
 
