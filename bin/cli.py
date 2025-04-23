@@ -18,9 +18,9 @@ class TerminalColorscheme(Enum):
     '''
     BLUE1 = '\033[0;34m'
     BLUE2 = '\033[0;94m'
-    CYAN1 = '\033[0;36m'
+    CYAN1 = '\033[1;96m'
     CYAN2 = '\033[0;96m'
-    GREEN1 = '\033[0;32m'
+    GREEN1 = '\033[1;92m'
     GREEN2 = '\033[0;92m'
     GREY1 = '\033[0;90m'
     GREY2 = '\033[0;37m'
@@ -48,7 +48,7 @@ class PrettyHelpFormatter(argparse.RawTextHelpFormatter):
 
     def _format_action(self, action):
         cyan2 = TerminalColorscheme.CYAN2.value
-        green2 = TerminalColorscheme.GREEN2.value
+        green1 = TerminalColorscheme.GREEN1.value
         clear = TerminalColorscheme.CLEAR.value
         if isinstance(action, argparse._SubParsersAction):
             lines = []
@@ -62,12 +62,13 @@ class PrettyHelpFormatter(argparse.RawTextHelpFormatter):
                 )
                 lines.append(line)
             output = '\n'.join(lines)
-            output = output + green2 + '\n'
+            output = output + green1 + '\n'
             return output
         return super()._format_action(action)
 
     def _add_item(self, func, args):
-        cyan2 = TerminalColorscheme.CYAN2.value
+        cyan1 = TerminalColorscheme.CYAN1.value
+        green2 = TerminalColorscheme.GREEN2.value
         white = TerminalColorscheme.WHITE.value
         clear = TerminalColorscheme.CLEAR.value
 
@@ -77,11 +78,12 @@ class PrettyHelpFormatter(argparse.RawTextHelpFormatter):
                 args[0].help = ''
 
             elif args[0].__class__.__name__ == '_HelpAction':
+                args[0].option_strings[0] = green2 + args[0].option_strings[0]
                 args[0].help = ' ' * 6 + clear + args[0].help
 
         elif func.__name__ == '_format_text':
             args = args[0]
-            args = '{}{}{}{}'.format(white, args, clear, cyan2)
+            args = '{}{}{}{}'.format(white, args, clear, cyan1)
             args = [args]
 
         super()._add_item(func, args)
