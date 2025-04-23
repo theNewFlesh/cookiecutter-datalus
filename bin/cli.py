@@ -36,8 +36,7 @@ class TerminalColorscheme(Enum):
 
 class PrettyHelpFormatter(argparse.RawTextHelpFormatter):
     '''
-    Argparse formatters suck at text wrapping.
-    So, I created this.
+    Argparse formatters suck at text wrapping. So, I created this.
     '''
     def _format_usage(self, *args):
         pass
@@ -62,12 +61,22 @@ class PrettyHelpFormatter(argparse.RawTextHelpFormatter):
         return super()._format_action(action)
 
     def _add_item(self, func, args):
-        if func.__name__ == '_format_text':
-            white = TerminalColorscheme.WHITE.value
-            clear = TerminalColorscheme.CLEAR.value
+        cyan2 = TerminalColorscheme.CYAN2.value
+        white = TerminalColorscheme.WHITE.value
+        clear = TerminalColorscheme.CLEAR.value
+
+        if func.__name__ == '_format_action':
+            if args[0].dest == 'command':
+                args[0].dest = clear + '  ' + args[0].dest.upper()
+                args[0].help = ' ' * 10 + args[0].help.upper()
+            elif args[0].__class__.__name__ == '_HelpAction':
+                args[0].help = clear + args[0].help
+
+        elif func.__name__ == '_format_text':
             args = args[0]
-            args = '{}{}{}'.format(white, args, clear)
+            args = '{}{}{}{}'.format(white, args, clear, cyan2)
             args = [args]
+
         super()._add_item(func, args)
 
 def main():
@@ -76,7 +85,7 @@ def main():
         description='Datalus command line interface', usage='',
         formatter_class=PrettyHelpFormatter
     )
-    cmd_parser.add_argument('command', help='Command to run')
+    cmd_parser.add_argument('command', help='description')
     # commands = cmd_parser.add_subparsers(metavar='', title='commands')
     commands = cmd_parser.add_subparsers(metavar='')
 
