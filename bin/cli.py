@@ -94,6 +94,7 @@ def main():
     )
     cmd_parser.add_argument('command')
     commands = cmd_parser.add_subparsers(metavar='')
+    cmd_parser._action_groups[0]._group_actions.pop(0)
 
     # build_test_repo
     build = commands.add_parser('build-test-repo', help='Build datalus test repo')
