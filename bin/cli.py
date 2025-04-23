@@ -39,6 +39,9 @@ class PrettyHelpFormatter(argparse.RawTextHelpFormatter):
     Argparse formatters suck at text wrapping.
     So, I created this.
     '''
+    def _format_usage(self, *args):
+        pass
+
     def _format_action(self, action):
         cyan2 = TerminalColorscheme.CYAN2.value
         green2 = TerminalColorscheme.GREEN2.value
@@ -58,6 +61,14 @@ class PrettyHelpFormatter(argparse.RawTextHelpFormatter):
             return output
         return super()._format_action(action)
 
+    def _add_item(self, func, args):
+        if func.__name__ == '_format_text':
+            white = TerminalColorscheme.WHITE.value
+            clear = TerminalColorscheme.CLEAR.value
+            args = args[0]
+            args = '{}{}{}'.format(white, args, clear)
+            args = [args]
+        super()._add_item(func, args)
 
 def main():
     # main parser
