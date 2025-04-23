@@ -53,7 +53,8 @@ class PrettyHelpFormatter(argparse.RawTextHelpFormatter):
         if isinstance(action, argparse._SubParsersAction):
             lines = []
             for item in set(action._choices_actions):
-                line = '    {a}{b:<25}{c} - {d}'.format(
+                line = '    {a}{b:<25}{c} - {d}'
+                line = line.format(
                     a=cyan2,
                     b=item.dest,
                     c=clear,
@@ -72,8 +73,6 @@ class PrettyHelpFormatter(argparse.RawTextHelpFormatter):
 
         if func.__name__ == '_format_action':
             if args[0].dest == 'command':
-                # args[0].dest = clear + args[0].dest.upper()
-                # args[0].help = ' ' * 10 + args[0].help.upper()
                 args[0].dest = clear
                 args[0].help = ''
 
