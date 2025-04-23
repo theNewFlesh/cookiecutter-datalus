@@ -62,7 +62,7 @@ class PrettyHelpFormatter(argparse.RawTextHelpFormatter):
                 )
                 lines.append(line)
             output = '\n'.join(lines)
-            output = '\n' + output + green2 + '\n'
+            output = output + green2 + '\n'
             return output
         return super()._format_action(action)
 
@@ -92,8 +92,7 @@ def main():
         description='Datalus command line interface', usage='',
         formatter_class=PrettyHelpFormatter
     )
-    cmd_parser.add_argument('command', help='description')
-    # commands = cmd_parser.add_subparsers(metavar='', title='commands')
+    cmd_parser.add_argument('command')
     commands = cmd_parser.add_subparsers(metavar='')
 
     # build_test_repo
