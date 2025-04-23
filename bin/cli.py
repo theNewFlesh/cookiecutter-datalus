@@ -38,6 +38,11 @@ class PrettyHelpFormatter(argparse.RawTextHelpFormatter):
     '''
     Argparse formatters suck at text wrapping. So, I created this.
     '''
+    def __init__(
+        self, prog, indent_increment=4, max_help_position=24, width=None
+    ):
+        super().__init__(prog, indent_increment, max_help_position, width)
+
     def _format_usage(self, *args):
         pass
 
@@ -67,10 +72,13 @@ class PrettyHelpFormatter(argparse.RawTextHelpFormatter):
 
         if func.__name__ == '_format_action':
             if args[0].dest == 'command':
-                args[0].dest = clear + '  ' + args[0].dest.upper()
-                args[0].help = ' ' * 10 + args[0].help.upper()
+                # args[0].dest = clear + args[0].dest.upper()
+                # args[0].help = ' ' * 10 + args[0].help.upper()
+                args[0].dest = clear
+                args[0].help = ''
+
             elif args[0].__class__.__name__ == '_HelpAction':
-                args[0].help = clear + args[0].help
+                args[0].help = ' ' * 6 + clear + args[0].help
 
         elif func.__name__ == '_format_text':
             args = args[0]
