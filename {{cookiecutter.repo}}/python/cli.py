@@ -58,7 +58,7 @@ def get_info():
     parser = argparse.ArgumentParser(
         formatter_class=BetterHelpFormatter,
         description=desc,
-        usage='  python cli.py COMMAND [-a --args]=ARGS [-h --help]'
+        usage='  python cli.py COMMAND [-a --args]=ARGS [-h --help] [--dryrun]'
     )
 
     parser.add_argument(
