@@ -1,7 +1,6 @@
 {
     "repo": "repo_name",
     "repo_type": ["dash", "flask", "library"],
-    "include_black": ["yes", "no"],
     "include_gcc": ["yes", "no"],
     "include_helm": ["yes", "no"],
     "include_mkdocs": ["yes", "no"],
@@ -9,9 +8,7 @@
     "include_openexr": ["yes", "no"],
     "include_prod_cli": ["yes", "no"],
     "include_prod_envs": ["yes", "no"],
-    "include_rsync": ["yes", "no"],
     "include_secret_env": ["yes", "no"],
-    "include_tensorflow": ["yes", "no"],
     "include_vscode_server": ["yes", "no"],
     "port_prefix": 10,
     "git_user": "git_user",
@@ -25,8 +22,8 @@
     "website": "http://yourwebsite.com",
     "volume": "",
     "keywords": "comma, separated, list",
-    "year": 2023,
-    "python_min_version": 7,
-    "python_max_version": 10,
+    "year": 2025,
+    "python_min_version": 10,
+    "python_max_version": 13,
     "initial_repo_version": "0.1.0"
 }

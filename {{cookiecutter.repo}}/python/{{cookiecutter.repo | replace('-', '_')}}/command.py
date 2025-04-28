@@ -3,11 +3,14 @@
 import subprocess
 
 import click
+import lunchbox.theme as lbc
 # ------------------------------------------------------------------------------
 
 '''
 Command line interface to {{ cc.repo }} library
 '''
+
+click.Context.formatter_class = lbc.ThemeFormatter
 
 
 @click.group()
@@ -18,7 +21,7 @@ def main():
 @main.command()
 def bash_completion():
     '''
-    BASH completion code to be written to a _{{ cc.repo }} completion file.
+    {white}BASH completion code to be written to a _{{ cc.repo }} completion file.{clear}
     '''
     cmd = '_{{ REPO_NAME }}_COMPLETE=bash_source {{ cc.repo }}'
     result = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
@@ -29,7 +32,7 @@ def bash_completion():
 @main.command()
 def zsh_completion():
     '''
-    ZSH completion code to be written to a _{{ cc.repo }} completion file.
+    {white}ZSH completion code to be written to a _{{ cc.repo }} completion file.{clear}
     '''
     cmd = '_{{ REPO_NAME }}_COMPLETE=zsh_source {{ cc.repo }}'
     result = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)

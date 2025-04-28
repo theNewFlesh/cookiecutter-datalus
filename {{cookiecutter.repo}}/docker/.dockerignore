@@ -2,6 +2,7 @@
 *
 !../docker
 !config
+!dist
 !scripts
 {%- if cc.include_secret_env == 'yes' %}
 config/secret-env

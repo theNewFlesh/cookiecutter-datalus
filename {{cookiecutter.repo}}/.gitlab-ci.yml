@@ -138,9 +138,8 @@ prod:
     - docker tag $repo:dev-latest $repo:dev
 {%- endif %}
     - $cli docker-start
-    - $cli library-install-prod
     - $cli test-prod
     - $cli build-publish -a "$PYPI_ACCESS_TOKEN"
-    - $cli docker-build-prod
+    - $cli docker-build-prod-no-cache
     - $cli docker-push-prod
     - $cli docker-push-prod-latest

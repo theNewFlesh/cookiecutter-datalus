@@ -1,7 +1,6 @@
 default_context:
   repo: datalus
   repo_type: library
-  include_black: "no"
   include_gcc: "no"
   include_helm: "no"
   include_mkdocs: "yes"
@@ -9,9 +8,7 @@ default_context:
   include_openexr: "yes"
   include_prod_cli: "no"
   include_prod_envs: "yes"
-  include_rsync: "yes"
   include_secret_env: "yes"
-  include_tensorflow: "yes"
   include_vscode_server: "yes"
   port_prefix: 99
   git_user: theNewFlesh
@@ -25,7 +22,7 @@ default_context:
   website: https://www.alexgbraun.com
   volume: "/tmp/storage"
   keywords: data, cloud, app
-  year: 2023
+  year: 2025
   python_min_version: 7
-  python_max_version: 10
+  python_max_version: 13
   initial_repo_version: "0.1.0"
