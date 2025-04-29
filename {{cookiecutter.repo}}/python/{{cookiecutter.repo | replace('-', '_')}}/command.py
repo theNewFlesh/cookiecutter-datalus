@@ -21,7 +21,8 @@ def main():
 @main.command()
 def bash_completion():
     '''
-    {white}BASH completion code to be written to a _{{ cc.repo }} completion file.{clear}
+    {white}BASH completion code to be written to a _{{ cc.repo }} completion
+    file.{clear}
     '''
     cmd = '_{{ REPO_NAME }}_COMPLETE=bash_source {{ cc.repo }}'
     result = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
@@ -32,7 +33,8 @@ def bash_completion():
 @main.command()
 def zsh_completion():
     '''
-    {white}ZSH completion code to be written to a _{{ cc.repo }} completion file.{clear}
+    {white}ZSH completion code to be written to a _{{ cc.repo }} completion
+    file.{clear}
     '''
     cmd = '_{{ REPO_NAME }}_COMPLETE=zsh_source {{ cc.repo }}'
     result = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
