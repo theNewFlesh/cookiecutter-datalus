@@ -655,7 +655,7 @@ def state_command():
                 sed s'/.* - "//g' |
                 sed 's/"//g' |
                 sed 's/^/{blue}/g' |
-                sed 's/:/{purple}|{CLEAR}->/g' |
+                sed 's/:/{clear}-->/g' |
                 awk 1 ORS=' '
             `
         '''),
