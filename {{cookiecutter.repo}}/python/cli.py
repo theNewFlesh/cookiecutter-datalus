@@ -22,7 +22,7 @@ DOCKER_REGISTRY = '{{ cc.git_user | lower }}/' + REPO
 {%- endif %}
 USER = 'ubuntu:ubuntu'
 PORT = 8080
-# {PURPLE2}--------------------------------------------------------------------------------------------------{CLEAR}
+# --------------------------------------------------------------------------------------------------
 
 '''
 A CLI for developing and deploying an app deeply integrated with this
