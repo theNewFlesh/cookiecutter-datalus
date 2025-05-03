@@ -22,7 +22,7 @@ DOCKER_REGISTRY = '{{ cc.git_user | lower }}/' + REPO
 {%- endif %}
 USER = 'ubuntu:ubuntu'
 PORT = 8080
-# ------------------------------------------------------------------------------
+# {PURPLE2}--------------------------------------------------------------------------------------------------{CLEAR}
 
 '''
 A CLI for developing and deploying an app deeply integrated with this
@@ -84,77 +84,88 @@ def get_info():
 
     parser.add_argument(
         'command',
-        metavar='COMMAND                      DESCRIPTION',
+        metavar='{PURPLE2}COMMAND                    | DESCRIPTION'.format(**COLORS),
         type=str,
         nargs=1,
         action='store',
         help='''
-    {BLUE2}build-edit-prod-dockerfile {CLEAR}- Edit prod.dockefile to use local package
-    {BLUE2}build-local-package        {CLEAR}- Generate pip package of repo and copy it to docker/dist
-    {BLUE2}build-package              {CLEAR}- Build production version of repo for publishing
-    {BLUE2}build-prod                 {CLEAR}- Publish pip package of repo to PyPi
-    {BLUE2}build-publish              {CLEAR}- Run production tests first then publish pip package of repo to PyPi
-    {BLUE2}build-test                 {CLEAR}- Build test version of repo for prod testing
-    {PURPLE2}docker-build               {CLEAR}- Build development image
-    {PURPLE2}docker-build-from-cache    {CLEAR}- Build development image from registry cache
-    {PURPLE2}docker-build-no-cache      {CLEAR}- Build development image without cache
-    {PURPLE2}docker-build-prod          {CLEAR}- Build production image
-    {PURPLE2}docker-build-prod-no-cache {CLEAR}- Build production image without cache
-    {PURPLE2}docker-container           {CLEAR}- Display the Docker container id
-    {PURPLE2}docker-destroy             {CLEAR}- Shutdown container and destroy its image
-    {PURPLE2}docker-destroy-prod        {CLEAR}- Shutdown production container and destroy its image
-    {PURPLE2}docker-image               {CLEAR}- Display the Docker image id
-    {PURPLE2}docker-prod                {CLEAR}- Start production container
-    {PURPLE2}docker-pull-dev            {CLEAR}- Pull development image from Docker registry
-    {PURPLE2}docker-pull-prod           {CLEAR}- Pull production image from Docker registry
-    {PURPLE2}docker-push-dev            {CLEAR}- Push development image to Docker registry
-    {PURPLE2}docker-push-dev-latest     {CLEAR}- Push development image to Docker registry with dev-latest tag
-    {PURPLE2}docker-push-prod           {CLEAR}- Push production image to Docker registry
-    {PURPLE2}docker-push-prod-latest    {CLEAR}- Push production image to Docker registry with prod-latest tag
-    {PURPLE2}docker-remove              {CLEAR}- Remove Docker image
-    {PURPLE2}docker-restart             {CLEAR}- Restart container
-    {PURPLE2}docker-start               {CLEAR}- Start container
-    {PURPLE2}docker-stop                {CLEAR}- Stop container
-    {YELLOW2}docs                       {CLEAR}- Generate sphinx documentation
-    {YELLOW2}docs-architecture          {CLEAR}- Generate architecture.svg diagram from all import statements
-    {YELLOW2}docs-full                  {CLEAR}- Generate documentation, coverage report, diagram and code
-    {YELLOW2}docs-metrics               {CLEAR}- Generate code metrics report, plots and tables
-    {CYAN2}library-add                {CLEAR}- Add a given package to a given dependency group
-    {CYAN2}library-graph-dev          {CLEAR}- Graph dependencies in dev environment
-    {CYAN2}library-graph-prod         {CLEAR}- Graph dependencies in prod environment
-    {CYAN2}library-install-dev        {CLEAR}- Install all dependencies into dev environment
-    {CYAN2}library-install-prod       {CLEAR}- Install all dependencies into prod environment
-    {CYAN2}library-list-dev           {CLEAR}- List packages in dev environment
-    {CYAN2}library-list-prod          {CLEAR}- List packages in prod environment
-    {CYAN2}library-lock-dev           {CLEAR}- Resolve dev.lock file
-    {CYAN2}library-lock-prod          {CLEAR}- Resolve prod.lock file
-    {CYAN2}library-remove             {CLEAR}- Remove a given package from a given dependency group
-    {CYAN2}library-search             {CLEAR}- Search for pip packages
-    {CYAN2}library-sync-dev           {CLEAR}- Sync dev environment with packages listed in dev.lock
-    {CYAN2}library-sync-prod          {CLEAR}- Sync prod environment with packages listed in prod.lock
-    {CYAN2}library-update             {CLEAR}- Update dev dependencies
-    {CYAN2}library-update-pdm         {CLEAR}- Update PDM
-    {RED2}quickstart                 {CLEAR}- Display quickstart guide
-    {WHITE}session-lab                {CLEAR}- Run jupyter lab server
-    {WHITE}session-python             {CLEAR}- Run python session with dev dependencies
+    {PURPLE2}---------------------------|---------------------------------------------------------------------{CLEAR}
+    {YELLOW2}build-edit-prod-dockerfile {PURPLE2}|{CLEAR} Edit prod.dockefile to use local package
+    {YELLOW2}build-local-package        {PURPLE2}|{CLEAR} Generate pip package of repo and copy it to docker/dist
+    {YELLOW2}build-package              {PURPLE2}|{CLEAR} Build production version of repo for publishing
+    {YELLOW2}build-prod                 {PURPLE2}|{CLEAR} Publish pip package of repo to PyPi
+    {YELLOW2}build-publish              {PURPLE2}|{CLEAR} Run production tests first then publish pip package of repo to PyPi
+    {YELLOW2}build-test                 {PURPLE2}|{CLEAR} Build test version of repo for prod testing
+    {PURPLE2}---------------------------|---------------------------------------------------------------------{CLEAR}
+    {CYAN2}docker-build               {PURPLE2}|{CLEAR} Build development image
+    {CYAN2}docker-build-from-cache    {PURPLE2}|{CLEAR} Build development image from registry cache
+    {CYAN2}docker-build-no-cache      {PURPLE2}|{CLEAR} Build development image without cache
+    {CYAN2}docker-build-prod          {PURPLE2}|{CLEAR} Build production image
+    {CYAN2}docker-build-prod-no-cache {PURPLE2}|{CLEAR} Build production image without cache
+    {CYAN2}docker-container           {PURPLE2}|{CLEAR} Display the Docker container id
+    {CYAN2}docker-destroy             {PURPLE2}|{CLEAR} Shutdown container and destroy its image
+    {CYAN2}docker-destroy-prod        {PURPLE2}|{CLEAR} Shutdown production container and destroy its image
+    {CYAN2}docker-image               {PURPLE2}|{CLEAR} Display the Docker image id
+    {CYAN2}docker-prod                {PURPLE2}|{CLEAR} Start production container
+    {CYAN2}docker-pull-dev            {PURPLE2}|{CLEAR} Pull development image from Docker registry
+    {CYAN2}docker-pull-prod           {PURPLE2}|{CLEAR} Pull production image from Docker registry
+    {CYAN2}docker-push-dev            {PURPLE2}|{CLEAR} Push development image to Docker registry
+    {CYAN2}docker-push-dev-latest     {PURPLE2}|{CLEAR} Push development image to Docker registry with dev-latest tag
+    {CYAN2}docker-push-prod           {PURPLE2}|{CLEAR} Push production image to Docker registry
+    {CYAN2}docker-push-prod-latest    {PURPLE2}|{CLEAR} Push production image to Docker registry with prod-latest tag
+    {CYAN2}docker-remove              {PURPLE2}|{CLEAR} Remove Docker image
+    {CYAN2}docker-restart             {PURPLE2}|{CLEAR} Restart container
+    {CYAN2}docker-start               {PURPLE2}|{CLEAR} Start container
+    {CYAN2}docker-stop                {PURPLE2}|{CLEAR} Stop container
+    {PURPLE2}---------------------------|---------------------------------------------------------------------{CLEAR}
+    {YELLOW2}docs                       {PURPLE2}|{CLEAR} Generate sphinx documentation
+    {YELLOW2}docs-architecture          {PURPLE2}|{CLEAR} Generate architecture.svg diagram from all import statements
+    {YELLOW2}docs-full                  {PURPLE2}|{CLEAR} Generate documentation, coverage report, diagram and code
+    {YELLOW2}docs-metrics               {PURPLE2}|{CLEAR} Generate code metrics report, plots and tables
+    {PURPLE2}---------------------------|---------------------------------------------------------------------{CLEAR}
+    {CYAN2}library-add                {PURPLE2}|{CLEAR} Add a given package to a given dependency group
+    {CYAN2}library-graph-dev          {PURPLE2}|{CLEAR} Graph dependencies in dev environment
+    {CYAN2}library-graph-prod         {PURPLE2}|{CLEAR} Graph dependencies in prod environment
+    {CYAN2}library-install-dev        {PURPLE2}|{CLEAR} Install all dependencies into dev environment
+    {CYAN2}library-install-prod       {PURPLE2}|{CLEAR} Install all dependencies into prod environment
+    {CYAN2}library-list-dev           {PURPLE2}|{CLEAR} List packages in dev environment
+    {CYAN2}library-list-prod          {PURPLE2}|{CLEAR} List packages in prod environment
+    {CYAN2}library-lock-dev           {PURPLE2}|{CLEAR} Resolve dev.lock file
+    {CYAN2}library-lock-prod          {PURPLE2}|{CLEAR} Resolve prod.lock file
+    {CYAN2}library-remove             {PURPLE2}|{CLEAR} Remove a given package from a given dependency group
+    {CYAN2}library-search             {PURPLE2}|{CLEAR} Search for pip packages
+    {CYAN2}library-sync-dev           {PURPLE2}|{CLEAR} Sync dev environment with packages listed in dev.lock
+    {CYAN2}library-sync-prod          {PURPLE2}|{CLEAR} Sync prod environment with packages listed in prod.lock
+    {CYAN2}library-update             {PURPLE2}|{CLEAR} Update dev dependencies
+    {CYAN2}library-update-pdm         {PURPLE2}|{CLEAR} Update PDM
+    {PURPLE2}---------------------------|---------------------------------------------------------------------{CLEAR}
+    {YELLOW2}quickstart                 {PURPLE2}|{CLEAR} Display quickstart guide
+    {PURPLE2}---------------------------|---------------------------------------------------------------------{CLEAR}
+    {CYAN2}session-lab                {PURPLE2}|{CLEAR} Run jupyter lab server
+    {CYAN2}session-python             {PURPLE2}|{CLEAR} Run python session with dev dependencies
 {%- if cc.repo_type in ['dash', 'flask'] %}
-    {WHITE}session-server             {CLEAR}- Run application server inside Docker container
+    {CYAN2}session-server             {PURPLE2}|{CLEAR} Run application server inside Docker container
 {%- endif %}
-    {CYAN2}state                      {CLEAR}- State of repository and Docker container
-    {GREEN2}test-coverage              {CLEAR}- Generate test coverage report
-    {GREEN2}test-dev                   {CLEAR}- Run all tests
-    {GREEN2}test-fast                  {CLEAR}- Test all code excepts tests marked with SKIP_SLOWS_TESTS decorator
-    {GREEN2}test-format                {CLEAR}- Format all python files
-    {GREEN2}test-lint                  {CLEAR}- Run linting and type checking
-    {GREEN2}test-prod                  {CLEAR}- Run tests across all support python versions
-    {RED2}version                    {CLEAR}- Full resolution of repo: dependencies, linting, tests, docs, etc
-    {RED2}version-bump-major         {CLEAR}- Bump pyproject major version
-    {RED2}version-bump-minor         {CLEAR}- Bump pyproject minor version
-    {RED2}version-bump-patch         {CLEAR}- Bump pyproject patch version
-    {RED2}version-commit             {CLEAR}- Tag with version and commit changes to master
-    {CYAN2}zsh                        {CLEAR}- Run ZSH session inside Docker container
-    {CYAN2}zsh-complete               {CLEAR}- Generate oh-my-zsh completions
-    {CYAN2}zsh-root                   {CLEAR}- Run ZSH session as root inside Docker container
+    {PURPLE2}---------------------------|---------------------------------------------------------------------{CLEAR}
+    {YELLOW2}state                      {PURPLE2}|{CLEAR} State of repository and Docker container
+    {PURPLE2}---------------------------|---------------------------------------------------------------------{CLEAR}
+    {CYAN2}test-coverage              {PURPLE2}|{CLEAR} Generate test coverage report
+    {CYAN2}test-dev                   {PURPLE2}|{CLEAR} Run all tests
+    {CYAN2}test-fast                  {PURPLE2}|{CLEAR} Test all code excepts tests marked with SKIP_SLOWS_TESTS decorator
+    {CYAN2}test-format                {PURPLE2}|{CLEAR} Format all python files
+    {CYAN2}test-lint                  {PURPLE2}|{CLEAR} Run linting and type checking
+    {CYAN2}test-prod                  {PURPLE2}|{CLEAR} Run tests across all support python versions
+    {PURPLE2}---------------------------|---------------------------------------------------------------------{CLEAR}
+    {YELLOW2}version                    {PURPLE2}|{CLEAR} Full resolution of repo: dependencies, linting, tests, docs, etc
+    {YELLOW2}version-bump-major         {PURPLE2}|{CLEAR} Bump pyproject major version
+    {YELLOW2}version-bump-minor         {PURPLE2}|{CLEAR} Bump pyproject minor version
+    {YELLOW2}version-bump-patch         {PURPLE2}|{CLEAR} Bump pyproject patch version
+    {YELLOW2}version-commit             {PURPLE2}|{CLEAR} Tag with version and commit changes to master
+    {PURPLE2}---------------------------|---------------------------------------------------------------------{CLEAR}
+    {CYAN2}zsh                        {PURPLE2}|{CLEAR} Run ZSH session inside Docker container
+    {CYAN2}zsh-complete               {PURPLE2}|{CLEAR} Generate oh-my-zsh completions
+    {CYAN2}zsh-root                   {PURPLE2}|{CLEAR} Run ZSH session as root inside Docker container
+    {GREEN2}
 '''[1:-1].format(repo=REPO, **COLORS))  # noqa: E501
 
     parser.add_argument(
@@ -645,7 +656,7 @@ def state_command():
                 sed s'/.* - "//g' |
                 sed 's/"//g' |
                 sed 's/^/{blue}/g' |
-                sed 's/:/{clear}-->/g' |
+                sed 's/:/{PURPLE2}|{CLEAR}->/g' |
                 awk 1 ORS=' '
             `
         '''),
