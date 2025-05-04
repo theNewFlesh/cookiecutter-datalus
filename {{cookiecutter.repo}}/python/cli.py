@@ -210,6 +210,7 @@ def resolve(commands):
         str: Resolved command.
     '''
     cmd = ' && '.join(commands)
+
     all_ = dict(
         git_user=GIT_USER,
         registry=DOCKER_REGISTRY,
@@ -820,8 +821,7 @@ def zsh_complete_command():
         'echo "    return" >> $_COMP',
         'echo "fi" >> $_COMP',
     ]
-    cmd = resolve(cmds)
-    return cmd
+    return resolve(cmds)
 
 
 def zsh_root_command():
