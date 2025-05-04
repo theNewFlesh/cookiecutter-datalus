@@ -55,12 +55,12 @@ class BetterHelpFormatter(argparse.RawTextHelpFormatter):
     def _format_action(self, action):
         text = super()._format_action(action)
         text = re.sub(' {28}', '    ', text)
-        output = []
         lines = text.split('\n')
 
         sep = '-' * 27 + '|' + '-' * 68
         sep = '    {purple}{sep}{clear}'.format(sep=sep, **COLORS)
 
+        output = []
         flag = False
         prev = ''
         for line in lines:
