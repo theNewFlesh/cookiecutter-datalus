@@ -102,9 +102,11 @@ def get_info():
         usage='  python cli.py COMMAND [-a --args]=ARGS [-h --help] [--dryrun]'
     )
 
+    metavar = '{purple}COMMAND' + ' ' * 20 + '| DESCRIPTION{clear}'
+    metavar = metavar.format(**COLORS),
     parser.add_argument(
         'command',
-        metavar='{purple}COMMAND                    | DESCRIPTION{clear}'.format(**COLORS),
+        metavar=metavar,
         type=str,
         nargs=1,
         action='store',
