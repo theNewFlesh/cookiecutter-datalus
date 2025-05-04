@@ -31,21 +31,14 @@ repository's structure. Written to be python version agnostic.
 
 
 COLORS = dict(
-    blue1='\033[0;34m',
-    blue2='\033[0;94m',
-    cyan1='\033[1;96m',
-    cyan2='\033[0;96m',
-    green1='\033[1;92m',
-    green2='\033[0;92m',
-    grey1='\033[0;90m',
-    grey2='\033[0;37m',
-    purple1='\033[0;35m',
-    purple2='\033[0;95m',
-    red1='\033[0;31m',
-    red2='\033[0;91m',
+    blue='\033[0;34m',
+    cyan='\033[1;96m',
+    green='\033[1;92m',
+    grey='\033[0;90m',
+    purple='\033[0;35m',
+    red='\033[0;31m',
     white='\033[1;97m',
-    yellow1='\033[0;33m',
-    yellow2='\033[0;93m',
+    yellow='\033[0;33m',
     clear='\033[0m',
 )
 
@@ -66,7 +59,7 @@ class BetterHelpFormatter(argparse.RawTextHelpFormatter):
         lines = text.split('\n')
 
         sep = '-' * 27 + '|' + '-' * 68
-        sep = '    {purple2}{sep}{clear}'.format(sep=sep, **COLORS)
+        sep = '    {purple}{sep}{clear}'.format(sep=sep, **COLORS)
 
         flag = False
         prev = ''
@@ -80,16 +73,16 @@ class BetterHelpFormatter(argparse.RawTextHelpFormatter):
                     prev = prefix
 
                 if flag:
-                    color = COLORS['yellow2']
+                    color = COLORS['yellow']
                 else:
-                    color = COLORS['cyan2']
+                    color = COLORS['cyan']
 
-                line = '{color}{cmd}{clear} {purple2}|{clear} {desc}'
+                line = '{color}{cmd}{clear} {purple}|{clear} {desc}'
                 line = line.format(color=color, cmd=cmd, desc=desc, **COLORS)
 
             output.append(line)
         output = '\n'.join(output)
-        output += COLORS['green2']
+        output += COLORS['green']
         return output
 
 
@@ -111,7 +104,7 @@ def get_info():
 
     parser.add_argument(
         'command',
-        metavar='{purple2}COMMAND                    | DESCRIPTION{clear}'.format(**COLORS),
+        metavar='{purple}COMMAND                    | DESCRIPTION{clear}'.format(**COLORS),
         type=str,
         nargs=1,
         action='store',
@@ -217,17 +210,7 @@ def resolve(commands):
         str: Resolved command.
     '''
     cmd = ' && '.join(commands)
-
     all_ = dict(
-        black='\033[0;30m',
-        blue='\033[0;34m',
-        clear='\033[0m',
-        cyan='\033[0;36m',
-        green='\033[0;32m',
-        purple='\033[0;35m',
-        red='\033[0;31m',
-        white='\033[0;37m',
-        yellow='\033[0;33m',
         git_user=GIT_USER,
         registry=DOCKER_REGISTRY,
         port=str(PORT),
@@ -237,6 +220,7 @@ def resolve(commands):
         repo_=re.sub('-', '_', REPO),
         user=USER,
     )
+    all_.update(COLORS)
     args = {}
     for k, v in all_.items():
         if '{' + k + '}' in cmd:
