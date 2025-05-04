@@ -797,11 +797,12 @@ def zsh_complete_command():
         'echo "local -a _subcommands" >> $_COMP',
         'echo "_subcommands=(" >> $_COMP',
         line('''
-            bin/{repo} --help
-                | grep '    - '
-                | sed -E 's/ +- /:/g'
-                | sed -E 's/^ +//g'
-                | sed -E "s/(.*)/    '\\1'/g"
+            /bin/cat -v <<< `bin/{repo} --help | tr '\\n' '@'`
+                | tr '@' '\\n'
+                | sed -E 's/\\^\\[\\[.(;..)?m//g'
+                | grep ' | '
+                | grep -v 'COMMAND'
+                | sed -E 's/ +\\| /:/g'
                 | parallel "echo {{}} >> $_COMP"
         '''),
         'echo ")" >> $_COMP',
@@ -818,7 +819,8 @@ def zsh_complete_command():
         'echo "    return" >> $_COMP',
         'echo "fi" >> $_COMP',
     ]
-    return resolve(cmds)
+    cmd = resolve(cmds)
+    return cmd
 
 
 def zsh_root_command():
