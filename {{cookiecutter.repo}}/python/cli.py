@@ -803,6 +803,7 @@ def zsh_complete_command():
                 | grep ' | '
                 | grep -v 'COMMAND'
                 | sed -E 's/ +\\| /:/g'
+                | sed -E "s/^ +(.+)/  '\\1'/g"
                 | parallel "echo {{}} >> $_COMP"
         '''),
         'echo ")" >> $_COMP',
