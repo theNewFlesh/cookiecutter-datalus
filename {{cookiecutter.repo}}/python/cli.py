@@ -53,6 +53,17 @@ class BetterHelpFormatter(argparse.RawTextHelpFormatter):
         super().__init__(prog, indent_increment, max_help_position, width)
 
     def _format_action(self, action):
+        # type: (Any) -> str
+        '''
+        Adds colorized table formatting to information provided via
+        parser.add_argument.
+
+        Args:
+            action (object): Parser action.
+
+        Returns:
+            str: Formatted string.
+        '''
         text = super()._format_action(action)
         text = re.sub(' {28}', '    ', text)
         lines = text.split('\n')
