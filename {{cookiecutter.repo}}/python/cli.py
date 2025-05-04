@@ -32,8 +32,8 @@ repository's structure. Written to be python version agnostic.
 
 COLORS = dict(
     blue='\033[0;34m',
-    cyan='\033[1;96m',
-    green='\033[1;92m',
+    cyan='\033[0;96m',
+    green='\033[0;92m',
     grey='\033[0;90m',
     purple='\033[0;35m',
     red='\033[0;31m',
