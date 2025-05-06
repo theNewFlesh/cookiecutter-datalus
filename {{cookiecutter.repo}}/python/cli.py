@@ -52,6 +52,18 @@ class BetterHelpFormatter(argparse.RawTextHelpFormatter):
     ):
         super().__init__(prog, indent_increment, max_help_position, width)
 
+    def add_text(self, text):
+        # type: (Any) -> None
+        '''
+        Adds color to description.
+
+        Args:
+            text (object): Text.
+        '''
+        if 'CLI' in str(text):
+            text = '{white}{text}{clear}'.format(text=text, **COLORS)
+        super().add_text(text)
+
     def _format_action(self, action):
         # type: (Any) -> str
         '''
@@ -64,6 +76,10 @@ class BetterHelpFormatter(argparse.RawTextHelpFormatter):
         Returns:
             str: Formatted string.
         '''
+        if action.dest == 'command':
+            metavar = '{purple}COMMAND' + ' ' * 20 + '| DESCRIPTION{clear}'
+            action.metavar = metavar.format(**COLORS)
+
         text = super()._format_action(action)
         text = re.sub(' {28}', '    ', text)
         lines = text.split('\n')
@@ -105,19 +121,16 @@ def get_info():
     Returns:
         tuple[str]: Mode and arguments.
     '''
-    desc = '{white}A CLI for developing and deploying the {repo} app.{clear}'
-    desc = desc.format(repo=REPO, **COLORS)
+    desc = 'A CLI for developing and deploying the {repo} app.'.format(repo=REPO)
     parser = argparse.ArgumentParser(
         formatter_class=BetterHelpFormatter,
         description=desc,
         usage='  python cli.py COMMAND [-a --args]=ARGS [-h --help] [--dryrun]'
     )
 
-    metavar = '{purple}COMMAND' + ' ' * 20 + '| DESCRIPTION{clear}'
-    metavar = metavar.format(**COLORS)
     parser.add_argument(
         'command',
-        metavar=metavar,
+        metavar='COMMAND',
         type=str,
         nargs=1,
         action='store',
