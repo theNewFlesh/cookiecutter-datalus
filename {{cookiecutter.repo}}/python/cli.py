@@ -867,10 +867,10 @@ def get_illegal_mode_command():
     '''
     cmds = [
         line('''
-            echo "That is not a legal command.
-            Please call {cyan}{repo} --help{clear} to see a list of legal
+            echo "{red}That is not a legal command.{clear}
+            Please call {green}{repo} --help{clear} to see a list of legal
             commands."
-        ''')
+        ''', sep='\n')
     ]
     return resolve(cmds)
 {%- endraw %}
