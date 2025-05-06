@@ -114,7 +114,7 @@ def get_info():
     )
 
     metavar = '{purple}COMMAND' + ' ' * 20 + '| DESCRIPTION{clear}'
-    metavar = metavar.format(**COLORS),
+    metavar = metavar.format(**COLORS)
     parser.add_argument(
         'command',
         metavar=metavar,
