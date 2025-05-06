@@ -11,7 +11,7 @@ CONFIG_PATH = '/home/ubuntu/{{repo_}}/resources/test_config.yaml'
 # ------------------------------------------------------------------------------
 
 
-def pytest_setup_options():
+def pytest_configure():
     '''
     Configures Chrome webdriver.
     '''
