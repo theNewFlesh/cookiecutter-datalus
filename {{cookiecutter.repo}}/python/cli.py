@@ -870,7 +870,7 @@ def get_illegal_mode_command():
             echo "{red}That is not a legal command.{clear}
             Please call {green}{repo} --help{clear} to see a list of legal
             commands."
-        ''', sep='\n')
+        ''')
     ]
     return resolve(cmds)
 {%- endraw %}
