@@ -110,68 +110,73 @@ Its usage pattern is: `bin/repo COMMAND [-a --args]=ARGS [-h --help] [--dryrun]`
 
 ### Commands
 
-| Command                 | Description                                                         | VSCode Task            |
-| ----------------------- | ------------------------------------------------------------------- | -----------------------|
-| build-package           | Build production version of repo for publishing                     | [build] package        |
-| build-prod              | Publish pip package of repo to PyPi                                 | [build] prod           |
-| build-publish           | Run production tests first then publish pip package of repo to PyPi | [build] publish        |
-| build-test              | Build test version of repo for prod testing                         | [build] test           |
-| docker-build            | Build Docker image                                                  |                        |
-| docker-build-from-cache | Build Docker image from registry cache                              |                        |
-| docker-build-no-cache   | Build Docker image without cache                                    |                        |
-| docker-build-prod       | Build production image                                              |                        |
-| docker-container        | Display the Docker container id                                     |                        |
-| docker-destroy          | Shutdown container and destroy its image                            |                        |
-| docker-destroy-prod     | Shutdown production container and destroy its image                 |                        |
-| docker-image            | Display the Docker image id                                         |                        |
-| docker-prod             | Start production container                                          |                        |
-| docker-pull-dev         | Pull development image from Docker registry                         |                        |
-| docker-pull-prod        | Pull production image from Docker registry                          |                        |
-| docker-push-dev         | Push development image to Docker registry                           |                        |
-| docker-push-dev-latest  | Push development image to Docker registry with dev-latest tag       |                        |
-| docker-push-prod        | Push production image to Docker registry                            |                        |
-| docker-push-prod-latest | Push production image to Docker registry with prod-latest tag       |                        |
-| docker-remove           | Remove Docker image                                                 |                        |
-| docker-restart          | Restart Docker container                                            |                        |
-| docker-start            | Start Docker container                                              |                        |
-| docker-stop             | Stop Docker container                                               |                        |
-| docs                    | Generate sphinx documentation                                       | [docs] docs            |
-| docs-architecture       | Generate architecture.svg diagram from all import statements        | [docs] architecture    |
-| docs-full               | Generate documentation, coverage report, diagram and code           | [docs] full            |
-| docs-metrics            | Generate code metrics report, plots and tables                      | [docs] metrics         |
-| library-add             | Add a given package to a given dependency group                     | [library] add          |
-| library-graph-dev       | Graph dependencies in dev environment                               | [library] graph-dev    |
-| library-graph-prod      | Graph dependencies in prod environment                              | [library] graph-prod   |
-| library-install-dev     | Install all dependencies into dev environment                       | [library] install-dev  |
-| library-install-prod    | Install all dependencies into prod environment                      | [library] install-prod |
-| library-list-dev        | List packages in dev environment                                    | [library] list-dev     |
-| library-list-prod       | List packages in prod environment                                   | [library] list-prod    |
-| library-lock-dev        | Resolve dev.lock file                                               | [library] lock-dev     |
-| library-lock-prod       | Resolve prod.lock file                                              | [library] lock-prod    |
-| library-remove          | Remove a given package from a given dependency group                | [library] remove       |
-| library-search          | Search for pip packages                                             | [library] search       |
-| library-sync-dev        | Sync dev environment with packages listed in dev.lock               | [library] sync-dev     |
-| library-sync-prod       | Sync prod environment with packages listed in prod.lock             | [library] sync-prod    |
-| library-update          | Update dev dependencies                                             | [library] update       |
-| library-update-pdm      | Update PDM                                                          | [library] update-pdm   |
-| quickstart              | Display quickstart guide                                            | quickstart             |
-| session-lab             | Run jupyter lab server                                              | [session] lab          |
-| session-python          | Run python session with dev dependencies                            | [session] python       |
-| session-server          | Runn application server inside Docker container                     | [session] server       |
-| state                   | State of repository and Docker container                            |                        |
-| test-coverage           | Generate test coverage report                                       | [test] coverage        |
-| test-dev                | Run all tests                                                       | [test] dev             |
-| test-fast               | Test all code excepts tests marked with SKIP_SLOWS_TESTS decorator  | [test] fast            |
-| test-lint               | Run linting and type checking                                       | [test] lint            |
-| test-prod               | Run tests across all support python versions                        | [test] prod            |
-| version                 | Full resolution of repo: dependencies, linting, tests, docs, etc    | [version] version      |
-| version-bump-major      | Bump pyproject major version                                        | [version] bump-major   |
-| version-bump-minor      | Bump pyproject minor version                                        | [version] bump-minor   |
-| version-bump-patch      | Bump pyproject patch version                                        | [version] bump-patch   |
-| version-commit          | Tag with version and commit changes to master                       | [version] commit       |
-| zsh                     | Run ZSH session inside Docker container                             |                        |
-| zsh-complete            | Generate oh-my-zsh completions                                      |                        |
-| zsh-root                | Run ZSH session as root inside Docker container                     |                        |
+| Command                    | Description                                                         | VSCode Task                   |
+| -------------------------- | ------------------------------------------------------------------- | ----------------------------- |
+| build-edit-prod-dockerfile | Edit prod.dockefile to use local package                            | [build] edit prod.dockerfile  |
+| build-local-package        | Generate local pip package in docker/dist                           | [build] local-package         |
+| build-package              | Build production version of repo for publishing                     | [build] package               |
+| build-prod                 | Publish pip package of repo to PyPi                                 | [build] prod                  |
+| build-publish              | Run production tests first then publish pip package of repo to PyPi | [build] publish               |
+| build-test                 | Build test version of repo for prod testing                         | [build] test                  |
+| docker-build               | Build development image                                             |                               |
+| docker-build-from-cache    | Build development image from registry cache                         |                               |
+| docker-build-no-cache      | Build development image without cache                               |                               |
+| docker-build-prod          | Build production image                                              |                               |
+| docker-build-prod-no-cache | Build production image without cache                                |                               |
+| docker-container           | Display the Docker container id                                     |                               |
+| docker-destroy             | Shutdown container and destroy its image                            |                               |
+| docker-destroy-prod        | Shutdown production container and destroy its image                 |                               |
+| docker-image               | Display the Docker image id                                         |                               |
+| docker-prod                | Start production container                                          |                               |
+| docker-pull-dev            | Pull development image from Docker registry                         |                               |
+| docker-pull-prod           | Pull production image from Docker registry                          |                               |
+| docker-push-dev            | Push development image to Docker registry                           |                               |
+| docker-push-dev-latest     | Push development image to Docker registry with dev-latest tag       |                               |
+| docker-push-prod           | Push production image to Docker registry                            |                               |
+| docker-push-prod-latest    | Push production image to Docker registry with prod-latest tag       |                               |
+| docker-remove              | Remove Docker image                                                 |                               |
+| docker-restart             | Restart container                                                   |                               |
+| docker-start               | Start container                                                     |                               |
+| docker-stop                | Stop container                                                      |                               |
+| docs                       | Generate sphinx documentation                                       | [docs] docs                   |
+| docs-architecture          | Generate architecture.svg diagram from all import statements        | [docs] architecture           |
+| docs-full                  | Generate documentation, coverage report, diagram and code           | [docs] full                   |
+| docs-metrics               | Generate code metrics report, plots and tables                      | [docs] metrics                |
+| library-add                | Add a given package to a given dependency group                     | [library] add                 |
+| library-graph-dev          | Graph dependencies in dev environment                               | [library] graph-dev           |
+| library-graph-prod         | Graph dependencies in prod environment                              | [library] graph-prod          |
+| library-install-dev        | Install all dependencies into dev environment                       | [library] install-dev         |
+| library-install-prod       | Install all dependencies into prod environment                      | [library] install-prod        |
+| library-list-dev           | List packages in dev environment                                    | [library] list-dev            |
+| library-list-prod          | List packages in prod environment                                   | [library] list-prod           |
+| library-lock-dev           | Resolve dev.lock file                                               | [library] lock-dev            |
+| library-lock-prod          | Resolve prod.lock file                                              | [library] lock-prod           |
+| library-remove             | Remove a given package from a given dependency group                | [library] remove              |
+| library-search             | Search for pip packages                                             | [library] search              |
+| library-sync-dev           | Sync dev environment with packages listed in dev.lock               | [library] sync-dev            |
+| library-sync-prod          | Sync prod environment with packages listed in prod.lock             | [library] sync-prod           |
+| library-update             | Update dev dependencies                                             | [library] update              |
+| library-update-pdm         | Update PDM                                                          | [library] update-pdm          |
+| quickstart                 | Display quickstart guide                                            | quickstart                    |
+| session-lab                | Run jupyter lab server                                              | [session] lab                 |
+| session-python             | Run python session with dev dependencies                            | [session] python              |
+| session-server             | Runn application server inside Docker container                     | [session] server              |
+| state                      | State of repository and Docker container                            |                               |
+| test-coverage              | Generate test coverage report                                       | [test] coverage               |
+| test-dev                   | Run all tests                                                       | [test] dev                    |
+| test-fast                  | Test all code excepts tests marked with SKIP_SLOWS_TESTS decorator  | [test] fast                   |
+| test-format                | Format all python files                                             | [test] format                 |
+| test-lint                  | Run linting and type checking                                       | [test] lint                   |
+| test-prod                  | Run tests across all support python versions                        | [test] prod                   |
+| version                    | Full resolution of repo: dependencies, linting, tests, docs, etc    | [version] version             |
+| version-bump-major         | Bump pyproject major version                                        | [version] bump-major          |
+| version-bump-minor         | Bump pyproject minor version                                        | [version] bump-minor          |
+| version-bump-patch         | Bump pyproject patch version                                        | [version] bump-patch          |
+| version-commit             | Tag with version and commit changes to master                       | [version] commit              |
+| zsh                        | Run ZSH session inside Docker container                             |                               |
+| zsh-complete               | Generate oh-my-zsh completions                                      |                               |
+| zsh-root                   | Run ZSH session as root inside Docker container                     |                               |
+|                            | Reinstall all VSCode extensions                                     | [vscode] reinstall-extensions |
 
 ### Flags
 
