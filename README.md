@@ -114,8 +114,8 @@ Its usage pattern is: `bin/repo COMMAND [-a --args]=ARGS [-h --help] [--dryrun]`
 | -------------------------- | ------------------------------------------------------------------- | ----------------------------- |
 | build-edit-prod-dockerfile | Edit prod.dockefile to use local package                            | [build] edit prod.dockerfile  |
 | build-local-package        | Generate local pip package in docker/dist                           | [build] local-package         |
-| build-package              | Build production version of repo for publishing                     | [build] package               |
-| build-prod                 | Publish pip package of repo to PyPi                                 | [build] prod                  |
+| build-package              | Generate pip package of repo                                        | [build] package               |
+| build-prod                 | Build production version of repo for publishing                     | [build] prod                  |
 | build-publish              | Run production tests first then publish pip package of repo to PyPi | [build] publish               |
 | build-test                 | Build test version of repo for prod testing                         | [build] test                  |
 | docker-build               | Build development image                                             |                               |
@@ -140,7 +140,7 @@ Its usage pattern is: `bin/repo COMMAND [-a --args]=ARGS [-h --help] [--dryrun]`
 | docker-stop                | Stop container                                                      |                               |
 | docs                       | Generate sphinx documentation                                       | [docs] docs                   |
 | docs-architecture          | Generate architecture.svg diagram from all import statements        | [docs] architecture           |
-| docs-full                  | Generate documentation, coverage report, diagram and code           | [docs] full                   |
+| docs-full                  | Generate documentation, coverage report, diagram and code metrics   | [docs] full                   |
 | docs-metrics               | Generate code metrics report, plots and tables                      | [docs] metrics                |
 | library-add                | Add a given package to a given dependency group                     | [library] add                 |
 | library-graph-dev          | Graph dependencies in dev environment                               | [library] graph-dev           |
