@@ -157,7 +157,7 @@ def get_info():
     docker-push-dev-latest     - Push development image to Docker registry with dev-latest tag
     docker-push-prod           - Push production image to Docker registry
     docker-push-prod-latest    - Push production image to Docker registry with prod-latest tag
-    docker-remove              - Remove Docker image
+    docker-remove              - Remove Docker container
     docker-restart             - Restart container
     docker-start               - Start container
     docker-stop                - Stop container
