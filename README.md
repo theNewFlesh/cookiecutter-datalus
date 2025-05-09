@@ -43,6 +43,12 @@ comes with each repo and has no dependencies.
 1. Install [cookiecutter](https://github.com/cookiecutter/cookiecutter) CLI
 2. `cookiecutter https://github.com/theNewFlesh/cookiecutter-datalus`
 
+Alternatively, you can use cruft (which uses cookiecutter). This method is recommended because cruft provides additional tooling for future template
+updates.
+
+1. `pip3 install cruft`
+2. `cruft create https://github.com/theNewFlesh/cookiecutter-datalus`
+
 # Purpose
 Datalus is designed to facilitate the development of modern python applications.
 It supports:
