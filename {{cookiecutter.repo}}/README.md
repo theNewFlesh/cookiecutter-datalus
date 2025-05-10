@@ -177,6 +177,9 @@ The following is a complete list of all available development commands:
 | build-prod                 | Build production version of repo for publishing                     |
 | build-publish              | Run production tests first then publish pip package of repo to PyPi |
 | build-test                 | Build test version of repo for prod testing                         |
+{%- if cc.package_registry == 'gitlab' %}
+| build-unpublish            | Remove current version pip package from package registry            |
+{%- endif %}
 | docker-build               | Build development image                                             |
 | docker-build-from-cache    | Build development image from registry cache                         |
 | docker-build-no-cache      | Build development image without cache                               |

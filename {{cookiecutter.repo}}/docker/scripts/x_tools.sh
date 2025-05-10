@@ -334,19 +334,26 @@ x_build_prod () {
     _x_build_show_dir;
 }
 
-x_build_publish () {
-    # Run production tests first then publish pip package of repo to PyPi
-    # args: token
+_x_build_publish () {
+    # Publish pip package of repo to PyPi
+    # args: user, token, comment, url
     x_build_package;
     cd $BUILD_DIR;
     echo "${CYAN2}PUBLISHING PIP PACKAGE TO PYPI${CLEAR}\n";
     pdm publish \
         --no-build \
-        --username "__token__" \
-        --password "$1" \
-        --comment "$version" \
-        --repository "$PYPI_URL" \
+        --username "$1" \
+        --password "$2" \
+        --comment "$3" \
+        --repository "$4" \
         --verbose;
+}
+
+x_build_publish () {
+    # Run production tests first then publish pip package of repo to PyPi
+    # args: token
+    local version=`_x_get_version`;
+    _x_build_publish __token__ $1 $version $PYPI_URL;
 }
 
 x_build_test () {
@@ -359,7 +366,7 @@ x_build_test () {
 {%- endraw %}
 {% if cc.package_registry == 'gitlab' %}
 x_build_unpublish () {
-    # Remove pip package matching current repo version from package registry
+    # Remove current version pip package from package registry
     # args: token
     local version=`_x_get_version`;
     echo "${CYAN2}DELETING PIP PACKAGE VERSION: $version${CLEAR}\n";
