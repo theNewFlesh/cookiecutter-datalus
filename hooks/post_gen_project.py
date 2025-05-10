@@ -45,6 +45,9 @@ def main():
     if git_host != 'gitlab':
         os.remove('.gitlab-ci.yml')
 
+    if git_host != 'github':
+        shutil.rmtree('.github')
+
     if prod_cli == 'no':
         os.remove('docker/scripts/prod-cli')
 
