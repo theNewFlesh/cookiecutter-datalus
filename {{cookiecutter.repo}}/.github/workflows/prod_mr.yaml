@@ -6,6 +6,7 @@ run-name: "Prod - ${{ github.head_ref }} - ${{ github.actor }}"
 on:
   pull_request:
     branches: [ prod ]
+    types: [ opened, synchronize, reopened ]
 
 env:
   repo: "${{ github.event.repository.name }}"
