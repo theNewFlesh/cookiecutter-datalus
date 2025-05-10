@@ -328,26 +328,19 @@ x_build_prod () {
     _x_build_show_dir;
 }
 
-_x_build_publish () {
-    # Publish pip package of repo to PyPi
-    # args: user, token, comment, url
+x_build_publish () {
+    # Run production tests first then publish pip package of repo to PyPi
+    # args: token
     x_build_package;
     cd $BUILD_DIR;
     echo "${CYAN2}PUBLISHING PIP PACKAGE TO PYPI${CLEAR}\n";
     pdm publish \
         --no-build \
-        --username "$1" \
-        --password "$2" \
-        --comment "$3" \
-        --repository "$4" \
+        --username "__token__" \
+        --password "$1" \
+        --comment "$version" \
+        --repository "$PYPI_URL" \
         --verbose;
-}
-
-x_build_publish () {
-    # Run production tests first then publish pip package of repo to PyPi
-    # args: token
-    local version=`_x_get_version`;
-    _x_build_publish __token__ $1 $version $PYPI_URL;
 }
 
 x_build_test () {
