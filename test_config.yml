@@ -14,7 +14,8 @@ default_context:
   git_user: theNewFlesh
   git_host: gitlab
   git_organization: theNewFlesh
-  docker_registry: gitlab
+  package_registry: pypi
+  docker_registry: docker.io
   organization_url: mycompany.com
   description: A cloud-native, custom dashboard and ephemeral database application.
   author: Alex Braun
