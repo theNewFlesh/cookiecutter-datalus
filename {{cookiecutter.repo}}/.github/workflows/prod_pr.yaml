@@ -1,7 +1,7 @@
 {%- set cc = cookiecutter -%}
 {%- raw -%}
-name: Prod
-run-name: "Prod - ${{ github.head_ref }} - ${{ github.actor }}"
+name: Prod Pull Request
+run-name: "Prod Pull Request - ${{ github.head_ref }} - ${{ github.actor }}"
 
 on:
   pull_request:
@@ -18,7 +18,7 @@ env:
 {%- raw %}
 
 jobs:
-  prod-mr:
+  prod-pr:
     runs-on: ubuntu-latest
     permissions:
       contents: write
