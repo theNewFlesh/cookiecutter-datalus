@@ -137,9 +137,9 @@ prod-mr:
     - docker tag registry.gitlab.com/$org/$repo:dev-latest $repo:dev
     - $cli docker-start
     - $cli test-prod
-    - $cli build-publish -a "$PYPI_ACCESS_TOKEN"
-    - $cli docker-build-prod-no-cache
-    - $cli build-unpublish -a "$PYPI_ACCESS_TOKEN"
+    # - $cli build-publish -a "$PYPI_ACCESS_TOKEN"
+    # - $cli docker-build-prod-no-cache
+    # - $cli build-unpublish -a "$PYPI_ACCESS_TOKEN"
 
 # PROD--------------------------------------------------------------------------
 prod:

@@ -52,13 +52,13 @@ jobs:
       - name: Run prod tests
         run: $cli test-prod
 
-      - name: Publish python package
-        run: $cli build-publish -a ${{ secrets.PYPI_ACCESS_TOKEN }}
+    #   - name: Publish python package
+    #     run: $cli build-publish -a ${{ secrets.PYPI_ACCESS_TOKEN }}
 
-      - name: Build prod image
-        run: $cli docker-build-prod-no-cache
+    #   - name: Build prod image
+    #     run: $cli docker-build-prod-no-cache
 
-      - name: Build prod image
-        run: - $cli build-unpublish -a ${{ secrets.PYPI_ACCESS_TOKEN }}
+    #   - name: Unpublish python package
+    #     run: - $cli build-unpublish -a ${{ secrets.PYPI_ACCESS_TOKEN }}
 
 {% endraw %}
