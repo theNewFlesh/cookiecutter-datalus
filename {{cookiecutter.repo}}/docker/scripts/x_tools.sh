@@ -25,7 +25,13 @@ export MIN_PYTHON_VERSION="3.{{ cc.python_min_version }}"
 export MAX_PYTHON_VERSION="3.{{ cc.python_max_version }}"
 export MKDOCS_DIR="$REPO_DIR/mkdocs"
 export PDM_DIR="$HOME/pdm"
+{%- if cc.package_registry == 'gitlab' %}
+export GIT_PROJECT_ID="ENTER GITLAB PROJECT ID HERE"
+export GIT_PROJECT_URL="https://gitlab.com/api/v4/projects/$GIT_PROJECT_ID"
+export PYPI_URL="$GIT_PROJECT_URL/packages/pypi"
+{%- else %}
 export PYPI_URL="pypi"
+{%- endif %}
 export PYTHONPATH="$REPO_DIR/python:$HOME/.local/lib"
 export SCRIPT_DIR="$REPO_DIR/docker/scripts"
 export TEST_MAX_PROCS=16
@@ -349,6 +355,32 @@ x_build_test () {
     _x_build test;
     _x_build_show_dir;
 }
+
+{%- endraw %}
+{% if cc.package_registry == 'gitlab' %}
+x_build_unpublish () {
+    # Remove pip package matching current repo version from package registry
+    # args: token
+    local version=`_x_get_version`;
+    echo "${CYAN2}DELETING PIP PACKAGE VERSION: $version${CLEAR}\n";
+    local package_id=` \
+        curl \
+            --silent \
+            --request GET \
+            --data "sort=desc" \
+            --url "$GIT_PROJECT_URL/packages" \
+            --header "PRIVATE-TOKEN: $1" \
+        | jq ".[] | select(.version == \"$version\") | .id" \
+    `;
+    curl \
+        --silent \
+        --request DELETE \
+        --url "$GIT_PROJECT_URL/packages/$package_id" \
+        --header "PRIVATE-TOKEN: $1";
+    echo "${GREEN2}PIP PACKAGE DELETED${CLEAR}";
+}
+{%- endif %}
+{%- raw %}
 
 # DOCS-FUNCTIONS----------------------------------------------------------------
 x_docs () {
