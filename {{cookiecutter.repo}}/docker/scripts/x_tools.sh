@@ -362,7 +362,6 @@ x_build_test () {
     _x_build test;
     _x_build_show_dir;
 }
-
 {%- endraw %}
 {% if cc.package_registry == 'gitlab' %}
 x_build_unpublish () {
@@ -386,9 +385,8 @@ x_build_unpublish () {
         --header "PRIVATE-TOKEN: $1";
     echo "${GREEN2}PIP PACKAGE DELETED${CLEAR}";
 }
-{%- endif %}
+{% endif %}
 {%- raw %}
-
 # DOCS-FUNCTIONS----------------------------------------------------------------
 x_docs () {
     # Generate documentation
