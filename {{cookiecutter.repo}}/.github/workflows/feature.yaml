@@ -15,6 +15,7 @@ env:
   org: "{{ cc.git_organization }}"
   org_url: "{{ cc.organization_url }}"
   docker_registry: "{{ cc.docker_registry }}"
+  BUILDKIT_PROGRESS: tty
 {%- raw %}
 
 jobs:
