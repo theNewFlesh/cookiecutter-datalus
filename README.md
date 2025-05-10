@@ -222,6 +222,12 @@ APP
    ├── .devcontainer.json                      # VSCode remote container config
    ├── .env                                    # needed by VSCode docker-compose
    ├── .gitlab-ci.yml                          # GitLab CI script
+   ├── .github                                 # GitHub CI
+   │   └── workflows
+   │      └── master.yml                       # Master commit CI
+   │      └── master_pr.yml                    # PRs into master CI
+   │      └── prod.yml                         # Prod commit CI
+   │      └── prod_pr.yml                      # PRs into Prod CI
    ├── bin
    │   └── APP                                 # shell wrapper for CLI
 ```
