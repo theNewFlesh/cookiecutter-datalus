@@ -18,7 +18,7 @@ env:
 {%- raw %}
 
 jobs:
-  prod:
+  prod-mr:
     runs-on: ubuntu-latest
     permissions:
       contents: write
