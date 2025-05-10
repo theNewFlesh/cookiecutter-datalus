@@ -49,8 +49,8 @@ variables:
     - echo "export PYPI_ACCESS_TOKEN=$PYPI_ACCESS_TOKEN" > docker/config/secret-env
 {%- endif %}
 
-# FEATURE-----------------------------------------------------------------------
-.feature-env:
+# MASTER-MR---------------------------------------------------------------------
+.master-mr-env:
   extends: .build-env
   rules:
     - if: >-
@@ -61,7 +61,7 @@ variables:
 
 build:
   stage: build
-  extends: .feature-env
+  extends: .master-mr-env
   script:
     - $($cli docker-pull-dev) || echo "docker image not found"
     - $cli docker-build-from-cache
@@ -70,7 +70,7 @@ build:
 
 docs:
   stage: test
-  extends: .feature-env
+  extends: .master-mr-env
   script:
     - docker pull $test_image
     - docker tag $test_image $repo:dev
@@ -81,7 +81,7 @@ docs:
 
 lint:
   stage: test
-  extends: .feature-env
+  extends: .master-mr-env
   script:
     - docker pull $test_image
     - docker tag $test_image $repo:dev
@@ -90,7 +90,7 @@ lint:
 
 test:
   stage: test
-  extends: .feature-env
+  extends: .master-mr-env
   script:
     - docker pull $test_image
     - docker tag $test_image $repo:dev
@@ -123,6 +123,23 @@ pages:
   artifacts:
     paths:
       - public
+
+# PROD-MR-----------------------------------------------------------------------
+prod-mr:
+  stage: prod
+  extends: .build-env
+  rules:
+    - if: >-
+        $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == 'master' &&
+        $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == 'prod'
+  script:
+    - $cli docker-pull-dev
+    - docker tag registry.gitlab.com/$org/$repo:dev-latest $repo:dev
+    - $cli docker-start
+    - $cli test-prod
+    - $cli build-publish -a "$PYPI_ACCESS_TOKEN"
+    - $cli docker-build-prod-no-cache
+    - $cli build-unpublish -a "$PYPI_ACCESS_TOKEN"
 
 # PROD--------------------------------------------------------------------------
 prod:
