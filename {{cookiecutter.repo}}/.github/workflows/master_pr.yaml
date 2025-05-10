@@ -1,7 +1,7 @@
 {%- set cc = cookiecutter -%}
 {%- raw -%}
-name: Feature
-run-name: "Feature - ${{ github.head_ref }} - ${{ github.actor }}"
+name: Master Pull Request
+run-name: "Master Pull Request - ${{ github.head_ref }} - ${{ github.actor }}"
 
 on:
   pull_request:
@@ -18,7 +18,7 @@ env:
 {%- raw %}
 
 jobs:
-  feature:
+  master-pr:
     runs-on: ubuntu-latest
     permissions:
       contents: write
