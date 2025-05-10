@@ -4,7 +4,7 @@ name: Prod
 run-name: "Prod - ${{ github.head_ref }} - ${{ github.actor }}"
 
 on:
-  push:
+  pull_request:
     branches: [ prod ]
 
 env:
@@ -57,10 +57,7 @@ jobs:
       - name: Build prod image
         run: $cli docker-build-prod-no-cache
 
-      - name: Push prod image
-        run: $cli docker-push-prod
-
-      - name: Push prod-latest image
-        run: $cli docker-push-prod-latest
+      - name: Build prod image
+        run: - $cli build-unpublish -a ${{ secrets.PYPI_ACCESS_TOKEN }}
 
 {% endraw %}
