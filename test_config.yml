@@ -12,7 +12,7 @@ default_context:
   include_vscode_server: "yes"
   port_prefix: 99
   git_user: theNewFlesh
-  git_host: gitlab
+  git_host: github
   git_organization: theNewFlesh
   package_registry: pypi
   docker_registry: docker.io
