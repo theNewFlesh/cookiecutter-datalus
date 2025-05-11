@@ -292,19 +292,20 @@ def cruft_check_files(
             Default: https://github.com/theNewFlesh/cookiecutter-datalus
     '''
     # create /tmp/datalus
-    root = '/tmp/datalus'
-    shutil.rmtree(root, ignore_errors=True)
-    os.makedirs(root)
-    target = Path(root, 'config.yaml').as_posix()
+    suffix = Path(source).name + '-example'
+    tmp = Path('/tmp/datalus', suffix).as_posix()
+    shutil.rmtree(tmp, ignore_errors=True)
+    os.makedirs(tmp)
+    target = Path(tmp, 'config.yaml').as_posix()
 
     # extract config
     cruft = Path(source, '.cruft.json').as_posix()
     extract_cookiecutter_yaml(cruft, target)
 
     # create example repo
-    cmd = 'cruft create {template} --checkout {branch} --output-dir {root} '
+    cmd = 'cruft create {template} --checkout {branch} --output-dir {tmp} '
     cmd += '--config-file {target} -y'
-    cmd = cmd.format(template=template, branch=branch, root=root, target=target)
+    cmd = cmd.format(template=template, branch=branch, tmp=tmp, target=target)
     subprocess.Popen(cmd, shell=True).wait()
 
     # establish ignore file pattern
@@ -313,12 +314,12 @@ def cruft_check_files(
     ignore_re += '|sphinx/images|user-settings'
 
     # get expected filepaths
-    demo = Path(root, Path(source).name).as_posix()
+    example = Path(tmp, Path(source).name).as_posix()
     expected = []
-    for root, _, files in os.walk(demo):
+    for root, _, files in os.walk(example):
         for file_ in files:
             f = Path(root, file_).as_posix()
-            f = re.sub(demo + os.sep, '', f)
+            f = re.sub(example + os.sep, '', f)
             if not re.search(ignore_re, f):
                 expected.append(f)
 
@@ -348,7 +349,7 @@ def cruft_check_files(
         print(msg)
 
     # clean up temp repo
-    shutil.rmtree(root, ignore_errors=True)
+    shutil.rmtree(tmp)
 # ------------------------------------------------------------------------------
 
 
