@@ -349,8 +349,7 @@ def cruft_check_files(
         print(msg)
 
     # clean up temp repo
-    print('remove', tmp)
-    # shutil.rmtree(tmp)
+    shutil.rmtree(tmp)
 # ------------------------------------------------------------------------------
 
 
