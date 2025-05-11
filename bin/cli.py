@@ -123,12 +123,20 @@ def main():
     extract.add_argument('--source', type=str, help='cruft.json file', required=True)
     extract.add_argument('--target', type=str, help='cookiecutter yaml file', required=True)
 
+    # cruft_check_files
+    check = commands.add_parser(
+        'cruft-check-files', help='Check for extra and missing template files'
+    )
+    check.add_argument('--source', type=str, help='repository', required=True)
+    check.add_argument('--branch', type=str, help='datalus branch or commmit', default='HEAD')
+
     # command lookup table
     lut = {
         'build-test-repo': (build, build_test_repo),
         'patch-cruft-json': (patch, patch_cruft_json),
         'cruft-update-repo': (cruft, cruft_update_repo),
         'extract-cookiecutter-yaml': (extract, extract_cookiecutter_yaml),
+        'cruft-check-files': (check, cruft_check_files),
     }
 
     # parse command
@@ -266,6 +274,78 @@ def extract_cookiecutter_yaml(source, target):
     data = dict(default_context=data['context']['cookiecutter'])
     with open(target, 'w') as f:
         json.dump(data, f, indent=4)
+
+
+def cruft_check_files(
+    source,
+    branch='HEAD',
+    template='https://github.com/theNewFlesh/cookiecutter-datalus',
+):
+    # type: (str, str, str) -> None
+    '''
+    Compares source repo to a cruft generated version.
+
+    Args:
+        source (str): Source repository.
+        branch (str, optional): Cruft template branch. Default: HEAD.
+        template (str, optional): Cruft template repo.
+            Default: https://github.com/theNewFlesh/cookiecutter-datalus
+    '''
+    # create /tmp/datalus
+    root = '/tmp/datalus'
+    shutil.rmtree(root, ignore_errors=True)
+    os.makedirs(root)
+    target = Path(root, 'config.yaml').as_posix()
+
+    # extract config
+    cruft = Path(source, '.cruft.json').as_posix()
+    extract_cookiecutter_yaml(cruft, target)
+
+    # create example repo
+    cmd = 'cruft create {template} --checkout {branch} --output-dir {root} '
+    cmd += '--config-file {target} -y'
+    cmd = cmd.format(template=template, branch=branch, root=root, target=target)
+    subprocess.Popen(cmd, shell=True).wait()
+
+    # establish ignore file pattern
+    ignore_re = r'\.git/|docs|drawio|DS_Store|jpeg|jpg|mypy|node_modules'
+    ignore_re += '|notebooks|png|public|pytest|python|resources|ruff'
+    ignore_re += '|sphinx/images|user-settings'
+
+    # get expected filepaths
+    demo = Path(root, Path(source).name).as_posix()
+    expected = []
+    for root, _, files in os.walk(demo):
+        for file_ in files:
+            f = Path(root, file_).as_posix()
+            f = re.sub(demo + os.sep, '', f)
+            if not re.search(ignore_re, f):
+                expected.append(f)
+
+    # get found filepaths
+    found = []
+    for root, _, files in os.walk(source):
+        for file_ in files:
+            f = Path(root, file_).as_posix()
+            f = re.sub(source + os.sep, '', f)
+            if not re.search(ignore_re, f):
+                found.append(f)
+
+    kwargs = dict(
+        green1=TerminalColorscheme.GREEN1.value,
+        red1=TerminalColorscheme.RED1.value,
+        clear=TerminalColorscheme.CLEAR.value,
+    )
+
+    # print extra files
+    for item in set(found).difference(expected):
+        msg = '{green1}EXTRA   {item}{clear}'.format(item=item, **kwargs)
+        print(msg)
+
+    # print missing files
+    for item in set(expected).difference(found):
+        msg = '{red1}MISSING {item}{clear}'.format(item=item, **kwargs)
+        print(msg)
 # ------------------------------------------------------------------------------
 
 
