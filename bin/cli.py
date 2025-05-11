@@ -292,7 +292,8 @@ def cruft_check_files(
             Default: https://github.com/theNewFlesh/cookiecutter-datalus
     '''
     # create /tmp/datalus
-    root = '/tmp/datalus'
+    suffix = Path(source).name + '-example'
+    root = Path('/tmp/datalus', suffix).as_posix()
     shutil.rmtree(root, ignore_errors=True)
     os.makedirs(root)
     target = Path(root, 'config.yaml').as_posix()
@@ -313,12 +314,12 @@ def cruft_check_files(
     ignore_re += '|sphinx/images|user-settings'
 
     # get expected filepaths
-    demo = Path(root, Path(source).name).as_posix()
+    example = Path(root, Path(source).name).as_posix()
     expected = []
-    for root, _, files in os.walk(demo):
+    for root, _, files in os.walk(example):
         for file_ in files:
             f = Path(root, file_).as_posix()
-            f = re.sub(demo + os.sep, '', f)
+            f = re.sub(example + os.sep, '', f)
             if not re.search(ignore_re, f):
                 expected.append(f)
 
