@@ -293,7 +293,7 @@ def cruft_check_files(
     '''
     # create /tmp/datalus
     root = '/tmp/datalus'
-    shutil.rmtree(root, ignore_errors=True)
+    shutil.rmtree(root)
     os.makedirs(root)
     target = Path(root, 'config.yaml').as_posix()
 
@@ -348,7 +348,7 @@ def cruft_check_files(
         print(msg)
 
     # clean up temp repo
-    shutil.rmtree(root, ignore_errors=True)
+    shutil.rmtree(root)
 # ------------------------------------------------------------------------------
 
 
