@@ -346,6 +346,9 @@ def cruft_check_files(
     for item in set(expected).difference(found):
         msg = '{red1}MISSING {item}{clear}'.format(item=item, **kwargs)
         print(msg)
+
+    # clean up temp repo
+    shutil.rmtree(root, ignore_errors=True)
 # ------------------------------------------------------------------------------
 
 
