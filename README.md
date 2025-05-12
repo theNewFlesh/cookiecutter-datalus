@@ -335,3 +335,20 @@ APP
    └── templates                               # (optional)
        └── ...                                 # dash templates
 ```
+
+---
+
+# Datalus CLI
+Datalus comes with CLI tools for managing repos created with cruft.
+
+Its usage pattern is: `bin/cli.py COMMAND --flag-1 arg --flag-2 arg [-h --help]`
+
+### Commands
+
+| Command                     | Description                                                | Flag 1                                   | Flag 2                               |
+| --------------------------- | ---------------------------------------------------------- | ---------------------------------------- | ------------------------------------ |
+| `extract-cookiecutter-yaml` | Extract cookiecutter yaml file from given .cruft.json file | `--source` cruft.json file               | `--target` cookiecutter yaml file    |
+| `build-test-repo`           | Build datalus test repo                                    | `--target` parent directory of test repo |                                      |
+| `patch-cruft-json`          | Patch .cruft.json file with skip patterns                  | `--target` cruft.json file               |                                      |
+| `cruft-update-repo`         | Apply silent cruft update to target repo                   | `--target` cruft.json file               | `--branch` datalus branch or commmit |
+| `cruft-check-files`         | Check for extra and missing template files                 | `--source` repository                    | `--branch` datalus branch or commmit |
