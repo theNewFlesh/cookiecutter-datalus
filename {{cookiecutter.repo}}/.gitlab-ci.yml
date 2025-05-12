@@ -42,8 +42,8 @@ variables:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - apt update
     - apt install -y git
-    - git config --global user.name devops
-    - git config --global user.email "devops@$org_url"
+    - git config --global user.name ci
+    - git config --global user.email "ci@$org_url"
     - git remote set-url origin $git_url
 {%- if cc.include_secret_env == 'yes' %}
     - echo "export PYPI_ACCESS_TOKEN=$PYPI_ACCESS_TOKEN" > docker/config/secret-env
