@@ -141,6 +141,9 @@ def get_info():
     build-prod                 - Build production version of repo for publishing
     build-publish              - Run production tests first then publish pip package of repo to PyPi
     build-test                 - Build test version of repo for prod testing
+{%- if cc.package_registry == 'gitlab' %}
+    build-unpublish            - Remove current version pip package from package registry
+{%- endif %}
     docker-build               - Build development image
     docker-build-from-cache    - Build development image from registry cache
     docker-build-no-cache      - Build development image without cache
@@ -890,6 +893,9 @@ def main():
         'build-prod': x_tools_command('x_build_prod', args),
         'build-publish': x_tools_command('x_build_publish', args),
         'build-test': x_tools_command('x_build_test', args),
+{%- if cc.package_registry == 'gitlab' %}
+        'build-unpublish': x_tools_command('x_build_unpublish', args),
+{%- endif %}
         'docker-build': build_dev_command(),
         'docker-build-from-cache': build_dev_command(use_cache=True),
         'docker-build-no-cache': build_dev_command(use_cache=False),

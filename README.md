@@ -124,6 +124,7 @@ Its usage pattern is: `bin/repo COMMAND [-a --args]=ARGS [-h --help] [--dryrun]`
 | build-prod                 | Build production version of repo for publishing                     | [build] prod                  |
 | build-publish              | Run production tests first then publish pip package of repo to PyPi | [build] publish               |
 | build-test                 | Build test version of repo for prod testing                         | [build] test                  |
+| build-unpublish            | Remove current version pip package from package registry            | [build] unpublish             |
 | docker-build               | Build development image                                             |                               |
 | docker-build-from-cache    | Build development image from registry cache                         |                               |
 | docker-build-no-cache      | Build development image without cache                               |                               |
@@ -221,6 +222,12 @@ APP
    ├── .devcontainer.json                      # VSCode remote container config
    ├── .env                                    # needed by VSCode docker-compose
    ├── .gitlab-ci.yml                          # GitLab CI script
+   ├── .github                                 # GitHub CI
+   │   └── workflows
+   │      └── master.yml                       # Master commit CI
+   │      └── master_pr.yml                    # PRs into master CI
+   │      └── prod.yml                         # Prod commit CI
+   │      └── prod_pr.yml                      # PRs into Prod CI
    ├── bin
    │   └── APP                                 # shell wrapper for CLI
 ```

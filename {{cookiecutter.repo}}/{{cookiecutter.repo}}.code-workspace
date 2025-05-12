@@ -141,6 +141,19 @@
                     "x_build_test"
                 ]
             },
+{%- endraw -%}
+{%- if cc.package_registry == 'gitlab' %}
+            {
+                "label": "[build] unpublish",
+                "detail": "Remove current version pip package from package registry",
+                "icon": {"id": "tools", "color": "terminal.ansiBlue"},
+                "command": [
+                    "source $X_TOOLS_PATH &&",
+                    "x_build_unpublish",
+                ]
+            },
+{%- endif %}
+{%- raw %}
             {
                 "label": "[docs] docs",
                 "detail": "Generate sphinx documentation",
