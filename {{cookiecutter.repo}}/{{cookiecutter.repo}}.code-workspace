@@ -1,6 +1,13 @@
 {%- set cc = cookiecutter -%}
 {%- set min_ver = cc.python_min_version | int %}
 {%- set max_ver = cc.python_max_version | int %}
+{%- if cc.package_registry == 'gitlab' %}
+{%- set pypi_url = 'https://gitlab.com/api/v4/projects/YOUR_GIT_PROJECT_ID/packages/pypi' %}
+{%- set pypi_test_url = 'https://gitlab.com/api/v4/projects/YOUR_GIT_PROJECT_ID/packages/pypi' %}
+{%- else %}
+{%- set pypi_url = 'pypi' %}
+{%- set pypi_test_url = 'https://test.pypi.org/simple' %}
+{%- endif %}
 {%- raw -%}
 {
     "folders": [{"path": "./"}],
@@ -127,6 +134,22 @@
                     "'${input:pypi_token}'",
                     "'${input:pypi_comment}'",
                     "'${input:pypi_url}'"
+                ],
+                "dependsOn": [
+                    "[test] prod"
+                ]
+            },
+            {
+                "label": "[build] publish-test",
+                "detail": "Publish pip package of repo to test PyPi",
+                "icon": {"id": "tools", "color": "terminal.ansiBlue"},
+                "command": [
+                    "source $X_TOOLS_PATH &&",
+                    "_x_build_publish",
+                    "'${input:pypi_user}'",
+                    "'${input:pypi_token}'",
+                    "'${input:pypi_comment}'",
+                    "'${input:pypi_test_url}'"
                 ],
                 "dependsOn": [
                     "[test] prod"
@@ -551,12 +574,20 @@
                 "description": "Comments:",
                 "type": "promptString"
             },
+{%- endraw %}
             {
                 "id": "pypi_url",
                 "description": "PyPI registry URL:",
                 "type": "promptString",
-                "default": "pypi"
+                "default": "{{ pypi_url }}"
             },
+            {
+                "id": "pypi_test_url",
+                "description": "Test PyPI registry URL:",
+                "type": "promptString",
+                "default": "{{ pypi_test_url }}"
+            },
+{%- raw %}
             {
                 "id": "commit_message",
                 "description": "Git commit message",

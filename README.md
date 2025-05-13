@@ -123,6 +123,7 @@ Its usage pattern is: `bin/repo COMMAND [-a --args]=ARGS [-h --help] [--dryrun]`
 | build-package              | Generate pip package of repo                                        | [build] package               |
 | build-prod                 | Build production version of repo for publishing                     | [build] prod                  |
 | build-publish              | Run production tests first then publish pip package of repo to PyPi | [build] publish               |
+| build-publish-test         | Run tests and then publish pip package of repo to test PyPi         | [build] publish-test          |
 | build-test                 | Build test version of repo for prod testing                         | [build] test                  |
 | build-unpublish            | Remove current version pip package from package registry            | [build] unpublish             |
 | docker-build               | Build development image                                             |                               |

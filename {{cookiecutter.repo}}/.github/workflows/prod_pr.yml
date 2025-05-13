@@ -58,7 +58,7 @@ jobs:
         run: $cli test-prod
 
     #   - name: Publish python package
-    #     run: $cli build-publish -a ${{ secrets.PYPI_ACCESS_TOKEN }}
+    #     run: $cli build-publish-test -a ${{ secrets.PYPI_ACCESS_TOKEN }}
 
     #   - name: Build prod image
     #     run: $cli docker-build-prod-no-cache

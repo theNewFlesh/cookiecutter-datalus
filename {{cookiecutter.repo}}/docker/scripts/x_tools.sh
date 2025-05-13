@@ -29,8 +29,10 @@ export PDM_DIR="$HOME/pdm"
 export GIT_PROJECT_ID="ENTER GITLAB PROJECT ID HERE"
 export GIT_PROJECT_URL="https://gitlab.com/api/v4/projects/$GIT_PROJECT_ID"
 export PYPI_URL="$GIT_PROJECT_URL/packages/pypi"
+export PYPI_TEST_URL="$PYPI_URL"
 {%- else %}
 export PYPI_URL="pypi"
+export PYPI_TEST_URL="https://test.pypi.org/simple"
 {%- endif %}
 export PYTHONPATH="$REPO_DIR/python:$HOME/.local/lib"
 export SCRIPT_DIR="$REPO_DIR/docker/scripts"
@@ -354,6 +356,13 @@ x_build_publish () {
     # args: token
     local version=`_x_get_version`;
     _x_build_publish __token__ $1 $version $PYPI_URL;
+}
+
+x_build_publish_test () {
+    # Run tests and then publish pip package of repo to test PyPi
+    # args: token
+    local version=`_x_get_version`;
+    _x_build_publish __token__ $1 $version $PYPI_TEST_URL;
 }
 
 x_build_test () {

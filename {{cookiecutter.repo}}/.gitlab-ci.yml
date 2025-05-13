@@ -138,7 +138,7 @@ prod-mr:
     - $cli docker-start
     - $cli test-prod
 {%- if cc.package_registry == 'gitlab' %}
-    - $cli build-publish -a "$PYPI_ACCESS_TOKEN"
+    - $cli build-publish-test -a "$PYPI_ACCESS_TOKEN"
     - $cli docker-build-prod-no-cache
     - $cli build-unpublish -a "$PYPI_ACCESS_TOKEN"
 {%- endif %}

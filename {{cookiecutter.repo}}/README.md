@@ -176,6 +176,7 @@ The following is a complete list of all available development commands:
 | build-package              | Generate pip package of repo                                        |
 | build-prod                 | Build production version of repo for publishing                     |
 | build-publish              | Run production tests first then publish pip package of repo to PyPi |
+| build-publish-test         | Run tests and then publish pip package of repo to test PyPi         |
 | build-test                 | Build test version of repo for prod testing                         |
 {%- if cc.package_registry == 'gitlab' %}
 | build-unpublish            | Remove current version pip package from package registry            |
