@@ -32,7 +32,7 @@ export PYPI_URL="$GIT_PROJECT_URL/packages/pypi"
 export PYPI_TEST_URL="$PYPI_URL"
 {%- else %}
 export PYPI_URL="pypi"
-export PYPI_TEST_URL="https://test.pypi.org/simple"
+export PYPI_TEST_URL="testpypi"
 {%- endif %}
 export PYTHONPATH="$REPO_DIR/python:$HOME/.local/lib"
 export SCRIPT_DIR="$REPO_DIR/docker/scripts"
