@@ -6,7 +6,7 @@
 {%- set pypi_test_url = 'https://gitlab.com/api/v4/projects/YOUR_GIT_PROJECT_ID/packages/pypi' %}
 {%- else %}
 {%- set pypi_url = 'pypi' %}
-{%- set pypi_test_url = 'https://test.pypi.org/simple' %}
+{%- set pypi_test_url = 'testpypi' %}
 {%- endif %}
 {%- raw -%}
 {
