@@ -228,7 +228,7 @@ APP
    │      └── master.yml                       # Master commit CI
    │      └── master_pr.yml                    # PRs into master CI
    │      └── prod.yml                         # Prod commit CI
-   │      └── prod_pr.yml                      # PRs into Prod CI
+   │      └── prod_pr.yml                      # PRs into prod CI
    ├── bin
    │   └── APP                                 # shell wrapper for CLI
 ```
