@@ -217,9 +217,10 @@ The following is a comprehensive diagram of the Datalus repository structure:
 ```yaml
 APP
    ├── README.md                               # README with install instructions
+   ├── LICENSE                                 # MIT License 
+   ├── APP.code-workspace                      # VSCode config (contains task commands)
    ├── .gitignore                              # git config
    ├── .gitattributes                          # git config
-   ├── APP.code-workspace                      # VSCode config (contains task commands)
    ├── .devcontainer.json                      # VSCode remote container config
    ├── .env                                    # needed by VSCode docker-compose
    ├── .gitlab-ci.yml                          # GitLab CI script
@@ -267,9 +268,12 @@ APP
    │      ├── command.py                       # prod CLI module (optional)
    │      ├── core
    │      │   ├── __init__.py
+   │      │   ├── tools.py                     # example module
+   │      │   ├── tools_test.py                # example test module
    │      │   └── ...                          # core logic modules
    │      └── server                           # (optional)
    │         ├── __init__.py
+   │         ├── server.py                     # example server
    │         └── ...                           # server logic modules
 ```
 ```yaml
@@ -282,7 +286,6 @@ APP
    │   ├── index.rst                           # sphinx toc tree
    │   ├── modules.rst                         # sphinx toc tree
    │   ├── server.rst                          # server.py docs (optional)
-   │   ├── intro.rst                           # README.md as rst
    │   └── style.css                           # used by sphinx for styling docs
 ```
 ```yaml
