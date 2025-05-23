@@ -789,7 +789,7 @@ def version_commit_command(args=[]):
         enter_repo(),
         version_variable(),
         'git add --all',
-        'git commit --message $VERSION',
+        'git commit --message "$VERSION [ci skip]"',
         'git tag --annotate $VERSION --message "version: $VERSION"',
         'git push --follow-tags origin HEAD:' + branch + ' --push-option ci.skip',
         exit_repo(),
