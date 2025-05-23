@@ -1,3 +1,4 @@
+{%- set cc = cookiecutter -%}
 {%- raw -%}
 name: Prod Pull Request
 run-name: "PR: ${{ github.head_ref }} --> prod | ${{ github.actor }}"
@@ -8,6 +9,9 @@ on:
     types: [ opened, synchronize ]
 
 env:
+{%- endraw %}
+  repo: "{{ cc.repo }}"
+{%- raw %}
   cli: "bin/${{ github.event.repository.name }}"
   GH_TOKEN: "${{ secrets.GH_TOKEN }}"
 

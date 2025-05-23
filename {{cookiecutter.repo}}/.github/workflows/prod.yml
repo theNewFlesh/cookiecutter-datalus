@@ -1,3 +1,4 @@
+{%- set cc = cookiecutter -%}
 {%- raw -%}
 name: Prod
 run-name: "${{ github.event.head_commit.message }} | ${{ github.actor }}"
@@ -7,6 +8,9 @@ on:
     branches: [ prod ]
 
 env:
+{%- endraw %}
+  repo: "{{ cc.repo }}"
+{%- raw %}
   cli: "bin/${{ github.event.repository.name }}"
   GH_TOKEN: "${{ secrets.GH_TOKEN }}"
 
