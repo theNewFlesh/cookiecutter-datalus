@@ -18,9 +18,14 @@ inputs:
     description: Docker registry
     required: true
 
+  image_name:
+    default: "{{ cc.docker_registry }}/{{ cc.git_organization }}/{{ cc.repo }}"
+    description: Image name
+    required: true
+
   image_tag:
-    default: "{{ cc.docker_registry }}/{{ cc.git_organization }}/{{ cc.repo }}:dev-ci"
-    description: CI image tag
+    default: "dev-ci"
+    description: Image tag
     required: true
 
 {% raw -%}
@@ -39,7 +44,7 @@ runs:
           cache-to: type=gha,mode=max
           outputs: type=docker
           push: true
-          tags: "${{ inputs.image_tag }}"
+        tags: "${{ inputs.image_name }}:${{ inputs.image_tag }}"
           labels: |
             repository=${{ inputs.docker_repo }}
             docker-registry=${{ inputs.docker_registry }}
@@ -52,5 +57,8 @@ runs:
 
       - name: Tag image
         shell: bash
-        run: "docker tag ${{ inputs.image_tag }} ${{ inputs.repo }}:dev"
+      run: |
+        docker tag \
+          ${{ inputs.image_name }}:${{ inputs.image_tag }} \
+          ${{ inputs.repo }}:dev
 {% endraw %}
