@@ -4,6 +4,8 @@
 #  - GH_TOKEN
 #  - DOCKER_REGISTRY_USER
 #  - DOCKER_REGISTRY_PASSWORD
+#  - PYPI_ACCESS_TOKEN
+#  - PYPI_TEST_ACCESS_TOKEN
 
 name: Setup
 description: Setup for all CI workflows
