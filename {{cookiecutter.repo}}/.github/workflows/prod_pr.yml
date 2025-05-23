@@ -22,6 +22,12 @@ jobs:
       contents: write
 
     steps:
+      - name: Check merge branch
+        if: github.head_ref != 'master'
+        run: |
+          echo "ERROR: Only master may be merged into prod" && \
+          exit 1
+
       - name: Clone repo
         uses: actions/checkout@v4
         with:
