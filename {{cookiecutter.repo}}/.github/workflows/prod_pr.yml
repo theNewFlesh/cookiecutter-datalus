@@ -36,14 +36,10 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
 
-      - name: Pull image
-        run: $cli docker-pull-dev || echo "docker image not found"
-
-      - name: Build image
-        run: $cli docker-build-from-cache
-
-      - name: Tag image
-        run: docker tag $repo:dev-latest $repo:dev
+      - name: Build dev image
+        uses: ./.github/actions/build
+        with:
+          image_tag: "dev-latest"
 
       - name: Start container
         run: $cli docker-start
