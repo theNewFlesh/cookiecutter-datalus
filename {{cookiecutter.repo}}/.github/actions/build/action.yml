@@ -1,0 +1,56 @@
+{%- set cc = cookiecutter -%}
+name: Build
+description: Build dev image
+
+inputs:
+  repo:
+    default: "{{ cc.repo }}"
+    description: Repository name
+    required: true
+
+  docker_repo:
+    default: "{{ cc.git_organization }}/{{ cc.repo }}"
+    description: Docker repository name
+    required: true
+
+  docker_registry:
+    default: "{{ cc.docker_registry }}"
+    description: Docker registry
+    required: true
+
+  image_tag:
+    default: "{{ cc.docker_registry }}/{{ cc.git_organization }}/{{ cc.repo }}:dev-ci"
+    description: CI image tag
+    required: true
+
+{% raw -%}
+runs:
+  using: composite
+  steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build image
+        uses: docker/build-push-action@v6
+        with:
+          context: docker
+          file: docker/dev.dockerfile
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          outputs: type=docker
+          push: true
+          tags: "${{ inputs.image_tag }}"
+          labels: |
+            repository=${{ inputs.docker_repo }}
+            docker-registry=${{ inputs.docker_registry }}
+{%- endraw %}
+{%- if cc.include_secret_env == 'yes' %}
+          secret-files: |
+            secret-env=docker/config/secret-env
+{%- endif %}
+{%- raw %}
+
+      - name: Tag image
+        shell: bash
+        run: "docker tag ${{ inputs.image_tag }} ${{ inputs.repo }}:dev"
+{% endraw %}

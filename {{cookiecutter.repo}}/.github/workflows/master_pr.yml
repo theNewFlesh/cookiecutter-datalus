@@ -26,11 +26,8 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
 
-      - name: Pull image
-        run: $cli docker-pull-dev || echo "docker image not found"
-
-      - name: Build image
-        run: $cli docker-build-from-cache
+      - name: Build dev image
+        uses: ./.github/actions/build
 
       - name: Start container
         run: $cli docker-start
