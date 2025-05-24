@@ -12,11 +12,6 @@ description: Setup for all CI workflows
 {%- endraw %}
 
 inputs:
-  repo:
-    default: "{{ cc.repo }}"
-    description: Repository name
-    required: true
-
   org:
     default: "{{ cc.git_organization }}"
     description: GitHub organization
@@ -32,12 +27,17 @@ inputs:
     description: Docker registry
     required: true
 
+  docker_registry_password:
+    description: Docker registry password
+    required: true
+
   docker_registry_user:
     description: Docker registry user
     required: true
 
-  docker_registry_password:
-    description: Docker registry password
+  repo:
+    default: "{{ cc.repo }}"
+    description: Repository name
     required: true
 
 {% raw -%}
