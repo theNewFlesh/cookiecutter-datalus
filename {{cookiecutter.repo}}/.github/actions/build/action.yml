@@ -3,19 +3,14 @@ name: Build
 description: Build dev image
 
 inputs:
-  repo:
-    default: "{{ cc.repo }}"
-    description: Repository name
+  docker_registry:
+    default: "{{ cc.docker_registry }}"
+    description: Docker registry
     required: true
 
   docker_repo:
     default: "{{ cc.git_organization }}/{{ cc.repo }}"
     description: Docker repository name
-    required: true
-
-  docker_registry:
-    default: "{{ cc.docker_registry }}"
-    description: Docker registry
     required: true
 
   image_name:
@@ -26,6 +21,11 @@ inputs:
   image_tag:
     default: "dev-ci"
     description: Image tag
+    required: true
+
+  repo:
+    default: "{{ cc.repo }}"
+    description: Repository name
     required: true
 
 {% raw -%}
