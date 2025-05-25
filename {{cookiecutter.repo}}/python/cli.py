@@ -952,6 +952,7 @@ def main():
         'test-lint': x_tools_command('x_test_lint', args),
         'test-prod': x_tools_command('x_test_prod', args),
         'version': x_tools_command('x_version', args),
+        'version-bump': x_tools_command('x_version_bump', args),
         'version-bump-major': x_tools_command('x_version_bump_major', args),
         'version-bump-minor': x_tools_command('x_version_bump_minor', args),
         'version-bump-patch': x_tools_command('x_version_bump_patch', args),
