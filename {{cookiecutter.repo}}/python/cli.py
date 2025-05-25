@@ -198,6 +198,7 @@ def get_info():
     test-lint                  - Run linting and type checking
     test-prod                  - Run tests across all support python versions
     version                    - Full resolution of repo: dependencies, linting, tests, docs, etc
+    version-bump               - Bump repo's patch version up to x.x.20, then bump minor version
     version-bump-major         - Bump pyproject major version
     version-bump-minor         - Bump pyproject minor version
     version-bump-patch         - Bump pyproject patch version
@@ -951,6 +952,7 @@ def main():
         'test-lint': x_tools_command('x_test_lint', args),
         'test-prod': x_tools_command('x_test_prod', args),
         'version': x_tools_command('x_version', args),
+        'version-bump': x_tools_command('x_version_bump', args),
         'version-bump-major': x_tools_command('x_version_bump_major', args),
         'version-bump-minor': x_tools_command('x_version_bump_minor', args),
         'version-bump-patch': x_tools_command('x_version_bump_patch', args),
