@@ -198,7 +198,7 @@ def get_info():
     test-lint                  - Run linting and type checking
     test-prod                  - Run tests across all support python versions
     version                    - Full resolution of repo: dependencies, linting, tests, docs, etc
-    version-bump               - Bump repo's patch version up to x.x.20, then bump minor version
+    version-bump               - Bump repo patch version up to x.x.20, then bump minor version
     version-bump-major         - Bump pyproject major version
     version-bump-minor         - Bump pyproject minor version
     version-bump-patch         - Bump pyproject patch version
