@@ -862,6 +862,18 @@ x_version_bump_patch () {
     _x_version_bump patch;
 }
 
+x_version_bump () {
+    # Bump repo's patch version up to x.x.20, then bump minor version
+    local minor=`python3 -c \
+        "v = '$(_x_get_version)'.split('.')[-1]; print(int(v) >= 20)"
+    `;
+    if [ "$minor" = "True" ]; then
+        x_version_bump_minor;
+    else
+        x_version_bump_patch;
+    fi;
+}
+
 x_version_commit () {
     # Tag with version and commit changes to master with given message
     # args: message

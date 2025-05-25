@@ -177,6 +177,7 @@ Its usage pattern is: `bin/repo COMMAND [-a --args]=ARGS [-h --help] [--dryrun]`
 | test-lint                  | Run linting and type checking                                       | [test] lint                   |
 | test-prod                  | Run tests across all support python versions                        | [test] prod                   |
 | version                    | Full resolution of repo: dependencies, linting, tests, docs, etc    | [version] version             |
+| version-bump               | Bump repo's patch version up to x.x.20, then bump minor version     | [version] bump                |
 | version-bump-major         | Bump pyproject major version                                        | [version] bump-major          |
 | version-bump-minor         | Bump pyproject minor version                                        | [version] bump-minor          |
 | version-bump-patch         | Bump pyproject patch version                                        | [version] bump-patch          |

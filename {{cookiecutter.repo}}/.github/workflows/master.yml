@@ -55,7 +55,7 @@ jobs:
         run: $cli docker-start
 
       - name: Version bump
-        run: $cli version-bump-patch
+        run: $cli version-bump
 
       - name: Version
         run: $cli version
