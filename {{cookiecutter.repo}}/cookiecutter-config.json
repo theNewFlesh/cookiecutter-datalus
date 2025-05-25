@@ -9,6 +9,7 @@
     "include_openexr": "{{ cc.include_openexr }}",
     "include_prod_cli": "{{ cc.include_prod_cli }}",
     "include_prod_envs": "{{ cc.include_prod_envs }}",
+    "include_pypi_badges": "{{ cc.include_pypi_badges }}",
     "include_secret_env": "{{ cc.include_secret_env }}",
     "include_vscode_server": "{{ cc.include_vscode_server }}",
     "port_prefix": {{ cc.port_prefix }},
