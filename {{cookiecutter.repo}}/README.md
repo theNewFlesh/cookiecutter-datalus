@@ -13,8 +13,8 @@
 [![](https://img.shields.io/pypi/v/{{cc.repo}}?style=for-the-badge&label=PyPI&color=5F95DE&logo=pypi&logoColor=5F95DE)](https://pypi.org/project/{{cc.repo}}/)
 [![](https://img.shields.io/pypi/dm/{{cc.repo}}?style=for-the-badge&label=Downloads&color=5F95DE)](https://pepy.tech/project/{{cc.repo}})
 {%- elif cc.git_host == 'github' %}
-![](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2F{{cc.git_organization}}%2F{{cc.repo}}%2Frefs%2Fheads%2Fmaster%2Fdocker%2Fscripts%2Fx_tools.sh&search=.*MIN_PY.*_VER.*%3D.(.*).%5Cn.*MAX_PY.*_VER.*%3D.(.*).&replace=%241%20%7C%20%242&style=for-the-badge&logo=python&logoColor=5F95DE&label=python&color=A0D17B)
-![](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2F{{cc.git_organization}}%2F{{cc.repo}}%2Frefs%2Fheads%2Fmaster%2Fdocker%2Fconfig%2Fpyproject.toml&query=project.version&style=for-the-badge&logoColor=5F95DE&label=version&color=5F95DE)
+![](https://img.shields.io/badge/dynamic/regex?url=https://raw.githubusercontent.com/{{cc.git_organization}}/{{cc.repo}}/refs/heads/master/docker/scripts/x_tools.sh&search=.*MIN_PY.*_VER.*%3D.(.*).%5Cn.*MAX_PY.*_VER.*%3D.(.*).&replace=%241%20%7C%20%242&style=for-the-badge&logo=python&logoColor=5F95DE&label=python&color=A0D17B)
+![](https://img.shields.io/badge/dynamic/toml?url=https://raw.githubusercontent.com/{{cc.git_organization}}/{{cc.repo}}/refs/heads/master/docker/config/pyproject.toml&query=project.version&style=for-the-badge&logoColor=5F95DE&label=version&color=5F95DE)
 {%- endif %}
 
 <!-- <img id="logo" src="sphinx/images/logo.png" style="max-width: 717px"> -->
