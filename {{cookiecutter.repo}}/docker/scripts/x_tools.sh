@@ -878,7 +878,7 @@ x_version_commit () {
     # Tag with version and commit changes to master with given message
     # args: message
     local version=`_x_get_version`;
-    git commit --message "$version [ci skip]";
+    git commit --message "$version";
     git tag --annotate $version --message "$1";
     git push --follow-tags origin HEAD:master --push-option ci.skip;
 }
