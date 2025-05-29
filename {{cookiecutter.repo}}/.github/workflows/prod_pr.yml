@@ -31,6 +31,12 @@ jobs:
 
       - name: Setup
         uses: ./.github/actions/setup
+        with:
+{%- endraw %}
+          docker_registry: {{ cc.docker_registry }}
+{%- raw %}
+          docker_registry_user: ${{ secrets.DOCKER_REGISTRY_USER }}
+          docker_registry_password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
 
       - name: Build dev image
         uses: ./.github/actions/build
