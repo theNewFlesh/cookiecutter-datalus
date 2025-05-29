@@ -37,8 +37,6 @@ jobs:
 
       - name: Build dev image
         uses: ./.github/actions/build
-        with:
-          image_tag: "dev-latest"
 
       - name: Start container
         run: $cli docker-start
