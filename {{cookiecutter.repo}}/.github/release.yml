@@ -1,9 +1,10 @@
+{%- set cc = cookiecutter -%}
 changelog:
   exclude:
     labels:
       - ignore
     authors:
-      - ci@vizcom.co
+      - ci@{{ cc.organization_url }}
   categories:
     - title: Breaking Changes
       labels:
