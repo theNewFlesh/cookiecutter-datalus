@@ -841,6 +841,9 @@ _x_version_bump () {
     _x_library_pdm_to_repo_dev;
 {%- if cc.include_mkdocs == 'yes' %}
     local new_version=`_x_get_version`;
+    sed --in-place -E \
+        "s/verbdg-.+-x/verbdg-$new_version-x/" \
+        $REPO_DIR/README.md;
     _x_version_file_update $old_version $new_version;
 {%- endif %}
 {%- raw %}
@@ -879,7 +882,7 @@ x_version_commit () {
     # args: message
     local version=`_x_get_version`;
     git commit --message "$version";
-    git tag --annotate $version --message "$1";
+    git tag --annotate $version --message "$1 <no ci>";
     git push --follow-tags origin HEAD:master --push-option ci.skip;
 }
 
