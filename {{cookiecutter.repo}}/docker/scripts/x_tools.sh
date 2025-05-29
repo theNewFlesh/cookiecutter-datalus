@@ -727,7 +727,7 @@ x_test_dev () {
 }
 
 x_test_fast () {
-    # Test all code excepts tests marked with SKIP_SLOWS_TESTS decorator
+    # Test all code excepts tests marked with SKIP_SLOW_TESTS decorator
     x_env_activate_dev;
     echo "${CYAN2}FAST TESTING DEV${CLEAR}\n";
     cd $REPO_DIR;

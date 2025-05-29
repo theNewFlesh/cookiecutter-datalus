@@ -415,7 +415,7 @@
             },
             {
                 "label": "[test] fast",
-                "detail": "Test all code excepts tests marked with SKIP_SLOWS_TESTS decorator",
+                "detail": "Test all code excepts tests marked with SKIP_SLOW_TESTS decorator",
                 "icon": {"id": "check", "color": "terminal.ansiGreen"},
                 "command": [
                     "source $X_TOOLS_PATH &&",

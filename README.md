@@ -172,7 +172,7 @@ Its usage pattern is: `bin/repo COMMAND [-a --args]=ARGS [-h --help] [--dryrun]`
 | state                      | State of repository and Docker container                            |                               |
 | test-coverage              | Generate test coverage report                                       | [test] coverage               |
 | test-dev                   | Run all tests                                                       | [test] dev                    |
-| test-fast                  | Test all code excepts tests marked with SKIP_SLOWS_TESTS decorator  | [test] fast                   |
+| test-fast                  | Test all code excepts tests marked with SKIP_SLOW_TESTS decorator   | [test] fast                   |
 | test-format                | Format all python files                                             | [test] format                 |
 | test-lint                  | Run linting and type checking                                       | [test] lint                   |
 | test-prod                  | Run tests across all support python versions                        | [test] prod                   |
@@ -218,7 +218,7 @@ The following is a comprehensive diagram of the Datalus repository structure:
 ```yaml
 APP
    ├── README.md                               # README with install instructions
-   ├── LICENSE                                 # MIT License 
+   ├── LICENSE                                 # MIT License
    ├── APP.code-workspace                      # VSCode config (contains task commands)
    ├── .gitignore                              # git config
    ├── .gitattributes                          # git config
