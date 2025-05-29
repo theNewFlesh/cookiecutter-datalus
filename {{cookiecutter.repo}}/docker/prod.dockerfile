@@ -27,7 +27,7 @@ WORKDIR /home/ubuntu
 
 # update ubuntu and install basic dependencies
 RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
-    apt update && \
+    apt update --fix-missing && \
     apt install -y \
         curl \
         software-properties-common && \
