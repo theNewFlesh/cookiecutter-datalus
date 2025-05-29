@@ -28,6 +28,9 @@
                 "esbenp.prettier-vscode",
                 "euskadi31.json-pretty-printer",
                 "fabiospampinato.vscode-diff",
+{%- if cc.git_host == 'github' %}
+                "github.vscode-github-actions",
+{%- endif %}
                 "gruntfuggly.todo-tree",
                 "hbenl.vscode-test-explorer",
                 "hediet.vscode-drawio",
