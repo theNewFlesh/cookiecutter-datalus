@@ -24,6 +24,8 @@ jobs:
 
       - name: Setup
         uses: ./.github/actions/setup
+        with:
+          pypi_repo: prod
 
       - name: Build dev image
         uses: ./.github/actions/build
@@ -47,4 +49,26 @@ jobs:
 
       - name: Push prod-latest image
         run: $cli docker-push-prod-latest
+
+      - name: Get version
+        id: version
+        shell: bash
+        run: |
+          export VERSION=` \
+            cat docker/config/pyproject.toml \
+            | grep -E '^version *=' \
+            | awk '{print $3}' \
+            | sed 's/\"//g' \
+          `;
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Generate release
+        uses: softprops/action-gh-release@v2
+        with:
+          make_latest: true
+          tag_name: "${{ steps.version.outputs.VERSION }}"
+          generate_release_notes: true
+          # body: |
+          #   [PyPI Package](${{ env.pypi_url }})
+          #   [Docker Image](${{ env.docker_url }})
 {% endraw %}
