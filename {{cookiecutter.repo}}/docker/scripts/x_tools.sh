@@ -808,17 +808,20 @@ _x_get_version () {
         | awk '{print $3}' \
         | sed 's/\"//g';
 }
-{% endraw -%}
 
-{%- if cc.include_mkdocs == 'yes' %}
 _x_version_file_update () {
     # update non-pyproject files with new pyproject version
     # args: old_version, new_version
+{%- endraw -%}
+{%- if cc.include_pypi_badges == 'no' %}
+    sed --in-place -E "s/verbdg-.+-x/verbdg-$2-x/" $REPO_DIR/README.md;
+{%- endif %}
+{%- if cc.include_mkdocs == 'yes' %}
     sed --in-place -E "s/$1/$2/g" $MKDOCS_DIR/mkdocs.yml;
-}
 {% endif %}
-
 {%- raw %}
+}
+
 x_version () {
     # Full resolution of repo: dependencies, linting, tests, docs, etc
     x_library_install_dev;
@@ -831,22 +834,14 @@ _x_version_bump () {
     # args: type
     x_env_activate_dev;
     local title=`echo $1 | tr '[a-z]' '[A-Z]'`;
-    echo "${CYAN2}BUMPING $title VERSION${CLEAR}\n";
-{%- endraw -%}
-{%- if cc.include_mkdocs == 'yes' %}
     local old_version=`_x_get_version`;
-{%- endif %}
+
+    echo "${CYAN2}BUMPING $title VERSION${CLEAR}\n";
     cd $PDM_DIR
     pdm bump $1;
     _x_library_pdm_to_repo_dev;
-{%- if cc.include_mkdocs == 'yes' %}
     local new_version=`_x_get_version`;
-    sed --in-place -E \
-        "s/verbdg-.+-x/verbdg-$new_version-x/" \
-        $REPO_DIR/README.md;
     _x_version_file_update $old_version $new_version;
-{%- endif %}
-{%- raw %}
 }
 
 x_version_bump_major () {
