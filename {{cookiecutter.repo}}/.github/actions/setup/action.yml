@@ -12,11 +12,6 @@ description: Setup for all CI workflows
 {%- endraw %}
 
 inputs:
-  org:
-    default: "{{ cc.git_organization }}"
-    description: GitHub organization
-    required: true
-
   org_url:
     default: "{{ cc.organization_url }}"
     description: Company URL
