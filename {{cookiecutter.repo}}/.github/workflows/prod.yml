@@ -9,6 +9,8 @@ on:
 env:
   cli: "bin/${{ github.event.repository.name }}"
   GH_TOKEN: "${{ secrets.GH_TOKEN }}"
+  # pypi_url: "YOUR PYPI URL"
+  # docker_url: "YOUR DOCKER URL"
 
 jobs:
   prod:
