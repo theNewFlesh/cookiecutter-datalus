@@ -27,7 +27,7 @@ WORKDIR /home/ubuntu
 
 # update ubuntu and install basic dependencies
 RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
-    apt update && \
+    apt update --fix-missing && \
     apt install -y \
         curl \
         software-properties-common && \
@@ -81,27 +81,51 @@ RUN echo "\n${CYAN}INSTALL OPENEXR${CLEAR}"; \
 RUN echo "\n${CYAN}SETUP PYTHON3.{{ max_ver }}${CLEAR}"; \
     add-apt-repository -y ppa:deadsnakes/ppa && \
     apt update && \
-    apt install --fix-missing -y python3.{{ max_ver }}-dev && \
-    rm -rf /var/lib/apt/lists/* && \
+    apt install --fix-missing -y \
+        python3.{{ max_ver }}-dev \
+        python3.{{ max_ver }}-venv && \
+    rm -rf /var/lib/apt/lists/*
+
+# install pip
+RUN echo "\n${CYAN}INSTALL PIP${CLEAR}"; \
     curl -fsSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
     python3.{{ max_ver }} get-pip.py && \
-    rm -rf /home/ubuntu/get-pip.py
+    pip3.{{ max_ver }} install --upgrade pip && \
+    rm -rf get-pip.py
 
-# install {{cc.repo}}
+# install pdm
 USER ubuntu
+ENV PATH="$PATH:/home/ubuntu/.local/bin"
+RUN echo "\n${CYAN}INSTALL PDM${CLEAR}"; \
+    curl -sSL \
+    https://raw.githubusercontent.com/pdm-project/pdm/main/install-pdm.py \
+    | python3.{{ max_ver }} - && \
+    pip3.{{ max_ver }} install --upgrade --user pdm && \
+    pdm self update --pip-args='--user'
+
+# setup pdm environment
+RUN echo "\n${CYAN}SETUP PDM${CLEAR}"; \
+    mkdir /home/ubuntu/pdm && \
+    cd /home/ubuntu/pdm && \
+    pdm init --python 3.{{ max_ver }} --non-interactive && \
+    rm -rf src tests README.md __pycache__ .gitignore && \
+    pdm venv create -n prod-3.{{ max_ver }};
+
+# install {{ cc.repo }}
+USER ubuntu
+COPY --chown=ubuntu:ubuntu config/prod.toml /home/ubuntu/pdm/pyproject.toml
 ARG VERSION
 {%- if cc.include_secret_env == 'yes' %}
 ARG URL="YOUR PRIVATE PYPI URL"
 RUN --mount=type=secret,id=secret-env,mode=0444 \
     . /run/secrets/secret-env && \
     echo "\n${CYAN}INSTALL {{ cc.repo | upper }}${CLEAR}"; \
-    pip3.{{ max_ver }} install \
-        --user \
-        --index-url "https://__token__:$PYPI_ACCESS_TOKEN@$URL" \
-        {{cc.repo}}==$VERSION
+    cd /home/ubuntu/pdm && \
+    pdm add -v {{ cc.repo }}==$VERSION;
 {%- else %}
 RUN echo "\n${CYAN}INSTALL {{ cc.repo | upper }}${CLEAR}"; \
-    pip3.{{ max_ver }} install --user {{cc.repo}}==$VERSION
+    cd /home/ubuntu/pdm && \
+    pdm add -v "{{ cc.repo }}==$VERSION";
 {%- endif %}
 
-ENV PATH="$PATH:/home/ubuntu/.local/bin"
+ENV PATH="/home/ubuntu/pdm/.venv/bin:$PATH"

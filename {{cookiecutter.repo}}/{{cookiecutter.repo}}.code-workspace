@@ -47,6 +47,13 @@
             "**/docs": true,
             "**/public": true,
         },
+{%- endraw %}
+{%- if cc.git_host == 'github' %}
+        "files.associations": {
+            "*.yml": "github-actions-workflow"
+        },
+{%- endif %}
+{%- raw %}
         "files.exclude": {
             "**/__pypackages__": true,
             "**/.classpath": true,
