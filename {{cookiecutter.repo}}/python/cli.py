@@ -790,9 +790,17 @@ def version_commit_command(args=[]):
         enter_repo(),
         version_variable(),
         'git add --all',
+{%- endraw %}
+{%- if cc.git_host == 'github' %}
         'git commit --message "$VERSION <no ci>"',
         'git tag --annotate $VERSION --message "version: $VERSION"',
         'git push --follow-tags origin HEAD:' + branch,
+{%- else %}
+        'git commit --message "$VERSION"',
+        'git tag --annotate $VERSION --message "version: $VERSION"',
+        'git push --follow-tags origin HEAD:' + branch + ' --push-option ci.skip',
+{%- endif %}
+{%- raw %}
         exit_repo(),
     ]
     return resolve(cmds)
