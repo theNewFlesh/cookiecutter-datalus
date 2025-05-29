@@ -13,6 +13,7 @@ env:
 jobs:
   master:
     runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '<no ci>') == false
     permissions:
       contents: write
 
@@ -24,6 +25,8 @@ jobs:
 
       - name: Setup
         uses: ./.github/actions/setup
+        with:
+          pypi_repo: prod
 
       - name: Build dev image
         uses: ./.github/actions/build
