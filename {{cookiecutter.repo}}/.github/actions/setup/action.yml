@@ -12,11 +12,6 @@ description: Setup for all CI workflows
 {%- endraw %}
 
 inputs:
-  org_url:
-    default: "{{ cc.organization_url }}"
-    description: Company URL
-    required: true
-
   docker_registry:
     default: "{{ cc.docker_registry }}"
     description: Docker registry
@@ -30,9 +25,9 @@ inputs:
     description: Docker registry user
     required: true
 
-  repo:
-    default: "{{ cc.repo }}"
-    description: Repository name
+  org_url:
+    default: "{{ cc.organization_url }}"
+    description: Company URL
     required: true
 
 {% raw -%}
