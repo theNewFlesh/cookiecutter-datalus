@@ -190,13 +190,13 @@ def patch_cruft_json(target):
         '\\.gitkeep$',
         'docker/config/.*\\.lock$',
         'docker/config/build\\.yaml',
+        'docker/config/secret-env',
         'docs/.*',
         'LICENSE',
         'mkdocs/md/(?!index\\.md|style\\.css)',
         'public/.*',
         'python/{}/.*(?!command\\.py$)'.format(repo),
         'resources/.*',
-        "secret-env",
         'sphinx/.*rst$',
     ]
     with open(target, 'w') as f:
