@@ -50,4 +50,5 @@ jobs:
 
       - name: Run tests
         run: $cli test-coverage
+
 {% endraw %}

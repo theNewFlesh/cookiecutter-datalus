@@ -37,4 +37,5 @@ runs:
       - name: Tag image
         shell: bash
         run: docker tag localhost:5000/${{ inputs.repo }}:dev-ci ${{ inputs.repo }}:dev
+
 {% endraw %}

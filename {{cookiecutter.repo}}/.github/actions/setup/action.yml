@@ -58,4 +58,4 @@ runs:
         run: |
           echo "export PYPI_ACCESS_TOKEN=$PYPI_ACCESS_TOKEN" \
             > docker/config/secret-env
-{%- endif %}
+{% endif %}
