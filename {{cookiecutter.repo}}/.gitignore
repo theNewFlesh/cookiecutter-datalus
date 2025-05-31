@@ -6,11 +6,8 @@ ansible/password.txt
 # c
 *.so
 
-{%- if cc.include_secret_env == 'yes' %}
-
 # docker
 docker/config/secret-env
-{%- endif %}
 
 # flask
 flask_monitoringdashboard*
