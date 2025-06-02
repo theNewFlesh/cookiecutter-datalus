@@ -606,7 +606,7 @@
 {%- raw %}
             {
                 "id": "commit_message",
-                "description": "Git commit message",
+                "description": "Git commit message:",
                 "type": "promptString",
                 "default": ""
             }
