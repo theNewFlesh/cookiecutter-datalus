@@ -324,7 +324,7 @@ x_build_edit_prod_dockerfile () {
         's/ARG VERSION/COPY \--chown=ubuntu:ubuntu dist\/pkg.tar.gz \/home\/ubuntu\/pkg.tar.gz/' \
         $REPO_DIR/docker/prod.dockerfile;
     sed --in-place -E \
-        's/--user.*==\$VERSION/--user \/home\/ubuntu\/pkg.tar.gz/' \
+        's/pdm add -v .*==\$VERSION/pdm add -v \/home\/ubuntu\/pkg.tar.gz/' \
         $REPO_DIR/docker/prod.dockerfile;
 }
 
