@@ -226,11 +226,17 @@ APP
    ├── .env                                    # needed by VSCode docker-compose
    ├── .gitlab-ci.yml                          # GitLab CI script
    ├── .github                                 # GitHub CI
-   │   └── workflows
-   │      └── master.yml                       # Master commit CI
-   │      └── master_pr.yml                    # PRs into master CI
-   │      └── prod.yml                         # Prod commit CI
-   │      └── prod_pr.yml                      # PRs into prod CI
+   │   ├── workflows
+   │   │  └── master.yml                       # Master commit CI
+   │   │  └── master_pr.yml                    # PRs into master CI
+   │   │  └── prod.yml                         # Prod commit CI
+   │   │  └── prod_pr.yml                      # PRs into prod CI
+   │   └── actions
+   │      ├── build
+   │      │  └── action.yml                    # Build dev container
+   │      └── setup
+   │         └── action.yml                    # Setup build environment
+   │
    ├── bin
    │   └── APP                                 # shell wrapper for CLI
 ```
