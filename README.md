@@ -226,6 +226,7 @@ APP
    ├── .env                                    # needed by VSCode docker-compose
    ├── .gitlab-ci.yml                          # GitLab CI script
    ├── .github                                 # GitHub CI
+   │   ├── release.yml                         # GitHub release config
    │   ├── workflows
    │   │  └── master.yml                       # Master commit CI
    │   │  └── master_pr.yml                    # PRs into master CI
