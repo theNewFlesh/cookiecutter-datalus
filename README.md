@@ -236,7 +236,6 @@ APP
    │      │  └── action.yml                    # Build dev container
    │      └── setup
    │         └── action.yml                    # Setup build environment
-   │
    ├── bin
    │   └── APP                                 # shell wrapper for CLI
 ```
