@@ -327,7 +327,7 @@ RUN echo "\n${CYAN}REMOVE DIRECTORIES${CLEAR}"; \
     rm -rf /home/ubuntu/config /home/ubuntu/scripts
 
 ENV REPO='{{cc.repo}}'
-ENV PYTHONPATH="$PYTHONPATH:/home/ubuntu/$REPO/python:/home/ubuntu/.local/lib"
+ENV PYTHONPATH="/home/ubuntu/$REPO/python:/home/ubuntu/.local/lib"
 ENV PYTHONPYCACHEPREFIX="/home/ubuntu/.python_cache"
 ENV HOME="/home/ubuntu"
 ENV JUPYTER_RUNTIME_DIR="/tmp/jupyter_runtime"
