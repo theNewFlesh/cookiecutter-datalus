@@ -363,3 +363,8 @@ Its usage pattern is: `bin/cli.py COMMAND --flag-1 arg --flag-2 arg [-h --help]`
 | `patch-cruft-json`          | Patch .cruft.json file with skip patterns                  | `--target` cruft.json file               |                                      |
 | `cruft-update-repo`         | Apply silent cruft update to target repo                   | `--target` cruft.json file               | `--branch` datalus branch or commmit |
 | `cruft-check-files`         | Check for extra and missing template files                 | `--source` repository                    | `--branch` datalus branch or commmit |
+
+---
+
+# Continuos Integration Diagram
+<p><img src="resources/ci.svg"></p>
