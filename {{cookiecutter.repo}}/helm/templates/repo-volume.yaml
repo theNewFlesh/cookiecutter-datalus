@@ -1,5 +1,5 @@
 {%- raw -%}
-{{- with (include "overlay" . | fromYaml) -}}
+{{- with .Values -}}
 {{ if .enable.repo_volume }}
 kind: PersistentVolume
 apiVersion: v1

@@ -1,5 +1,5 @@
 {%- raw -%}
-{{- with (include "overlay" . | fromYaml) -}}
+{{- with .Values -}}
 {{ if .enable.namespace }}
 kind: Namespace
 apiVersion: v1
