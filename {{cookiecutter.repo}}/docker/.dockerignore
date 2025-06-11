@@ -1,9 +1,13 @@
 {%- set cc = cookiecutter -%}
-*
-!../docker
-!config
-!dist
-!scripts
+**
+!*.dockerfile
+!config/*-env
+!config/*.lock
+!config/*.toml
+!config/**
+!config/henanigans.zsh-theme
+!config/zshrc
+!scripts/**
 {%- if cc.include_secret_env == 'yes' %}
 config/secret-env
 {%- endif %}
