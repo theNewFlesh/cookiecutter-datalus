@@ -12,14 +12,13 @@ spec:
   source:
 {%- endraw -%}
 {%- if cc.git_host == 'github' %}
-repoURL: https://github.com/{{cc.git_user}}/{{cc.repo}}.git
+    repoURL: https://github.com/{{cc.git_user}}/{{cc.repo}}.git
 {% elif cc.git_host == 'gitlab' %}
-repoURL: https://gitlab.com/{{cc.git_user}}/{{cc.repo}}.git
+    repoURL: https://gitlab.com/{{cc.git_user}}/{{cc.repo}}.git
 {% elif cc.git_host == 'bitbucket' %}
-repoURL: https://bitbucket.org/{{cc.git_user}}/{{cc.repo}}.git
-{% endif -%}
-{%- raw -%}
-    targetRevision: master
+    repoURL: https://bitbucket.org/{{cc.git_user}}/{{cc.repo}}.git
+{%- endif -%}
+{%- raw %}    targetRevision: master
     path: helm
     helm:
       values: |
