@@ -1,102 +1,63 @@
 {%- set cc = cookiecutter -%}
-# CONTEXT-----------------------------------------------------------------------
-overlay: rancher_desktop
+enable:
+  namespace: false
+  argocd_application: false
+  env_configmap: true
+  env_secret: false
+  image_pull_secret: false
+  repo_volume: false
+  desktop_volume: false
+  nfs_volume: false
+  nginx_ingress: false
+  traefik_ingress: false
+  readiness_probe: true
+  liveness_probe: true
 
-# BASE--------------------------------------------------------------------------
-base:
-  enable:
-    namespace: false
-    argocd_application: false
-    env_configmap: true
-    env_secret: false
-    image_pull_secret: false
-    repo_volume: false
-    desktop_volume: false
-    nfs_volume: false
-    nginx_ingress: false
-    traefik_ingress: false
-    readiness_probe: true
-    liveness_probe: true
+namespace:
+  name: {{ cc.repo }}
 
-  namespace:
-    name: {{ cc.repo }}
+argocd_application:
+  name: {{ cc.repo }}
+  source_namespace: argocd
+  target_namespace: {{ cc.repo }}
 
-  argocd_application:
-    name: {{ cc.repo }}
-    source_namespace: argocd
-    target_namespace: {{ cc.repo }}
+env_configmap:
+  FLASK_APP: server.app:get_app
+  FLASK_DEBUG:
+  FLASK_RUN_PORT: 8080
+  FLASK_RUN_HOST: 0.0.0.0
 
-  env_configmap:
-    FLASK_APP: server.app:get_app
-    FLASK_DEBUG:
-    FLASK_RUN_PORT: 8080
-    FLASK_RUN_HOST: 0.0.0.0
+env_secret:
 
-  env_secret:
+deployment:
+  repository: {{ cc.git_user }}/{{ cc.repo }}
+  image_tag: latest
+  repo_path: /home/ubuntu/{{ cc.repo }}
+  storage_path: /mnt/storage
+  image_pull_policy: IfNotPresent
+  nfs_server:
+  command:
+    - {{ cc.repo }}
+    - server
+  args:
+  env_configmap: {{ cc.repo }}-env-configmap
+  env_secret: {{ cc.repo }}-env-secret
 
-  deployment:
-    repository: {{ cc.git_user }}/{{ cc.repo }}
-    image_tag: latest
-    repo_path: /home/ubuntu/{{ cc.repo }}
-    storage_path: /mnt/storage
-    image_pull_policy: IfNotPresent
-    nfs_server:
-    command:
-      - {{ cc.repo }}
-      - server
-    args:
-    env_configmap: {{ cc.repo }}-env-configmap
-    env_secret: {{ cc.repo }}-env-secret
+service:
+  port: 80
+  target_port: 8080
 
-  service:
-    port: 80
-    target_port: 8080
+repo_volume:
+  path:
 
-  repo_volume:
-    path:
+desktop_volume:
+  path:
 
-  desktop_volume:
-    path:
+nginx_ingress:
+  host:
 
-  nginx_ingress:
-    host:
+traefik_ingress:
+  match:
 
-  traefik_ingress:
-    match:
-
-  image_pull_secret:
-    docker_config:
-
-# OVERLAYS----------------------------------------------------------------------
-overlays:
-  # RANCHER-DESKTOP-------------------------------------------------------------
-  rancher_desktop:
-    enable:
-      namespace: true
-      env_secret: true
-      image_pull_secret: false
-      repo_volume: false
-      desktop_volume: true
-      traefik_ingress: true
-
-    namespace:
-      name: {{ cc.repo }}
-
-    repo_volume:
-      path: /local/path/to/{{ cc.repo }}/repository
-
-    desktop_volume:
-      path: /local/storage/path
-
-    traefik_ingress:
-      match: HostRegexp(`{{ cc.repo }}.local`)
-
-    deployment:
-      command:
-        - {{ cc.repo }}
-        - server
-
-    env_configmap:
-      FLASK_DEBUG: 1
-
-    env_secret:
+image_pull_secret:
+  docker_config:
