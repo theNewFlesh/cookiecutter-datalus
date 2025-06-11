@@ -366,5 +366,5 @@ Its usage pattern is: `bin/cli.py COMMAND --flag-1 arg --flag-2 arg [-h --help]`
 
 ---
 
-# Continuos Integration Diagram
+# Continuous Integration Diagram
 <p><img src="resources/ci.svg"></p>
