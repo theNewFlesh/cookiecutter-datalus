@@ -1,4 +1,5 @@
 {%- set cc = cookiecutter -%}
+# ENABLE------------------------------------------------------------------------
 enable:
   namespace: false
   argocd_application: false
@@ -13,6 +14,7 @@ enable:
   readiness_probe: true
   liveness_probe: true
 
+# APPLICATION-------------------------------------------------------------------
 namespace:
   name: {{ cc.repo }}
 
@@ -21,14 +23,19 @@ argocd_application:
   source_namespace: argocd
   target_namespace: {{ cc.repo }}
 
+# ENVIRONMENT-------------------------------------------------------------------
 env_configmap:
   FLASK_APP: server.app:get_app
-  FLASK_DEBUG:
+  FLASK_DEBUG: true
   FLASK_RUN_PORT: 8080
   FLASK_RUN_HOST: 0.0.0.0
 
 env_secret:
 
+image_pull_secret:
+  docker_config:
+
+# DEPLOYMENT--------------------------------------------------------------------
 deployment:
   repository: {{ cc.git_user }}/{{ cc.repo }}
   image_tag: latest
@@ -47,17 +54,16 @@ service:
   port: 80
   target_port: 8080
 
+# VOLUME------------------------------------------------------------------------
 repo_volume:
   path:
 
 desktop_volume:
   path:
 
+# INGRESS-----------------------------------------------------------------------
 nginx_ingress:
   host:
 
 traefik_ingress:
   match:
-
-image_pull_secret:
-  docker_config:
