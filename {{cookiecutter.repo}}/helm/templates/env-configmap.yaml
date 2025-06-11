@@ -1,5 +1,5 @@
 {%- raw -%}
-{{- with .Values -}}
+{{- with (include "_values" . | fromYaml) -}}
 {{ if .enable.env_configmap }}
 kind: ConfigMap
 apiVersion: v1
