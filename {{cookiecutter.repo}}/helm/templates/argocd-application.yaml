@@ -22,7 +22,7 @@ spec:
     path: helm
     helm:
       values: |
-        overlay: rancher_desktop
+        # your helm chart values go here
   destination:
     server: https://kubernetes.default.svc
     namespace: {{ .argocd_application.target_namespace }}
