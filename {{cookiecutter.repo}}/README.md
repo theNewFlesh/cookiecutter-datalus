@@ -17,7 +17,10 @@
 ![](https://img.shields.io/badge/verbdg-{{ cc.initial_repo_version }}-x?style=for-the-badge&logoColor=5F95DE&label=version&color=5F95DE)
 {%- endif %}
 
-<!-- <img id="logo" src="sphinx/images/logo.png" style="max-width: 717px"> -->
+<!-- <img
+    id="logo" src="sphinx/images/logo.png"
+    style="max-width: 717px; min-width: 666px; min-height: 360px"
+> -->
 
 # Introduction
 
