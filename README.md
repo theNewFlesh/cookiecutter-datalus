@@ -26,7 +26,7 @@
     </a>
 </p>
 
-<p><img src="logo.png" style="min-width: 666px; min-height: 360px"></p>
+<p><img src="logo.png" min-width="666px" min-height="360px"></p>
 
 # Introduction
 Datalus is a cookiecutter template for end-to-end automated, modular python repos.
