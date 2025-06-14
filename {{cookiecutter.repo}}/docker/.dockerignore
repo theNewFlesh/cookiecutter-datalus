@@ -4,7 +4,6 @@
 !config/*-env
 !config/*.lock
 !config/*.toml
-!config/**
 !config/henanigans.zsh-theme
 !config/zshrc
 !dist/**
