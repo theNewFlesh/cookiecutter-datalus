@@ -7,6 +7,7 @@
 !config/**
 !config/henanigans.zsh-theme
 !config/zshrc
+!dist/**
 !scripts/**
 {%- if cc.include_secret_env == 'yes' %}
 config/secret-env
