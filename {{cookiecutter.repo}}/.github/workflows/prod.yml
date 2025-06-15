@@ -64,6 +64,14 @@ jobs:
           `;
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
+      - name: Tag release commit
+        shell: bash
+        run: |
+          git tag \
+            --annotate ${{ steps.version.outputs.VERSION }}-release \
+            --message 'Release: ${{ steps.version.outputs.VERSION }}' && \
+          git push --follow-tags
+
       - name: Generate release
         uses: softprops/action-gh-release@v2
         with:
