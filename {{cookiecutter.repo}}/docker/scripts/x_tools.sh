@@ -818,6 +818,7 @@ _x_version_file_update () {
 {%- endif %}
 {%- if cc.include_mkdocs == 'yes' %}
     sed --in-place -E "s/$1/$2/g" $MKDOCS_DIR/mkdocs.yml;
+    sed --in-place -E "s/verbdg-.+-x/verbdg-$2-x/" $MKDOCS_DIR/md/index.md;
 {% endif %}
 {%- raw %}
 }
