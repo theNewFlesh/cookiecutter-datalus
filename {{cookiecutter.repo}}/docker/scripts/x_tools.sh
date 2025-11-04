@@ -492,6 +492,7 @@ $sep
 
 x_docs_sphinx () {
     # Generate sphinx rst files for all python modules
+    echo "${CYAN2}GENERATING SPHINX RST FILES${CLEAR}\n";
 
     # modules.rst
     local tmp=`find $REPO_SUBPACKAGE -mindepth 1 -maxdepth 1 -type d`;
