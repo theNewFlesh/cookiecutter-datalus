@@ -36,6 +36,7 @@ export PYPI_TEST_URL="testpypi"
 {%- endif %}
 export PYTHONPATH="$REPO_DIR/python:$HOME/.local/lib"
 export SCRIPT_DIR="$REPO_DIR/docker/scripts"
+export SPHINX_DIR="$REPO_DIR/sphinx"
 export TEST_MAX_PROCS=16
 export TEST_PROCS="auto"
 export TEST_VERBOSITY=0
@@ -410,11 +411,11 @@ x_docs () {
     exit_code=`_x_resolve_exit_code $exit_code $?`;
 {%- endif %}
     mkdir -p {{sphinx_dir}};
-    cp $REPO_DIR/README.md $REPO_DIR/sphinx/readme.md;
-    sed --in-place -E 's/sphinx\/images/_images/g' $REPO_DIR/sphinx/readme.md;
+    cp $REPO_DIR/README.md $SPHINX_DIR/readme.md;
+    sed --in-place -E 's/sphinx\/images/_images/g' $SPHINX_DIR/readme.md;
     sphinx-build sphinx {{sphinx_dir}};
     exit_code=`_x_resolve_exit_code $exit_code $?`;
-    rm -f $REPO_DIR/sphinx/readme.md;
+    rm -f $SPHINX_DIR/readme.md;
     cp -f sphinx/style.css {{sphinx_dir}}/_static/style.css;
     touch {{sphinx_dir}}/.nojekyll;
 {%- raw %}
@@ -466,6 +467,55 @@ x_docs_metrics () {
         $REPO_DIR/python $DOCS_DIR;
 {%- endif %}
 {%- raw %}
+}
+
+_x_docs_sphinx () {
+    # Generate sphinx rst file
+    # args: subpackage name, absolute module paths
+    echo "$1";
+    echo "$1" | sed 's/./=/g';
+
+    local items=(`echo "$2" | tr ' ' '\n'`);
+    for item in $items; do
+        local module=`echo $item | sed -E 's/.*\.//'`;
+        local sep=`echo $module | sed 's/./-/g'`;
+        echo "
+$module
+$sep
+.. automodule:: $item
+    :members:
+    :private-members:
+    :undoc-members:
+    :show-inheritance:";
+    done;
+}
+
+x_docs_sphinx () {
+    # Generate sphinx rst files for all python modules
+
+    # modules.rst
+    local tmp=`find $REPO_SUBPACKAGE -mindepth 1 -maxdepth 1 -type d`;
+    local modules=`echo "$tmp" | sed -E 's/.*\//   /' | sort`;
+    echo ".. toctree::
+   :maxdepth: 4
+
+$modules" > $SPHINX_DIR/modules.rst;
+
+    # all other rst files
+    local dirs=(`find $REPO_SUBPACKAGE -mindepth 1 -maxdepth 1 -type d`);
+    for dir in $dirs; do
+        local name=`echo $dir | tr ' ' '\n' | head -n 1 | sed -E 's/^.*\///'`;
+        local items=` \
+            find $dir -type f \
+            | grep -vE '(test|test_base|__init__|/command)\.py' \
+            | sed -E 's/.*python\///' \
+            | sed -E 's/\//./g' \
+            | sed -E 's/\.py//' \
+            | sort \
+            | tr '\n' ' '
+        `;
+        _x_docs_sphinx "$name" "$items" > $SPHINX_DIR/$name.rst;
+    done;
 }
 
 # LIBRARY-FUNCTIONS-------------------------------------------------------------
