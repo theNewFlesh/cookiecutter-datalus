@@ -150,6 +150,7 @@ Its usage pattern is: `bin/repo COMMAND [-a --args]=ARGS [-h --help] [--dryrun]`
 | docs-architecture          | Generate architecture.svg diagram from all import statements        | [docs] architecture           |
 | docs-full                  | Generate documentation, coverage report, diagram and code metrics   | [docs] full                   |
 | docs-metrics               | Generate code metrics report, plots and tables                      | [docs] metrics                |
+| docs-sphinx                | Generate sphinx rst files                                           | [docs] sphinx                 |
 | library-add                | Add a given package to a given dependency group                     | [library] add                 |
 | library-graph-dev          | Graph dependencies in dev environment                               | [library] graph-dev           |
 | library-graph-prod         | Graph dependencies in prod environment                              | [library] graph-prod          |
