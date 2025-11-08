@@ -475,8 +475,8 @@ _x_docs_sphinx () {
     echo "$1";
     echo "$1" | sed 's/./=/g';
 
-    local items=(`echo "$2" | tr ' ' '\n'`);
-    for item in $items; do
+    local items=`echo "$2" | tr ' ' '\n'`;
+    echo $items | while read -r item; do
         local module=`echo $item | sed -E 's/.*\.//'`;
         local sep=`echo $module | sed 's/./-/g'`;
         echo "
@@ -503,8 +503,8 @@ x_docs_sphinx () {
 $modules" > $SPHINX_DIR/modules.rst;
 
     # all other rst files
-    local dirs=(`find $REPO_SUBPACKAGE -mindepth 1 -maxdepth 1 -type d`);
-    for dir in $dirs; do
+    local dirs=`find $REPO_SUBPACKAGE -mindepth 1 -maxdepth 1 -type d`;
+    echo $dirs | while read -r dir; do
         local name=`echo $dir | tr ' ' '\n' | head -n 1 | sed -E 's/^.*\///'`;
         local items=` \
             find $dir -type f \
