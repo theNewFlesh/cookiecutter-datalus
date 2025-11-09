@@ -75,6 +75,10 @@
             "**/jupyter/serverconfig": true,
             "*/*/**/node_modules": true,
             "**/.Trash*": true,
+        },
+        "workbench.colorCustomizations": {
+            "statusBar.background" : "#B6ECF3",
+            "statusBar.foreground": "#000000"
         }
     },
     "tasks": {
