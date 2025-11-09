@@ -28,5 +28,6 @@
     "year": {{ cc.year }},
     "python_min_version": "{{ cc.python_min_version }}",
     "python_max_version": "{{ cc.python_max_version }}",
-    "initial_repo_version": "{{ cc.initial_repo_version }}"
+    "initial_repo_version": "{{ cc.initial_repo_version }}",
+    "status_bar_color": "{{ cc.status_bar_color }}"
 }

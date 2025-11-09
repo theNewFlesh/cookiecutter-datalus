@@ -77,7 +77,9 @@
             "**/.Trash*": true,
         },
         "workbench.colorCustomizations": {
-            "statusBar.background" : "#B6ECF3",
+{%- endraw %}
+            "statusBar.background": "{{ cc.status_bar_color }}",
+{%- raw %}
             "statusBar.foreground": "#000000"
         }
     },
