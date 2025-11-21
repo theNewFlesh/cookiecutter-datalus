@@ -3,7 +3,6 @@ c = get_config()
 c.IdentityProvider.token = ''
 c.IPCompleter.use_jedi = False
 c.ServerApp.disable_check_xsrf = True
-c.ServerApp.iopub_data_rate_limit = 10000000
 c.ServerApp.password_required = False
 c.ServerApp.port = 9000
 c.ServerApp.root_dir = '/home/ubuntu/{{cc.repo}}/notebooks'
