@@ -1,10 +1,13 @@
 {%- set cc = cookiecutter -%}
 c = get_config()
-c.ServerApp.iopub_data_rate_limit = 10000000
-c.ServerApp.root_dir = '/home/ubuntu/{{cc.repo}}/notebooks'
+c.IdentityProvider.token = ''
+c.IPCompleter.use_jedi = False
 c.ServerApp.disable_check_xsrf = True
+c.ServerApp.iopub_data_rate_limit = 10000000
 c.ServerApp.password_required = False
 c.ServerApp.port = 9000
+c.ServerApp.root_dir = '/home/ubuntu/{{cc.repo}}/notebooks'
 c.ServerApp.terminado_settings = {'shell_command': ['/bin/zsh']}
-c.ServerApp.token = ''
-c.IPCompleter.use_jedi = False
+c.ZMQChannelsWebsocketConnection.iopub_data_rate_limit = 10000000
+c.ZMQChannelsWebsocketConnection.iopub_msg_rate_limit = 10000000
+c.ZMQChannelsWebsocketConnection.rate_limit_window = 10.0
