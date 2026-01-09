@@ -863,6 +863,7 @@ _x_get_version () {
 _x_version_file_update () {
     # update non-pyproject files with new pyproject version
     # args: old_version, new_version
+    echo "${CYAN2}UPDATING VERSION IN MISC FILES${CLEAR}\n";
 {%- endraw -%}
 {%- if cc.include_pypi_badges == 'no' %}
     sed --in-place -E "s/verbdg-.+-x/verbdg-$2-x/" $REPO_DIR/README.md;
