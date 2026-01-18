@@ -30,6 +30,8 @@
     "initial_repo_version": "0.1.0",
     "status_bar_color": [
         "#B6ECF3", "#EBB483", "#A0D17B", "#93B6E6", "#AC92DE", "#DE958E",
-        "#E9EABE", "#F4F4F4"
+        "#E9EABE", "#F4F4F4",
+        "#7EC4CF", "#EB9E58", "#8BD155", "#5F95DE", "#C98FDE", "#F77E70",
+        "#E8EA7E", "#A4A4A4"
     ]
 }
