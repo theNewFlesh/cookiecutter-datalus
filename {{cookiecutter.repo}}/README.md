@@ -34,7 +34,7 @@ See [documentation](https://{{cc.git_organization}}.{{cc.git_host}}.io/{{cc.repo
 4. `cd {{cc.repo}}`
 5. `chmod +x bin/{{cc.repo}}`
 6. `bin/{{cc.repo}} docker-start`
-   - If building on a M1 Mac run `export DOCKER_DEFAULT_PLATFORM=linux/amd64` first.
+   - If building on a M1 Mac run `export DOCKER_DEFAULT_PLATFORM=linux/arm64` first.
 
 The service should take a few minutes to start up.
 
@@ -62,7 +62,7 @@ If using GitLab private python package registry:
     - `alias {{cc.repo}}="cd [parent dir]/{{cc.repo}}; bin/{{cc.repo}}"`
     - Replace `[parent dir]` with the parent directory of this repository
 3. Consider adding the following line to your ~/.zshrc if you are using a M1 Mac:
-    - `export DOCKER_DEFAULT_PLATFORM=linux/amd64`
+    - `export DOCKER_DEFAULT_PLATFORM=linux/arm64`
 4. Running the `zsh-complete` command will enable tab completions of the cli
    commands, in the next shell session.
 

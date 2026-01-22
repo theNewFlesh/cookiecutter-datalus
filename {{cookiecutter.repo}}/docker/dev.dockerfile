@@ -1,6 +1,11 @@
 {%- set cc = cookiecutter -%}
 {%- set min_ver = cc.python_min_version | int %}
 {%- set max_ver = cc.python_max_version | int -%}
+{%- if cc.architecture == "amd64" -%}
+{%- set arch = "x86_64" -%}
+{%- else -%}
+{%- set arch = "aarch64" -%}
+{%- endif -%}
 {% if cc.include_nvidia == "yes" -%}
 FROM nvidia/cuda:12.2.2-base-ubuntu22.04 AS base
 {%- else -%}
@@ -62,7 +67,7 @@ RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
 # install yq
 RUN echo "\n${CYAN}INSTALL YQ${CLEAR}"; \
     curl -fsSL \
-        https://github.com/mikefarah/yq/releases/download/v4.9.1/yq_linux_amd64 \
+        https://github.com/mikefarah/yq/releases/download/v4.50.1/yq_linux_{{ cc.architecture }} \
         -o /usr/local/bin/yq && \
     chmod +x /usr/local/bin/yq
 
@@ -124,7 +129,7 @@ RUN echo "\n${CYAN}SETUP ZSH${CLEAR}"; \
 
 # install s6-overlay
 RUN echo "\n${CYAN}INSTALL S6${CLEAR}"; \
-    export S6_ARCH="x86_64" && \
+    export S6_ARCH="{{ arch }}" && \
     export S6_VERSION="v3.1.5.0" && \
     export S6_URL="https://github.com/just-containers/s6-overlay/releases/download" && \
     curl -fsSL "${S6_URL}/${S6_VERSION}/s6-overlay-noarch.tar.xz" \

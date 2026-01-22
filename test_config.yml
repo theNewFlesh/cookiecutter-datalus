@@ -27,5 +27,6 @@ default_context:
   year: 2025
   python_min_version: 7
   python_max_version: 13
+  architecture: arm64
   initial_repo_version: "0.1.0"
   status_bar_color: "#DE958E"
