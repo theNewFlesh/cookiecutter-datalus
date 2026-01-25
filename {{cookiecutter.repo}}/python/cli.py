@@ -20,6 +20,7 @@ DOCKER_REGISTRY = 'registry.gitlab.com/{{ cc.git_organization | lower }}/' + REP
 {%- else %}
 DOCKER_REGISTRY = '{{ cc.git_user | lower }}/' + REPO
 {%- endif %}
+PLATFORM = 'linux/{{ cc.architecture }}'
 USER = 'ubuntu:ubuntu'
 PORT = 8080
 # ------------------------------------------------------------------------------
@@ -247,6 +248,7 @@ def resolve(commands):
         git_user=GIT_USER,
         registry=DOCKER_REGISTRY,
         port=str(PORT),
+        platform=PLATFORM,
         pythonpath='{PYTHONPATH}',
         repo_path=REPO_PATH,
         repo=REPO,
@@ -430,6 +432,7 @@ def build_dev_command(use_cache=True):
     cmd = line('''
         cd docker;
         docker build
+            --platform {platform}
             --file dev.dockerfile
             --build-arg BUILDKIT_INLINE_CACHE=1
 {%- endraw %}
@@ -476,6 +479,7 @@ def build_prod_command(use_cache=False):
         cd docker;
         docker build
             --force-rm
+            --platform {platform}
             --file prod.dockerfile
             --build-arg VERSION="$VERSION"
 {%- if cc.include_secret_env == 'yes' %}
