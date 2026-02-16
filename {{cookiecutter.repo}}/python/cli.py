@@ -20,7 +20,7 @@ DOCKER_REGISTRY = 'registry.gitlab.com/{{ cc.git_organization | lower }}/' + REP
 {%- else %}
 DOCKER_REGISTRY = '{{ cc.git_user | lower }}/' + REPO
 {%- endif %}
-PLATFORM = 'linux/{{ cc.architecture }}'
+PLATFORM = os.environ.get('DOCKER_DEFAULT_PLATFORM', 'linux/{{ cc.architecture }}')
 USER = 'ubuntu:ubuntu'
 PORT = 8080
 # ------------------------------------------------------------------------------
