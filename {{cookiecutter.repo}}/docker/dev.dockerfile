@@ -2,9 +2,11 @@
 {%- set min_ver = cc.python_min_version | int %}
 {%- set max_ver = cc.python_max_version | int -%}
 {%- if cc.architecture == "amd64" -%}
-{%- set arch = "x86_64" -%}
+{%- set arch_1 = "amd64" -%}
+{%- set arch_2 = "x86_64" -%}
 {%- else -%}
-{%- set arch = "aarch64" -%}
+{%- set arch_1 = "arm64" -%}
+{%- set arch_2 = "aarch64" -%}
 {%- endif -%}
 {% if cc.include_nvidia == "yes" -%}
 FROM nvidia/cuda:12.2.2-base-ubuntu22.04 AS base
@@ -13,6 +15,10 @@ FROM ubuntu:22.04 AS base
 {%- endif %}
 
 USER root
+
+# architecture
+ARG ARCH_1="{{ arch_1 }}"
+ARG ARCH_2="{{ arch_2 }}"
 
 # coloring syntax for headers
 ENV CYAN='\033[0;36m'
@@ -67,7 +73,7 @@ RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
 # install yq
 RUN echo "\n${CYAN}INSTALL YQ${CLEAR}"; \
     curl -fsSL \
-        https://github.com/mikefarah/yq/releases/download/v4.50.1/yq_linux_{{ cc.architecture }} \
+        https://github.com/mikefarah/yq/releases/download/v4.50.1/yq_linux_$ARCH_1 \
         -o /usr/local/bin/yq && \
     chmod +x /usr/local/bin/yq
 
@@ -129,31 +135,29 @@ RUN echo "\n${CYAN}SETUP ZSH${CLEAR}"; \
 
 # install s6-overlay
 RUN echo "\n${CYAN}INSTALL S6${CLEAR}"; \
-    export S6_ARCH="{{ arch }}" && \
     export S6_VERSION="v3.1.5.0" && \
     export S6_URL="https://github.com/just-containers/s6-overlay/releases/download" && \
     curl -fsSL "${S6_URL}/${S6_VERSION}/s6-overlay-noarch.tar.xz" \
         -o /tmp/s6-overlay-noarch.tar.xz && \
     curl -fsSL "${S6_URL}/${S6_VERSION}/s6-overlay-noarch.tar.xz.sha256" \
         -o /tmp/s6-overlay-noarch.tar.xz.sha256 && \
-    curl -fsSL "${S6_URL}/${S6_VERSION}/s6-overlay-${S6_ARCH}.tar.xz" \
-        -o /tmp/s6-overlay-${S6_ARCH}.tar.xz && \
-    curl -fsSL "${S6_URL}/${S6_VERSION}/s6-overlay-${S6_ARCH}.tar.xz.sha256" \
-        -o /tmp/s6-overlay-${S6_ARCH}.tar.xz.sha256 && \
+    curl -fsSL "${S6_URL}/${S6_VERSION}/s6-overlay-${ARCH_2}.tar.xz" \
+        -o /tmp/s6-overlay-${ARCH_2}.tar.xz && \
+    curl -fsSL "${S6_URL}/${S6_VERSION}/s6-overlay-${ARCH_2}.tar.xz.sha256" \
+        -o /tmp/s6-overlay-${ARCH_2}.tar.xz.sha256 && \
     tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz && \
-    tar -C / -Jxpf /tmp/s6-overlay-${S6_ARCH}.tar.xz && \
+    tar -C / -Jxpf /tmp/s6-overlay-${ARCH_2}.tar.xz && \
     rm /tmp/s6-overlay-noarch.tar.xz \
        /tmp/s6-overlay-noarch.tar.xz.sha256 \
-       /tmp/s6-overlay-${S6_ARCH}.tar.xz \
-       /tmp/s6-overlay-${S6_ARCH}.tar.xz.sha256
+       /tmp/s6-overlay-${ARCH_2}.tar.xz \
+       /tmp/s6-overlay-${ARCH_2}.tar.xz.sha256
 
 {%- if cc.include_vscode_server == "yes" %}
 
 # install vscode server
 RUN echo "\n${CYAN}INSTALL VSCODE SERVER${CLEAR}"; \
-    export CODE_ARCH="amd64" && \
     export CODE_VERSION="4.19.1" && \
-    export CODE_URL="https://github.com/coder/code-server/releases/download/v$CODE_VERSION/code-server_${CODE_VERSION}_$CODE_ARCH.deb" && \
+    export CODE_URL="https://github.com/coder/code-server/releases/download/v$CODE_VERSION/code-server_${CODE_VERSION}_${ARCH_1}.deb" && \
     curl -fsSL $CODE_URL -o /tmp/code-server.deb && \
     dpkg -i /tmp/code-server.deb && \
     rm -f /tmp/code-server.deb

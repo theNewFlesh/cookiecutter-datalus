@@ -243,12 +243,18 @@ def resolve(commands):
         str: Resolved command.
     '''
     cmd = ' && '.join(commands)
+    arch_1 = PLATFORM.split('/')[1]
+    arch_2 = 'x86_64'
+    if arch_1 == 'arm64':
+        arch_2 = 'aarch64'
 
     all_ = dict(
         git_user=GIT_USER,
         registry=DOCKER_REGISTRY,
         port=str(PORT),
         platform=PLATFORM,
+        arch_1=arch_1,
+        arch_2=arch_2,
         pythonpath='{PYTHONPATH}',
         repo_path=REPO_PATH,
         repo=REPO,
@@ -436,6 +442,8 @@ def build_dev_command(use_cache=True):
             --platform {platform}
             --file dev.dockerfile
             --build-arg BUILDKIT_INLINE_CACHE=1
+            --build-arg ARCH_1={arch_1}
+            --build-arg ARCH_2={arch_2}
 {%- endraw %}
 {%- if cc.include_secret_env == 'yes' %}
             --secret id=secret-env,src=config/secret-env
