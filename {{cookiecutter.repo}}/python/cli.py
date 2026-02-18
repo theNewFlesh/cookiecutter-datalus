@@ -324,6 +324,7 @@ def start():
                 docker compose
                     -p {repo}
                     -f {repo_path}/docker/docker-compose.yml up
+                    --no-build
                     --detach;
                 cd ..;
             fi
