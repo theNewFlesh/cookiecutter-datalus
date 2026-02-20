@@ -9,6 +9,7 @@ on:
 env:
   cli: "bin/${{ github.event.repository.name }}"
   GH_TOKEN: "${{ secrets.GH_TOKEN }}"
+  DOCKER_DEFAULT_PLATFORM: linux/amd64
   # pypi_url: "YOUR PYPI URL"
   # docker_url: "YOUR DOCKER URL"
 
@@ -42,14 +43,14 @@ jobs:
       - name: Publish python package
         run: $cli build-publish -a ${{ secrets.PYPI_ACCESS_TOKEN }}
 
-      - name: Build prod image
-        run: $cli docker-build-prod-no-cache
+      # - name: Build prod image
+      #   run: $cli docker-build-prod-no-cache
 
-      - name: Push prod image
-        run: $cli docker-push-prod
+      # - name: Push prod image
+      #   run: $cli docker-push-prod
 
-      - name: Push prod-latest image
-        run: $cli docker-push-prod-latest
+      # - name: Push prod-latest image
+      #   run: $cli docker-push-prod-latest
 
       - name: Get version
         id: version
@@ -77,8 +78,8 @@ jobs:
           make_latest: true
           tag_name: "${{ steps.version.outputs.VERSION }}"
           generate_release_notes: true
-          # body: |
-          #   [PyPI Package](${{ env.pypi_url }})
-          #   [Docker Image](${{ env.docker_url }})
+          body: |
+            [PyPI Package](${{ env.pypi_url }})
+            [Docker Image](${{ env.docker_url }})
 
 {% endraw %}
