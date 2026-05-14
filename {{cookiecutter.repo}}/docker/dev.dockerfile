@@ -59,6 +59,7 @@ RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
         curl \
         exa \
         git \
+        git-lfs \
         gnupg \
         graphviz \
         jq \

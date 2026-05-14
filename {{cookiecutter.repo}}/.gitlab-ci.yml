@@ -41,7 +41,7 @@ variables:
     - export test_image="$CI_REGISTRY/$org/$repo:test-$timestamp"
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - apt update
-    - apt install -y git
+    - apt install -y git git-lfs
     - git config --global user.name ci
     - git config --global user.email "ci@$org_url"
     - git remote set-url origin $git_url
