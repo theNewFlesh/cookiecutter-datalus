@@ -15,6 +15,7 @@ default_context:
   git_user: theNewFlesh
   git_host: github
   git_organization: theNewFlesh
+  git_project_id: 01234567
   package_registry: pypi
   docker_registry: docker.io
   organization_url: mycompany.com

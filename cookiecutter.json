@@ -15,6 +15,7 @@
     "git_user": "git_user",
     "git_host": ["github", "gitlab", "bitbucket"],
     "git_organization": "your-git-org",
+    "git_project_id": "your-gitlab-project-id",
     "package_registry": ["pypi", "github", "gitlab"],
     "docker_registry": ["docker.io", "ghcr.io", "gitlab"],
     "organization_url": "your-org.com",

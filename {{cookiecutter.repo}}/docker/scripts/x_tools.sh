@@ -26,7 +26,7 @@ export MAX_PYTHON_VERSION="3.{{ cc.python_max_version }}"
 export MKDOCS_DIR="$REPO_DIR/mkdocs"
 export PDM_DIR="$HOME/pdm"
 {%- if cc.package_registry == 'gitlab' %}
-export GIT_PROJECT_ID="ENTER GITLAB PROJECT ID HERE"
+export GIT_PROJECT_ID="{{ cc.git_project_id }}"
 export GIT_PROJECT_URL="https://gitlab.com/api/v4/projects/$GIT_PROJECT_ID"
 export PYPI_URL="$GIT_PROJECT_URL/packages/pypi"
 export PYPI_TEST_URL="$PYPI_URL"

@@ -1,13 +1,6 @@
 {%- set cc = cookiecutter -%}
 {%- set min_ver = cc.python_min_version | int %}
 {%- set max_ver = cc.python_max_version | int %}
-{%- if cc.package_registry == 'gitlab' %}
-{%- set pypi_url = 'https://gitlab.com/api/v4/projects/YOUR_GIT_PROJECT_ID/packages/pypi' %}
-{%- set pypi_test_url = 'https://gitlab.com/api/v4/projects/YOUR_GIT_PROJECT_ID/packages/pypi' %}
-{%- else %}
-{%- set pypi_url = 'pypi' %}
-{%- set pypi_test_url = 'testpypi' %}
-{%- endif %}
 {%- raw -%}
 {
     "folders": [{"path": "./"}],
@@ -610,13 +603,21 @@
                 "id": "pypi_url",
                 "description": "PyPI registry URL:",
                 "type": "promptString",
-                "default": "{{ pypi_url }}"
+{%- if cc.package_registry == 'gitlab' %}
+                "default": "https://gitlab.com/api/v4/projects/{{ cc.git_project_id }}/packages/pypi"
+{%- else %}
+                "default": "pypi"
+{%- endif %}
             },
             {
                 "id": "pypi_test_url",
                 "description": "Test PyPI registry URL:",
                 "type": "promptString",
-                "default": "{{ pypi_test_url }}"
+{%- if cc.package_registry == 'gitlab' %}
+                "default": "https://gitlab.com/api/v4/projects/{{ cc.git_project_id }}/packages/pypi"
+{%- else %}
+                "default": "testpypi"
+{%- endif %}
             },
 {%- raw %}
             {
