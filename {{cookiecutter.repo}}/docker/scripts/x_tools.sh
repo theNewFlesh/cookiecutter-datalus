@@ -706,15 +706,21 @@ x_quickstart () {
 }
 
 # SESSION-FUNCTIONS-------------------------------------------------------------
+_x_kill_session () {
+    # Kill processes which match given process name
+    # args: process name
+    ps aux \
+        | grep "$1" \
+        | grep -vE 'grep|s6' \
+        | awk '{print $2}' \
+        | parallel 'kill -9 {}';
+}
+
 x_session_lab () {
     # Run jupyter lab server
     x_env_activate_dev;
     echo "${CYAN2}JUPYTER LAB${CLEAR}\n";
-    ps aux \
-        | grep jupyter \
-        | grep -vE 'grep|s6' \
-        | awk '{print $2}' \
-        | parallel 'kill -9 {}';
+    _x_kill_session jupyter;
     jupyter lab \
         --allow-root \
         --ip=0.0.0.0 \
@@ -731,6 +737,7 @@ x_session_server () {
     # Run application server
     x_env_activate_dev;
     echo "${CYAN2}SERVER${CLEAR}\n";
+    _x_kill_session app.py;
     python3 $REPO_SUBPACKAGE/server/app.py;
 }
 
