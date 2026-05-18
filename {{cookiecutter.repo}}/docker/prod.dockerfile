@@ -116,7 +116,12 @@ USER ubuntu
 COPY --chown=ubuntu:ubuntu config/prod.toml /home/ubuntu/pdm/pyproject.toml
 ARG VERSION
 {%- if cc.include_secret_env == 'yes' %}
-ARG URL="YOUR PRIVATE PYPI URL"
+{%- if cc.package_registry == 'gitlab' %}
+ARG {{- cc.repo | upper | replace('-', '_') -}}_URL="gitlab.com/api/v4/projects/{{ cc.git_project_id }}/packages/pypi/simple"
+{%- else %}
+ARG {{- cc.repo | upper | replace('-', '_') -}}_URL="YOUR PRIVATE PYPI URL"
+{%- endif %}
+{%- if cc.include_secret_env == 'yes' %}
 RUN --mount=type=secret,id=secret-env,mode=0444 \
     . /run/secrets/secret-env && \
     echo "\n${CYAN}INSTALL {{ cc.repo | upper }}${CLEAR}"; \
