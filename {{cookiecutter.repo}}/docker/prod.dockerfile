@@ -121,7 +121,7 @@ RUN --mount=type=secret,id=secret-env,mode=0444 \
     . /run/secrets/secret-env && \
     echo "\n${CYAN}INSTALL {{ cc.repo | upper }}${CLEAR}"; \
     cd /home/ubuntu/pdm && \
-    pdm add -v {{ cc.repo }}==$VERSION;
+    pdm add -v "{{ cc.repo }}==$VERSION";
 {%- else %}
 RUN echo "\n${CYAN}INSTALL {{ cc.repo | upper }}${CLEAR}"; \
     cd /home/ubuntu/pdm && \
