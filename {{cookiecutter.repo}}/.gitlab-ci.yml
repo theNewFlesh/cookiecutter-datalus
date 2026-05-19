@@ -200,9 +200,8 @@ release:
       links:
         - name: Docker Image
           link_type: image
-          url: "https://${CI_REGISTRY}/${org}/${repo}:prod-${VERSION}"
 {%- if cc.docker_registry == 'gitlab' %}
-          url: "https://${org_url}/${org}/${repo}/-/packages"
+          url: "https://${CI_REGISTRY}/${org}/${repo}:prod-${VERSION}"
 {%- else %}
           url: "https://hub.docker.com/r/${org}/${repo}"
 {%- endif %}
