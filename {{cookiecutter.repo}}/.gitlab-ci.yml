@@ -6,6 +6,8 @@ stages:
   - master
   - pages
   - prod
+  - pre-release
+  - release
 
 # Please setup a project or group access token in GitLab:
 #  - name: GIT_ACCESS_TOKEN
@@ -144,9 +146,15 @@ prod-mr:
 {%- endif %}
 
 # PROD--------------------------------------------------------------------------
+.prod-rules:
+  rules:
+    - if: $CI_COMMIT_BRANCH == 'prod'
+
 prod:
   stage: prod
-  extends: .build-env
+  extends:
+    - .build-env
+    - .prod-rules
   rules:
     - if: $CI_COMMIT_BRANCH == 'prod'
   script:
@@ -162,3 +170,46 @@ prod:
     - $cli docker-build-prod-no-cache
     - $cli docker-push-prod
     - $cli docker-push-prod-latest
+
+pre-release:
+  stage: pre-release
+  extends:
+    - .prod-rules
+  script:
+    - echo "Gathering release version"
+    - >
+      export VERSION=`cat docker/config/pyproject.toml
+      | grep -E '^version *=' | awk '{print $3}' | sed 's/"//g'`
+    - echo "VERSION=${VERSION}" > release.env
+  artifacts:
+    reports:
+      dotenv: release.env
+
+release:
+  stage: release
+  extends:
+    - .prod-rules
+  dependencies:
+    - pre-release
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  release:
+    name: "Release: ${repo} ${VERSION}"
+    description: "Production release of ${repo} ${VERSION}"
+    tag_name: "release-${VERSION}"
+    assets:
+      links:
+{%- if cc.docker_registry == 'gitlab' %}
+        - name: Docker Image
+          link_type: image
+          url: "https://${CI_REGISTRY}/${org}/${repo}:prod-${VERSION}"
+        - name: PyPI Package
+          link_type: package
+          url: "https://${org_url}/${org}/${repo}/-/packages"
+{%- else %}
+        - name: Docker Image
+          link_type: image
+          url: "https://hub.docker.com/r/${org}/${repo}"
+        - name: PyPI Package
+          link_type: package
+          url: "https://pypi.org/project/${repo}/${VERSION}"
+{%- endif %}
