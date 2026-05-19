@@ -198,18 +198,18 @@ release:
     tag_name: "release-${VERSION}"
     assets:
       links:
-{%- if cc.docker_registry == 'gitlab' %}
         - name: Docker Image
           link_type: image
           url: "https://${CI_REGISTRY}/${org}/${repo}:prod-${VERSION}"
-        - name: PyPI Package
-          link_type: package
+{%- if cc.docker_registry == 'gitlab' %}
           url: "https://${org_url}/${org}/${repo}/-/packages"
 {%- else %}
-        - name: Docker Image
-          link_type: image
           url: "https://hub.docker.com/r/${org}/${repo}"
+{%- endif %}
         - name: PyPI Package
           link_type: package
+{%- if cc.package_registry == 'gitlab' %}
+          url: "https://${org_url}/${org}/${repo}/-/packages"
+{%- else %}
           url: "https://pypi.org/project/${repo}/${VERSION}"
 {%- endif %}
