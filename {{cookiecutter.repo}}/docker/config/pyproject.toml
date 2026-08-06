@@ -144,10 +144,9 @@ inline-quotes = "single"
 select = ["E", "F"]
 ignore = ["E731"]
 
-[tool.pdm]
-source = [
-    { name = "testpypi", url = "https://test.pypi.org/simple" },
-]
+[[tool.pdm.source]]
+name = "pypi"
+url = "https://pypi.org/simple"
 
 [tool.uv]
 cache-dir = "/home/ubuntu/pdm/cache"
