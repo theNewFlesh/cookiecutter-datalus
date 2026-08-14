@@ -57,7 +57,7 @@ RUN echo "\n${CYAN}INSTALL GENERIC DEPENDENCIES${CLEAR}"; \
         ca-certificates \
         cargo \
         curl \
-        eza \
+        exa \
         git \
         git-lfs \
         gnupg \
