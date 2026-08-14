@@ -134,7 +134,7 @@ RUN echo "\n${CYAN}SETUP ZSH${CLEAR}"; \
     rm -rf install-oh-my-zsh.sh && \
     echo 'UTC' > /etc/timezone
 
-# install s6-overlay
+# install s6-overlay (prevents upgrade to ubuntu 24.04 and later)
 RUN echo "\n${CYAN}INSTALL S6${CLEAR}"; \
     export S6_VERSION="v3.1.5.0" && \
     export S6_URL="https://github.com/just-containers/s6-overlay/releases/download" && \
