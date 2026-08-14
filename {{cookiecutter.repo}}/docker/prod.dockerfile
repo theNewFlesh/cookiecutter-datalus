@@ -3,7 +3,7 @@
 {% if cc.include_nvidia == "yes" -%}
 FROM nvidia/cuda:12.2.2-base-ubuntu22.04 AS base
 {%- else -%}
-FROM ubuntu:22.04 AS base
+FROM ubuntu:26.04 AS base
 {%- endif %}
 
 USER root
@@ -14,15 +14,10 @@ ENV CLEAR='\033[0m'
 ENV DEBIAN_FRONTEND="noninteractive"
 
 # setup ubuntu user
-ARG UID_="1000"
-ARG GID_="1000"
 RUN echo "\n${CYAN}SETUP UBUNTU USER${CLEAR}"; \
-    addgroup --gid $GID_ ubuntu && \
-    adduser \
-        --disabled-password \
-        --gecos '' \
-        --uid $UID_ \
-        --gid $GID_ ubuntu
+    passwd -d ubuntu && \
+    usermod -c '' ubuntu
+
 WORKDIR /home/ubuntu
 
 # update ubuntu and install basic dependencies
@@ -60,7 +55,7 @@ RUN echo "\n${CYAN}INSTALL NVIDIA CONTAINER TOOLKIT${CLEAR}"; \
     sed -i -e '/experimental/ s/^#//g' /etc/apt/sources.list.d/nvidia-container-toolkit.list && \
     apt update && \
     apt install -y \
-        libgl1-mesa-glx \
+        libglx-mesa0 \
         nvidia-container-toolkit && \
     rm -rf /var/lib/apt/lists/*
 {%- endif %}
