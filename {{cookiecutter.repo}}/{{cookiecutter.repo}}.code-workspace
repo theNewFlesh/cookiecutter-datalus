@@ -29,7 +29,7 @@
         "terminal.integrated.defaultProfile.linux": "zsh",
         "terminal.integrated.defaultProfile.osx": "zsh",
         "testExplorer.codeLens": true,
-        "todo-tree.filtering.excludeGlobs": [
+        "better-todo-tree.filtering.excludeGlobs": [
             "**/docs/**/*.*",
             "**/public/**/*.*",
         ],
