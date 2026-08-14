@@ -11,7 +11,7 @@
 {% if cc.include_nvidia == "yes" -%}
 FROM nvidia/cuda:12.2.2-base-ubuntu22.04 AS base
 {%- else -%}
-FROM ubuntu:22.04 AS base
+FROM ubuntu:26.04 AS base
 {%- endif %}
 
 USER root
@@ -26,15 +26,9 @@ ENV CLEAR='\033[0m'
 ENV DEBIAN_FRONTEND="noninteractive"
 
 # setup ubuntu user
-ARG UID_="1000"
-ARG GID_="1000"
 RUN echo "\n${CYAN}SETUP UBUNTU USER${CLEAR}"; \
-    addgroup --gid $GID_ ubuntu && \
-    adduser \
-        --disabled-password \
-        --gecos '' \
-        --uid $UID_ \
-        --gid $GID_ ubuntu && \
+    passwd -d ubuntu && \
+    usermod -c '' ubuntu && \
     usermod -aG root ubuntu
 
 # setup sudo
@@ -100,20 +94,13 @@ RUN echo "\n${CYAN}INSTALL PIP${CLEAR}"; \
     pip3.{{ max_ver }} install --upgrade pip && \
     rm -rf get-pip.py
 
-# install nodejs (needed by jupyter lab)
+# install nodejs (needed by jupyter lab and oh-my-zsh)
 RUN echo "\n${CYAN}INSTALL NODEJS${CLEAR}"; \
-    mkdir -p /etc/apt/keyrings && \
-    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
-        | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
-    export NODE_VERSION=20 && \
-    echo "deb \
-        [signed-by=/etc/apt/keyrings/nodesource.gpg] \
-        https://deb.nodesource.com/node_$NODE_VERSION.x \
-        nodistro main" \
-        | tee /etc/apt/sources.list.d/nodesource.list && \
     apt update && \
-    apt install -y nodejs && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install -y --no-install-recommends \
+        nodejs \
+        npm \
+    && rm -rf /var/lib/apt/lists/*
 
 # install and setup zsh
 RUN echo "\n${CYAN}SETUP ZSH${CLEAR}"; \
@@ -134,18 +121,19 @@ RUN echo "\n${CYAN}SETUP ZSH${CLEAR}"; \
     rm -rf install-oh-my-zsh.sh && \
     echo 'UTC' > /etc/timezone
 
-# install s6-overlay (prevents upgrade to ubuntu 24.04 and later)
-RUN echo "\n${CYAN}INSTALL S6${CLEAR}"; \
-    export S6_VERSION="v3.1.5.0" && \
-    export S6_URL="https://github.com/just-containers/s6-overlay/releases/download" && \
-    curl -fsSL "${S6_URL}/${S6_VERSION}/s6-overlay-noarch.tar.xz" \
-        -o /tmp/s6-overlay-noarch.tar.xz && \
-    curl -fsSL "${S6_URL}/${S6_VERSION}/s6-overlay-${ARCH_2}.tar.xz" \
-        -o /tmp/s6-overlay-${ARCH_2}.tar.xz && \
-    tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz && \
-    tar -C / -Jxpf /tmp/s6-overlay-${ARCH_2}.tar.xz && \
-    rm /tmp/s6-overlay-noarch.tar.xz \
-       /tmp/s6-overlay-${ARCH_2}.tar.xz
+# TODO: replace this with systemd or something
+# # install s6-overlay (prevents upgrade to ubuntu 24.04 and later)
+# RUN echo "\n${CYAN}INSTALL S6${CLEAR}"; \
+#     export S6_VERSION="v3.1.5.0" && \
+#     export S6_URL="https://github.com/just-containers/s6-overlay/releases/download" && \
+#     curl -fsSL "${S6_URL}/${S6_VERSION}/s6-overlay-noarch.tar.xz" \
+#         -o /tmp/s6-overlay-noarch.tar.xz && \
+#     curl -fsSL "${S6_URL}/${S6_VERSION}/s6-overlay-${ARCH_2}.tar.xz" \
+#         -o /tmp/s6-overlay-${ARCH_2}.tar.xz && \
+#     tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz && \
+#     tar -C / -Jxpf /tmp/s6-overlay-${ARCH_2}.tar.xz && \
+#     rm /tmp/s6-overlay-noarch.tar.xz \
+#        /tmp/s6-overlay-${ARCH_2}.tar.xz
 
 {%- if cc.include_vscode_server == "yes" %}
 
@@ -204,7 +192,7 @@ RUN echo "\n${CYAN}INSTALL NVIDIA CONTAINER TOOLKIT${CLEAR}"; \
     sed -i -e '/experimental/ s/^#//g' /etc/apt/sources.list.d/nvidia-container-toolkit.list && \
     apt update && \
     apt install -y \
-        libgl1-mesa-glx \
+        libglx-mesa0 \
         nvidia-container-toolkit && \
     rm -rf /var/lib/apt/lists/*
 {%- endif %}
